@@ -262,3 +262,78 @@ SCENARIO_4_GROUND_TRUTH = BenchmarkGroundTruth(
     expected_stale_actions=frozenset({"A1"}),
 )
 SCENARIO_4_GROUND_TRUTH.validate()
+
+SCENARIO_5_GROUND_TRUTH = BenchmarkGroundTruth(
+    scenario_id="contradictory_evidence_v1",
+    changed_node="B1",
+
+    original_nodes=(
+        GroundTruthNode("B1", NodeType.BELIEF),
+        GroundTruthNode("C1", NodeType.CONCLUSION),
+        GroundTruthNode("P1", NodeType.PLAN),
+        GroundTruthNode("A1", NodeType.ACTION),
+
+        GroundTruthNode("B2", NodeType.BELIEF),
+        GroundTruthNode("C2", NodeType.CONCLUSION),
+        GroundTruthNode("P2", NodeType.PLAN),
+        GroundTruthNode("A2", NodeType.ACTION),
+    ),
+
+    edges=(
+        GroundTruthEdge(
+            "B1",
+            "C1",
+            DependencyType.REQUIRES,
+        ),
+        GroundTruthEdge(
+            "C1",
+            "P1",
+            DependencyType.REQUIRES,
+        ),
+        GroundTruthEdge(
+            "P1",
+            "A1",
+            DependencyType.REQUIRES,
+        ),
+
+        GroundTruthEdge(
+            "B2",
+            "C2",
+            DependencyType.REQUIRES,
+        ),
+        GroundTruthEdge(
+            "C2",
+            "P2",
+            DependencyType.REQUIRES,
+        ),
+        GroundTruthEdge(
+            "P2",
+            "A2",
+            DependencyType.REQUIRES,
+        ),
+    ),
+
+    expected_invalidated=frozenset({
+        "B1",
+        "C1",
+        "P1",
+        "A1",
+    }),
+
+    expected_reevaluation=frozenset(),
+
+    expected_uncertain=frozenset(),
+
+    expected_preserved=frozenset({
+        "B2",
+        "C2",
+        "P2",
+        "A2",
+    }),
+
+    expected_stale_actions=frozenset({
+        "A1",
+    }),
+)
+
+SCENARIO_5_GROUND_TRUTH.validate()
