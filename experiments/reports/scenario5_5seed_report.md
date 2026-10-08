@@ -35,10 +35,10 @@ Strategy comparison
 | Task success | 0.0% | 100.0% | 100.0% |
 | Recovery success | 0.0% | 100.0% | 100.0% |
 | Preservation ratio | 0.0% | 0.0% | 50.0% |
-| Affected nodes | 0 | 12 | 6 |
+| Affected nodes | 0 | 8 | 4 |
 | Invalidated nodes | 0 | 0 | 4 |
-| Recomputed nodes | 0 | 12 | 0 |
-| Unnecessary recomputation | 0 | 6 | 0 |
+| Recomputed nodes | 0 | 8 | 0 |
+| Unnecessary recomputation | 0 | 4 | 0 |
 | Propagation depth | 0 | 0 | 3 |
 
 ## 4. Interpretation
@@ -47,7 +47,7 @@ In this controlled benchmark, the baseline strategy does not successfully recove
 
 The conventional memory strategy successfully recovers, but it recomputes the complete original reasoning state rather than identifying only the affected dependency region.
 
-The Belief-Graph strategy successfully performs dependency-aware impact analysis and selective revision. It preserves 50.0% of the original reasoning state. The affected region contains 6 nodes. 4 nodes are explicitly invalidated. Unnecessary recomputation is 0 nodes.
+The Belief-Graph strategy successfully performs dependency-aware impact analysis and selective revision. It preserves 50.0% of the original reasoning state. The affected region contains 4 nodes. 4 nodes are explicitly invalidated. Unnecessary recomputation is 0 nodes.
 
 These results demonstrate the intended selective revision behavior within the controlled benchmark. They should not be interpreted as universal performance or superiority claims.
 
@@ -105,6 +105,7 @@ python run_experiment.py
 | Strategy | Metric | Mean | Population Std. Dev. |
 |---|---|---:|---:|
 | baseline | affected_node_count | 0.0000 | 0.0000 |
+| baseline | evidence_selection_correct | 0.0000 | 0.0000 |
 | baseline | invalid_plans | 0.0000 | 0.0000 |
 | baseline | invalidated_node_count | 0.0000 | 0.0000 |
 | baseline | preservation_ratio | 0.0000 | 0.0000 |
@@ -113,36 +114,44 @@ python run_experiment.py
 | baseline | recomputed_node_count | 0.0000 | 0.0000 |
 | baseline | recovery_steps | 0.0000 | 0.0000 |
 | baseline | recovery_success | 0.0000 | 0.0000 |
-| baseline | stale_actions | 3.0000 | 0.0000 |
-| baseline | stale_plans | 3.0000 | 0.0000 |
+| baseline | revision_count | 0.0000 | 0.0000 |
+| baseline | selected_evidence_confidence | 0.0000 | 0.0000 |
+| baseline | stale_actions | 1.0000 | 0.0000 |
+| baseline | stale_plans | 1.0000 | 0.0000 |
 | baseline | task_success | 0.0000 | 0.0000 |
 | baseline | tool_calls | 0.0000 | 0.0000 |
 | baseline | unnecessary_invalidation | 0.0000 | 0.0000 |
 | baseline | unnecessary_recomputation | 0.0000 | 0.0000 |
-| memory | affected_node_count | 12.0000 | 0.0000 |
+| memory | affected_node_count | 8.0000 | 0.0000 |
+| memory | evidence_selection_correct | 1.0000 | 0.0000 |
 | memory | invalid_plans | 0.0000 | 0.0000 |
 | memory | invalidated_node_count | 0.0000 | 0.0000 |
 | memory | preservation_ratio | 0.0000 | 0.0000 |
 | memory | preserved_node_count | 0.0000 | 0.0000 |
 | memory | propagation_depth | 0.0000 | 0.0000 |
-| memory | recomputed_node_count | 12.0000 | 0.0000 |
+| memory | recomputed_node_count | 8.0000 | 0.0000 |
 | memory | recovery_steps | 2.0000 | 0.0000 |
 | memory | recovery_success | 1.0000 | 0.0000 |
+| memory | revision_count | 1.0000 | 0.0000 |
+| memory | selected_evidence_confidence | 0.9200 | 0.0141 |
 | memory | stale_actions | 0.0000 | 0.0000 |
 | memory | stale_plans | 0.0000 | 0.0000 |
 | memory | task_success | 1.0000 | 0.0000 |
 | memory | tool_calls | 3.0000 | 0.0000 |
 | memory | unnecessary_invalidation | 0.0000 | 0.0000 |
-| memory | unnecessary_recomputation | 6.0000 | 0.0000 |
-| belief_graph | affected_node_count | 6.0000 | 0.0000 |
+| memory | unnecessary_recomputation | 4.0000 | 0.0000 |
+| belief_graph | affected_node_count | 4.0000 | 0.0000 |
+| belief_graph | evidence_selection_correct | 1.0000 | 0.0000 |
 | belief_graph | invalid_plans | 1.0000 | 0.0000 |
 | belief_graph | invalidated_node_count | 4.0000 | 0.0000 |
 | belief_graph | preservation_ratio | 0.5000 | 0.0000 |
-| belief_graph | preserved_node_count | 6.0000 | 0.0000 |
+| belief_graph | preserved_node_count | 4.0000 | 0.0000 |
 | belief_graph | propagation_depth | 3.0000 | 0.0000 |
 | belief_graph | recomputed_node_count | 0.0000 | 0.0000 |
 | belief_graph | recovery_steps | 1.0000 | 0.0000 |
 | belief_graph | recovery_success | 1.0000 | 0.0000 |
+| belief_graph | revision_count | 1.0000 | 0.0000 |
+| belief_graph | selected_evidence_confidence | 0.9200 | 0.0141 |
 | belief_graph | stale_actions | 0.0000 | 0.0000 |
 | belief_graph | stale_plans | 0.0000 | 0.0000 |
 | belief_graph | task_success | 1.0000 | 0.0000 |

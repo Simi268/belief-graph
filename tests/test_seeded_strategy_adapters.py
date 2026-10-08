@@ -17,8 +17,26 @@ def test_seeded_baseline_matches_strategy_semantics():
     assert result.metrics["task_success"] is False
     assert result.metrics["stale_actions"] == 3
     assert result.metrics["stale_plans"] == 3
-    assert result.metrics["affected_node_count"] == 5
-    assert result.metrics["preserved_node_count"] == 6
+
+    # Baseline does not perform dependency-aware impact analysis.
+    assert result.metrics["affected_node_count"] == 0
+    assert result.metrics["invalidated_node_count"] == 0
+    assert result.metrics["recomputed_node_count"] == 0
+    assert result.metrics["preserved_node_count"] == 0
+    assert result.metrics["preservation_ratio"] == 0.0
+
+    assert result.details["dependency_tracking"] is False
+    assert result.details["strategy_detected_affected_nodes"] == []
+
+    assert (
+        result.details["ground_truth_affected_node_count"]
+        == len(instance.affected_nodes)
+    )
+
+    assert (
+        result.details["ground_truth_preserved_node_count"]
+        == len(instance.expected_preserved)
+    )
 
 
 def test_seeded_memory_matches_full_restart_semantics():

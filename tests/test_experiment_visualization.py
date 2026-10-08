@@ -84,7 +84,7 @@ def test_preservation_ratio_uses_measured_values():
     }
 
     assert values == {
-        "baseline": 0.5,
+        "baseline": 0.0,
         "memory": 0.0,
         "belief_graph": 0.5,
     }
@@ -109,7 +109,7 @@ def test_strategy_comparison_contains_requested_metrics():
 
     assert comparison["baseline"] == {
         "task_success": 0.0,
-        "preservation_ratio": 0.5,
+        "preservation_ratio": 0.0,
         "unnecessary_recomputation": 0.0,
     }
 

@@ -9,12 +9,12 @@
   "results": [
     {
       "seed": 1,
-      "instance_id": "scenario2_S0001",
+      "instance_id": "scenario1_S0001",
       "strategy": "baseline",
       "metrics": {
         "task_success": false,
-        "stale_actions": 3,
-        "stale_plans": 3,
+        "stale_actions": 1,
+        "stale_plans": 1,
         "invalid_plans": 0,
         "recovery_success": false,
         "unnecessary_invalidation": 0,
@@ -33,29 +33,27 @@
         "stale_nodes": [
           "A1_S0001",
           "C1_S0001",
-          "P1_S0001",
-          "P2_S0001",
-          "P3_S0001"
+          "P1_S0001"
         ],
         "strategy_detected_affected_nodes": [],
         "ground_truth_affected_nodes": [
           "A1_S0001",
           "B1_S0001",
           "C1_S0001",
-          "P1_S0001",
-          "P2_S0001",
-          "P3_S0001"
+          "P1_S0001"
         ],
-        "ground_truth_affected_node_count": 6,
+        "ground_truth_affected_node_count": 4,
         "ground_truth_preserved_nodes": [
-          "A2_S0001",
-          "A3_S0001",
-          "A4_S0001",
-          "B4_S0001",
-          "C4_S0001",
-          "P4_S0001"
+          "A2_U_S0001",
+          "A3_U_S0001",
+          "B2_U_S0001",
+          "B3_U_S0001",
+          "C2_U_S0001",
+          "C3_U_S0001",
+          "P2_U_S0001",
+          "P3_U_S0001"
         ],
-        "ground_truth_preserved_node_count": 6,
+        "ground_truth_preserved_node_count": 8,
         "dependency_tracking": false,
         "strategy_behavior": "leave_downstream_state_unchanged",
         "metric_note": "Baseline does not perform dependency-aware impact analysis or selective recovery. Strategy-level affected and preserved counts therefore remain zero; the formal ground-truth regions are reported separately."
@@ -63,7 +61,7 @@
     },
     {
       "seed": 1,
-      "instance_id": "scenario2_S0001",
+      "instance_id": "scenario1_S0001",
       "strategy": "memory",
       "metrics": {
         "task_success": true,
@@ -78,7 +76,7 @@
         "affected_node_count": 12,
         "invalidated_node_count": 0,
         "recomputed_node_count": 12,
-        "unnecessary_recomputation": 6,
+        "unnecessary_recomputation": 8,
         "preserved_node_count": 0,
         "preservation_ratio": 0.0
       },
@@ -86,17 +84,17 @@
         "changed_belief": "B1_S0001",
         "recomputed_nodes": [
           "A1_S0001",
-          "A2_S0001",
-          "A3_S0001",
-          "A4_S0001",
+          "A2_U_S0001",
+          "A3_U_S0001",
           "B1_S0001",
-          "B4_S0001",
+          "B2_U_S0001",
+          "B3_U_S0001",
           "C1_S0001",
-          "C4_S0001",
+          "C2_U_S0001",
+          "C3_U_S0001",
           "P1_S0001",
-          "P2_S0001",
-          "P3_S0001",
-          "P4_S0001"
+          "P2_U_S0001",
+          "P3_U_S0001"
         ],
         "preserved_nodes": [],
         "dependency_tracking": false,
@@ -105,7 +103,7 @@
     },
     {
       "seed": 1,
-      "instance_id": "scenario2_S0001",
+      "instance_id": "scenario1_S0001",
       "strategy": "belief_graph",
       "metrics": {
         "task_success": true,
@@ -117,12 +115,12 @@
         "propagation_depth": 3,
         "recovery_steps": 1,
         "tool_calls": 0,
-        "affected_node_count": 6,
+        "affected_node_count": 4,
         "invalidated_node_count": 4,
         "recomputed_node_count": 0,
         "unnecessary_recomputation": 0,
-        "preserved_node_count": 6,
-        "preservation_ratio": 0.5
+        "preserved_node_count": 8,
+        "preservation_ratio": 0.6666666666666666
       },
       "details": {
         "changed_belief": "B1_S0001",
@@ -130,9 +128,7 @@
           "A1_S0001",
           "B1_S0001",
           "C1_S0001",
-          "P1_S0001",
-          "P2_S0001",
-          "P3_S0001"
+          "P1_S0001"
         ],
         "invalidated_nodes": [
           "A1_S0001",
@@ -140,19 +136,17 @@
           "C1_S0001",
           "P1_S0001"
         ],
-        "reevaluation_nodes": [
-          "P2_S0001"
-        ],
-        "uncertain_nodes": [
-          "P3_S0001"
-        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
         "preserved_nodes": [
-          "A2_S0001",
-          "A3_S0001",
-          "A4_S0001",
-          "B4_S0001",
-          "C4_S0001",
-          "P4_S0001"
+          "A2_U_S0001",
+          "A3_U_S0001",
+          "B2_U_S0001",
+          "B3_U_S0001",
+          "C2_U_S0001",
+          "C3_U_S0001",
+          "P2_U_S0001",
+          "P3_U_S0001"
         ],
         "expected_invalidated": [
           "A1_S0001",
@@ -160,31 +154,29 @@
           "C1_S0001",
           "P1_S0001"
         ],
-        "expected_reevaluation": [
-          "P2_S0001"
-        ],
-        "expected_uncertain": [
-          "P3_S0001"
-        ],
+        "expected_reevaluation": [],
+        "expected_uncertain": [],
         "expected_preserved": [
-          "A2_S0001",
-          "A3_S0001",
-          "A4_S0001",
-          "B4_S0001",
-          "C4_S0001",
-          "P4_S0001"
+          "A2_U_S0001",
+          "A3_U_S0001",
+          "B2_U_S0001",
+          "B3_U_S0001",
+          "C2_U_S0001",
+          "C3_U_S0001",
+          "P2_U_S0001",
+          "P3_U_S0001"
         ],
         "direct_graph_execution": true
       }
     },
     {
       "seed": 2,
-      "instance_id": "scenario2_S0002",
+      "instance_id": "scenario1_S0002",
       "strategy": "baseline",
       "metrics": {
         "task_success": false,
-        "stale_actions": 3,
-        "stale_plans": 3,
+        "stale_actions": 1,
+        "stale_plans": 1,
         "invalid_plans": 0,
         "recovery_success": false,
         "unnecessary_invalidation": 0,
@@ -203,29 +195,31 @@
         "stale_nodes": [
           "A1_S0002",
           "C1_S0002",
-          "P1_S0002",
-          "P2_S0002",
-          "P3_S0002"
+          "P1_S0002"
         ],
         "strategy_detected_affected_nodes": [],
         "ground_truth_affected_nodes": [
           "A1_S0002",
           "B1_S0002",
           "C1_S0002",
-          "P1_S0002",
-          "P2_S0002",
-          "P3_S0002"
+          "P1_S0002"
         ],
-        "ground_truth_affected_node_count": 6,
+        "ground_truth_affected_node_count": 4,
         "ground_truth_preserved_nodes": [
-          "A2_S0002",
-          "A3_S0002",
-          "A4_S0002",
-          "B4_S0002",
-          "C4_S0002",
-          "P4_S0002"
+          "A2_U_S0002",
+          "A3_U_S0002",
+          "A4_U_S0002",
+          "B2_U_S0002",
+          "B3_U_S0002",
+          "B4_U_S0002",
+          "C2_U_S0002",
+          "C3_U_S0002",
+          "C4_U_S0002",
+          "P2_U_S0002",
+          "P3_U_S0002",
+          "P4_U_S0002"
         ],
-        "ground_truth_preserved_node_count": 6,
+        "ground_truth_preserved_node_count": 12,
         "dependency_tracking": false,
         "strategy_behavior": "leave_downstream_state_unchanged",
         "metric_note": "Baseline does not perform dependency-aware impact analysis or selective recovery. Strategy-level affected and preserved counts therefore remain zero; the formal ground-truth regions are reported separately."
@@ -233,7 +227,7 @@
     },
     {
       "seed": 2,
-      "instance_id": "scenario2_S0002",
+      "instance_id": "scenario1_S0002",
       "strategy": "memory",
       "metrics": {
         "task_success": true,
@@ -245,10 +239,10 @@
         "propagation_depth": 0,
         "recovery_steps": 2,
         "tool_calls": 3,
-        "affected_node_count": 12,
+        "affected_node_count": 16,
         "invalidated_node_count": 0,
-        "recomputed_node_count": 12,
-        "unnecessary_recomputation": 6,
+        "recomputed_node_count": 16,
+        "unnecessary_recomputation": 12,
         "preserved_node_count": 0,
         "preservation_ratio": 0.0
       },
@@ -256,17 +250,21 @@
         "changed_belief": "B1_S0002",
         "recomputed_nodes": [
           "A1_S0002",
-          "A2_S0002",
-          "A3_S0002",
-          "A4_S0002",
+          "A2_U_S0002",
+          "A3_U_S0002",
+          "A4_U_S0002",
           "B1_S0002",
-          "B4_S0002",
+          "B2_U_S0002",
+          "B3_U_S0002",
+          "B4_U_S0002",
           "C1_S0002",
-          "C4_S0002",
+          "C2_U_S0002",
+          "C3_U_S0002",
+          "C4_U_S0002",
           "P1_S0002",
-          "P2_S0002",
-          "P3_S0002",
-          "P4_S0002"
+          "P2_U_S0002",
+          "P3_U_S0002",
+          "P4_U_S0002"
         ],
         "preserved_nodes": [],
         "dependency_tracking": false,
@@ -275,7 +273,7 @@
     },
     {
       "seed": 2,
-      "instance_id": "scenario2_S0002",
+      "instance_id": "scenario1_S0002",
       "strategy": "belief_graph",
       "metrics": {
         "task_success": true,
@@ -287,12 +285,12 @@
         "propagation_depth": 3,
         "recovery_steps": 1,
         "tool_calls": 0,
-        "affected_node_count": 6,
+        "affected_node_count": 4,
         "invalidated_node_count": 4,
         "recomputed_node_count": 0,
         "unnecessary_recomputation": 0,
-        "preserved_node_count": 6,
-        "preservation_ratio": 0.5
+        "preserved_node_count": 12,
+        "preservation_ratio": 0.75
       },
       "details": {
         "changed_belief": "B1_S0002",
@@ -300,9 +298,7 @@
           "A1_S0002",
           "B1_S0002",
           "C1_S0002",
-          "P1_S0002",
-          "P2_S0002",
-          "P3_S0002"
+          "P1_S0002"
         ],
         "invalidated_nodes": [
           "A1_S0002",
@@ -310,19 +306,21 @@
           "C1_S0002",
           "P1_S0002"
         ],
-        "reevaluation_nodes": [
-          "P2_S0002"
-        ],
-        "uncertain_nodes": [
-          "P3_S0002"
-        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
         "preserved_nodes": [
-          "A2_S0002",
-          "A3_S0002",
-          "A4_S0002",
-          "B4_S0002",
-          "C4_S0002",
-          "P4_S0002"
+          "A2_U_S0002",
+          "A3_U_S0002",
+          "A4_U_S0002",
+          "B2_U_S0002",
+          "B3_U_S0002",
+          "B4_U_S0002",
+          "C2_U_S0002",
+          "C3_U_S0002",
+          "C4_U_S0002",
+          "P2_U_S0002",
+          "P3_U_S0002",
+          "P4_U_S0002"
         ],
         "expected_invalidated": [
           "A1_S0002",
@@ -330,31 +328,33 @@
           "C1_S0002",
           "P1_S0002"
         ],
-        "expected_reevaluation": [
-          "P2_S0002"
-        ],
-        "expected_uncertain": [
-          "P3_S0002"
-        ],
+        "expected_reevaluation": [],
+        "expected_uncertain": [],
         "expected_preserved": [
-          "A2_S0002",
-          "A3_S0002",
-          "A4_S0002",
-          "B4_S0002",
-          "C4_S0002",
-          "P4_S0002"
+          "A2_U_S0002",
+          "A3_U_S0002",
+          "A4_U_S0002",
+          "B2_U_S0002",
+          "B3_U_S0002",
+          "B4_U_S0002",
+          "C2_U_S0002",
+          "C3_U_S0002",
+          "C4_U_S0002",
+          "P2_U_S0002",
+          "P3_U_S0002",
+          "P4_U_S0002"
         ],
         "direct_graph_execution": true
       }
     },
     {
       "seed": 3,
-      "instance_id": "scenario2_S0003",
+      "instance_id": "scenario1_S0003",
       "strategy": "baseline",
       "metrics": {
         "task_success": false,
-        "stale_actions": 3,
-        "stale_plans": 3,
+        "stale_actions": 1,
+        "stale_plans": 1,
         "invalid_plans": 0,
         "recovery_success": false,
         "unnecessary_invalidation": 0,
@@ -373,29 +373,23 @@
         "stale_nodes": [
           "A1_S0003",
           "C1_S0003",
-          "P1_S0003",
-          "P2_S0003",
-          "P3_S0003"
+          "P1_S0003"
         ],
         "strategy_detected_affected_nodes": [],
         "ground_truth_affected_nodes": [
           "A1_S0003",
           "B1_S0003",
           "C1_S0003",
-          "P1_S0003",
-          "P2_S0003",
-          "P3_S0003"
+          "P1_S0003"
         ],
-        "ground_truth_affected_node_count": 6,
+        "ground_truth_affected_node_count": 4,
         "ground_truth_preserved_nodes": [
-          "A2_S0003",
-          "A3_S0003",
-          "A4_S0003",
-          "B4_S0003",
-          "C4_S0003",
-          "P4_S0003"
+          "A2_U_S0003",
+          "B2_U_S0003",
+          "C2_U_S0003",
+          "P2_U_S0003"
         ],
-        "ground_truth_preserved_node_count": 6,
+        "ground_truth_preserved_node_count": 4,
         "dependency_tracking": false,
         "strategy_behavior": "leave_downstream_state_unchanged",
         "metric_note": "Baseline does not perform dependency-aware impact analysis or selective recovery. Strategy-level affected and preserved counts therefore remain zero; the formal ground-truth regions are reported separately."
@@ -403,7 +397,7 @@
     },
     {
       "seed": 3,
-      "instance_id": "scenario2_S0003",
+      "instance_id": "scenario1_S0003",
       "strategy": "memory",
       "metrics": {
         "task_success": true,
@@ -415,10 +409,10 @@
         "propagation_depth": 0,
         "recovery_steps": 2,
         "tool_calls": 3,
-        "affected_node_count": 12,
+        "affected_node_count": 8,
         "invalidated_node_count": 0,
-        "recomputed_node_count": 12,
-        "unnecessary_recomputation": 6,
+        "recomputed_node_count": 8,
+        "unnecessary_recomputation": 4,
         "preserved_node_count": 0,
         "preservation_ratio": 0.0
       },
@@ -426,17 +420,13 @@
         "changed_belief": "B1_S0003",
         "recomputed_nodes": [
           "A1_S0003",
-          "A2_S0003",
-          "A3_S0003",
-          "A4_S0003",
+          "A2_U_S0003",
           "B1_S0003",
-          "B4_S0003",
+          "B2_U_S0003",
           "C1_S0003",
-          "C4_S0003",
+          "C2_U_S0003",
           "P1_S0003",
-          "P2_S0003",
-          "P3_S0003",
-          "P4_S0003"
+          "P2_U_S0003"
         ],
         "preserved_nodes": [],
         "dependency_tracking": false,
@@ -445,7 +435,7 @@
     },
     {
       "seed": 3,
-      "instance_id": "scenario2_S0003",
+      "instance_id": "scenario1_S0003",
       "strategy": "belief_graph",
       "metrics": {
         "task_success": true,
@@ -457,11 +447,11 @@
         "propagation_depth": 3,
         "recovery_steps": 1,
         "tool_calls": 0,
-        "affected_node_count": 6,
+        "affected_node_count": 4,
         "invalidated_node_count": 4,
         "recomputed_node_count": 0,
         "unnecessary_recomputation": 0,
-        "preserved_node_count": 6,
+        "preserved_node_count": 4,
         "preservation_ratio": 0.5
       },
       "details": {
@@ -470,9 +460,7 @@
           "A1_S0003",
           "B1_S0003",
           "C1_S0003",
-          "P1_S0003",
-          "P2_S0003",
-          "P3_S0003"
+          "P1_S0003"
         ],
         "invalidated_nodes": [
           "A1_S0003",
@@ -480,19 +468,13 @@
           "C1_S0003",
           "P1_S0003"
         ],
-        "reevaluation_nodes": [
-          "P2_S0003"
-        ],
-        "uncertain_nodes": [
-          "P3_S0003"
-        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
         "preserved_nodes": [
-          "A2_S0003",
-          "A3_S0003",
-          "A4_S0003",
-          "B4_S0003",
-          "C4_S0003",
-          "P4_S0003"
+          "A2_U_S0003",
+          "B2_U_S0003",
+          "C2_U_S0003",
+          "P2_U_S0003"
         ],
         "expected_invalidated": [
           "A1_S0003",
@@ -500,31 +482,25 @@
           "C1_S0003",
           "P1_S0003"
         ],
-        "expected_reevaluation": [
-          "P2_S0003"
-        ],
-        "expected_uncertain": [
-          "P3_S0003"
-        ],
+        "expected_reevaluation": [],
+        "expected_uncertain": [],
         "expected_preserved": [
-          "A2_S0003",
-          "A3_S0003",
-          "A4_S0003",
-          "B4_S0003",
-          "C4_S0003",
-          "P4_S0003"
+          "A2_U_S0003",
+          "B2_U_S0003",
+          "C2_U_S0003",
+          "P2_U_S0003"
         ],
         "direct_graph_execution": true
       }
     },
     {
       "seed": 4,
-      "instance_id": "scenario2_S0004",
+      "instance_id": "scenario1_S0004",
       "strategy": "baseline",
       "metrics": {
         "task_success": false,
-        "stale_actions": 3,
-        "stale_plans": 3,
+        "stale_actions": 1,
+        "stale_plans": 1,
         "invalid_plans": 0,
         "recovery_success": false,
         "unnecessary_invalidation": 0,
@@ -543,29 +519,27 @@
         "stale_nodes": [
           "A1_S0004",
           "C1_S0004",
-          "P1_S0004",
-          "P2_S0004",
-          "P3_S0004"
+          "P1_S0004"
         ],
         "strategy_detected_affected_nodes": [],
         "ground_truth_affected_nodes": [
           "A1_S0004",
           "B1_S0004",
           "C1_S0004",
-          "P1_S0004",
-          "P2_S0004",
-          "P3_S0004"
+          "P1_S0004"
         ],
-        "ground_truth_affected_node_count": 6,
+        "ground_truth_affected_node_count": 4,
         "ground_truth_preserved_nodes": [
-          "A2_S0004",
-          "A3_S0004",
-          "A4_S0004",
-          "B4_S0004",
-          "C4_S0004",
-          "P4_S0004"
+          "A2_U_S0004",
+          "A3_U_S0004",
+          "B2_U_S0004",
+          "B3_U_S0004",
+          "C2_U_S0004",
+          "C3_U_S0004",
+          "P2_U_S0004",
+          "P3_U_S0004"
         ],
-        "ground_truth_preserved_node_count": 6,
+        "ground_truth_preserved_node_count": 8,
         "dependency_tracking": false,
         "strategy_behavior": "leave_downstream_state_unchanged",
         "metric_note": "Baseline does not perform dependency-aware impact analysis or selective recovery. Strategy-level affected and preserved counts therefore remain zero; the formal ground-truth regions are reported separately."
@@ -573,7 +547,7 @@
     },
     {
       "seed": 4,
-      "instance_id": "scenario2_S0004",
+      "instance_id": "scenario1_S0004",
       "strategy": "memory",
       "metrics": {
         "task_success": true,
@@ -588,7 +562,7 @@
         "affected_node_count": 12,
         "invalidated_node_count": 0,
         "recomputed_node_count": 12,
-        "unnecessary_recomputation": 6,
+        "unnecessary_recomputation": 8,
         "preserved_node_count": 0,
         "preservation_ratio": 0.0
       },
@@ -596,17 +570,17 @@
         "changed_belief": "B1_S0004",
         "recomputed_nodes": [
           "A1_S0004",
-          "A2_S0004",
-          "A3_S0004",
-          "A4_S0004",
+          "A2_U_S0004",
+          "A3_U_S0004",
           "B1_S0004",
-          "B4_S0004",
+          "B2_U_S0004",
+          "B3_U_S0004",
           "C1_S0004",
-          "C4_S0004",
+          "C2_U_S0004",
+          "C3_U_S0004",
           "P1_S0004",
-          "P2_S0004",
-          "P3_S0004",
-          "P4_S0004"
+          "P2_U_S0004",
+          "P3_U_S0004"
         ],
         "preserved_nodes": [],
         "dependency_tracking": false,
@@ -615,7 +589,7 @@
     },
     {
       "seed": 4,
-      "instance_id": "scenario2_S0004",
+      "instance_id": "scenario1_S0004",
       "strategy": "belief_graph",
       "metrics": {
         "task_success": true,
@@ -627,12 +601,12 @@
         "propagation_depth": 3,
         "recovery_steps": 1,
         "tool_calls": 0,
-        "affected_node_count": 6,
+        "affected_node_count": 4,
         "invalidated_node_count": 4,
         "recomputed_node_count": 0,
         "unnecessary_recomputation": 0,
-        "preserved_node_count": 6,
-        "preservation_ratio": 0.5
+        "preserved_node_count": 8,
+        "preservation_ratio": 0.6666666666666666
       },
       "details": {
         "changed_belief": "B1_S0004",
@@ -640,9 +614,7 @@
           "A1_S0004",
           "B1_S0004",
           "C1_S0004",
-          "P1_S0004",
-          "P2_S0004",
-          "P3_S0004"
+          "P1_S0004"
         ],
         "invalidated_nodes": [
           "A1_S0004",
@@ -650,19 +622,17 @@
           "C1_S0004",
           "P1_S0004"
         ],
-        "reevaluation_nodes": [
-          "P2_S0004"
-        ],
-        "uncertain_nodes": [
-          "P3_S0004"
-        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
         "preserved_nodes": [
-          "A2_S0004",
-          "A3_S0004",
-          "A4_S0004",
-          "B4_S0004",
-          "C4_S0004",
-          "P4_S0004"
+          "A2_U_S0004",
+          "A3_U_S0004",
+          "B2_U_S0004",
+          "B3_U_S0004",
+          "C2_U_S0004",
+          "C3_U_S0004",
+          "P2_U_S0004",
+          "P3_U_S0004"
         ],
         "expected_invalidated": [
           "A1_S0004",
@@ -670,31 +640,29 @@
           "C1_S0004",
           "P1_S0004"
         ],
-        "expected_reevaluation": [
-          "P2_S0004"
-        ],
-        "expected_uncertain": [
-          "P3_S0004"
-        ],
+        "expected_reevaluation": [],
+        "expected_uncertain": [],
         "expected_preserved": [
-          "A2_S0004",
-          "A3_S0004",
-          "A4_S0004",
-          "B4_S0004",
-          "C4_S0004",
-          "P4_S0004"
+          "A2_U_S0004",
+          "A3_U_S0004",
+          "B2_U_S0004",
+          "B3_U_S0004",
+          "C2_U_S0004",
+          "C3_U_S0004",
+          "P2_U_S0004",
+          "P3_U_S0004"
         ],
         "direct_graph_execution": true
       }
     },
     {
       "seed": 5,
-      "instance_id": "scenario2_S0005",
+      "instance_id": "scenario1_S0005",
       "strategy": "baseline",
       "metrics": {
         "task_success": false,
-        "stale_actions": 3,
-        "stale_plans": 3,
+        "stale_actions": 1,
+        "stale_plans": 1,
         "invalid_plans": 0,
         "recovery_success": false,
         "unnecessary_invalidation": 0,
@@ -713,29 +681,31 @@
         "stale_nodes": [
           "A1_S0005",
           "C1_S0005",
-          "P1_S0005",
-          "P2_S0005",
-          "P3_S0005"
+          "P1_S0005"
         ],
         "strategy_detected_affected_nodes": [],
         "ground_truth_affected_nodes": [
           "A1_S0005",
           "B1_S0005",
           "C1_S0005",
-          "P1_S0005",
-          "P2_S0005",
-          "P3_S0005"
+          "P1_S0005"
         ],
-        "ground_truth_affected_node_count": 6,
+        "ground_truth_affected_node_count": 4,
         "ground_truth_preserved_nodes": [
-          "A2_S0005",
-          "A3_S0005",
-          "A4_S0005",
-          "B4_S0005",
-          "C4_S0005",
-          "P4_S0005"
+          "A2_U_S0005",
+          "A3_U_S0005",
+          "A4_U_S0005",
+          "B2_U_S0005",
+          "B3_U_S0005",
+          "B4_U_S0005",
+          "C2_U_S0005",
+          "C3_U_S0005",
+          "C4_U_S0005",
+          "P2_U_S0005",
+          "P3_U_S0005",
+          "P4_U_S0005"
         ],
-        "ground_truth_preserved_node_count": 6,
+        "ground_truth_preserved_node_count": 12,
         "dependency_tracking": false,
         "strategy_behavior": "leave_downstream_state_unchanged",
         "metric_note": "Baseline does not perform dependency-aware impact analysis or selective recovery. Strategy-level affected and preserved counts therefore remain zero; the formal ground-truth regions are reported separately."
@@ -743,7 +713,7 @@
     },
     {
       "seed": 5,
-      "instance_id": "scenario2_S0005",
+      "instance_id": "scenario1_S0005",
       "strategy": "memory",
       "metrics": {
         "task_success": true,
@@ -755,10 +725,10 @@
         "propagation_depth": 0,
         "recovery_steps": 2,
         "tool_calls": 3,
-        "affected_node_count": 12,
+        "affected_node_count": 16,
         "invalidated_node_count": 0,
-        "recomputed_node_count": 12,
-        "unnecessary_recomputation": 6,
+        "recomputed_node_count": 16,
+        "unnecessary_recomputation": 12,
         "preserved_node_count": 0,
         "preservation_ratio": 0.0
       },
@@ -766,17 +736,21 @@
         "changed_belief": "B1_S0005",
         "recomputed_nodes": [
           "A1_S0005",
-          "A2_S0005",
-          "A3_S0005",
-          "A4_S0005",
+          "A2_U_S0005",
+          "A3_U_S0005",
+          "A4_U_S0005",
           "B1_S0005",
-          "B4_S0005",
+          "B2_U_S0005",
+          "B3_U_S0005",
+          "B4_U_S0005",
           "C1_S0005",
-          "C4_S0005",
+          "C2_U_S0005",
+          "C3_U_S0005",
+          "C4_U_S0005",
           "P1_S0005",
-          "P2_S0005",
-          "P3_S0005",
-          "P4_S0005"
+          "P2_U_S0005",
+          "P3_U_S0005",
+          "P4_U_S0005"
         ],
         "preserved_nodes": [],
         "dependency_tracking": false,
@@ -785,7 +759,7 @@
     },
     {
       "seed": 5,
-      "instance_id": "scenario2_S0005",
+      "instance_id": "scenario1_S0005",
       "strategy": "belief_graph",
       "metrics": {
         "task_success": true,
@@ -797,12 +771,12 @@
         "propagation_depth": 3,
         "recovery_steps": 1,
         "tool_calls": 0,
-        "affected_node_count": 6,
+        "affected_node_count": 4,
         "invalidated_node_count": 4,
         "recomputed_node_count": 0,
         "unnecessary_recomputation": 0,
-        "preserved_node_count": 6,
-        "preservation_ratio": 0.5
+        "preserved_node_count": 12,
+        "preservation_ratio": 0.75
       },
       "details": {
         "changed_belief": "B1_S0005",
@@ -810,9 +784,7 @@
           "A1_S0005",
           "B1_S0005",
           "C1_S0005",
-          "P1_S0005",
-          "P2_S0005",
-          "P3_S0005"
+          "P1_S0005"
         ],
         "invalidated_nodes": [
           "A1_S0005",
@@ -820,19 +792,21 @@
           "C1_S0005",
           "P1_S0005"
         ],
-        "reevaluation_nodes": [
-          "P2_S0005"
-        ],
-        "uncertain_nodes": [
-          "P3_S0005"
-        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
         "preserved_nodes": [
-          "A2_S0005",
-          "A3_S0005",
-          "A4_S0005",
-          "B4_S0005",
-          "C4_S0005",
-          "P4_S0005"
+          "A2_U_S0005",
+          "A3_U_S0005",
+          "A4_U_S0005",
+          "B2_U_S0005",
+          "B3_U_S0005",
+          "B4_U_S0005",
+          "C2_U_S0005",
+          "C3_U_S0005",
+          "C4_U_S0005",
+          "P2_U_S0005",
+          "P3_U_S0005",
+          "P4_U_S0005"
         ],
         "expected_invalidated": [
           "A1_S0005",
@@ -840,19 +814,21 @@
           "C1_S0005",
           "P1_S0005"
         ],
-        "expected_reevaluation": [
-          "P2_S0005"
-        ],
-        "expected_uncertain": [
-          "P3_S0005"
-        ],
+        "expected_reevaluation": [],
+        "expected_uncertain": [],
         "expected_preserved": [
-          "A2_S0005",
-          "A3_S0005",
-          "A4_S0005",
-          "B4_S0005",
-          "C4_S0005",
-          "P4_S0005"
+          "A2_U_S0005",
+          "A3_U_S0005",
+          "A4_U_S0005",
+          "B2_U_S0005",
+          "B3_U_S0005",
+          "B4_U_S0005",
+          "C2_U_S0005",
+          "C3_U_S0005",
+          "C4_U_S0005",
+          "P2_U_S0005",
+          "P3_U_S0005",
+          "P4_U_S0005"
         ],
         "direct_graph_execution": true
       }
@@ -910,12 +886,12 @@
         },
         {
           "metric": "stale_actions",
-          "mean": 3.0,
+          "mean": 1.0,
           "population_std": 0.0
         },
         {
           "metric": "stale_plans",
-          "mean": 3.0,
+          "mean": 1.0,
           "population_std": 0.0
         },
         {
@@ -946,8 +922,8 @@
       "metrics": [
         {
           "metric": "affected_node_count",
-          "mean": 12.0,
-          "population_std": 0.0
+          "mean": 12.8,
+          "population_std": 2.9933259094191533
         },
         {
           "metric": "invalid_plans",
@@ -976,8 +952,8 @@
         },
         {
           "metric": "recomputed_node_count",
-          "mean": 12.0,
-          "population_std": 0.0
+          "mean": 12.8,
+          "population_std": 2.9933259094191533
         },
         {
           "metric": "recovery_steps",
@@ -1016,8 +992,8 @@
         },
         {
           "metric": "unnecessary_recomputation",
-          "mean": 6.0,
-          "population_std": 0.0
+          "mean": 8.8,
+          "population_std": 2.9933259094191533
         }
       ]
     },
@@ -1027,7 +1003,7 @@
       "metrics": [
         {
           "metric": "affected_node_count",
-          "mean": 6.0,
+          "mean": 4.0,
           "population_std": 0.0
         },
         {
@@ -1042,13 +1018,13 @@
         },
         {
           "metric": "preservation_ratio",
-          "mean": 0.5,
-          "population_std": 0.0
+          "mean": 0.6666666666666666,
+          "population_std": 0.09128709291752768
         },
         {
           "metric": "preserved_node_count",
-          "mean": 6.0,
-          "population_std": 0.0
+          "mean": 8.8,
+          "population_std": 2.9933259094191533
         },
         {
           "metric": "propagation_depth",

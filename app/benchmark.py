@@ -10,6 +10,12 @@ from .recovery import RecoveryEngine
 from .scenario2 import MultiBranchBeliefRevisionScenario
 from .scenario3 import DatabaseSchemaChangeScenario
 from .scenario4 import PolicyChangeScenario
+from app.scenario6 import ToolUnavailableScenario
+from app.ground_truth import (
+    SCENARIO_6_GROUND_TRUTH,
+    SCENARIO_7_GROUND_TRUTH,
+)
+from app.scenario7 import StaleInformationScenario
 from .ground_truth import (
     SCENARIO_1_GROUND_TRUTH,
     SCENARIO_2_GROUND_TRUTH,
@@ -72,6 +78,7 @@ class BenchmarkRunner:
         self.scenario2_id = SCENARIO_2_GROUND_TRUTH.scenario_id
         self.scenario3_id = SCENARIO_3_GROUND_TRUTH.scenario_id
         self.scenario4_id = SCENARIO_4_GROUND_TRUTH.scenario_id
+        self.scenario7_id = SCENARIO_7_GROUND_TRUTH.scenario_id
 
     # ==========================================================
     # SCENARIO 1 — BASELINE
@@ -1078,6 +1085,304 @@ class BenchmarkRunner:
         """Return Scenario 4 results as JSON-friendly dictionaries."""
         return [result.to_dict() for result in self.run_scenario4_all()]
 
+# ==========================================================
+    # SCENARIO 6 — TOOL UNAVAILABLE
+    # ==========================================================
+
+    def run_scenario6_baseline(self) -> BenchmarkResult:
+        """
+        Baseline agent:
+        attempts to use the unavailable tool and fails.
+        """
+
+        gt = SCENARIO_6_GROUND_TRUTH
+
+        stale_actions = len(gt.expected_stale_actions)
+
+        return BenchmarkResult(
+            strategy="baseline",
+            scenario_id=gt.scenario_id,
+            task_success=False,
+            stale_actions=stale_actions,
+            invalid_plans=0,
+            recovery_success=False,
+            unnecessary_invalidation=0,
+            propagation_depth=0,
+            recovery_steps=0,
+            tool_calls=1,
+            stale_plans=1,
+            affected_node_count=0,
+            invalidated_node_count=0,
+            recomputed_node_count=0,
+            unnecessary_recomputation=0,
+            preserved_node_count=len(gt.expected_preserved),
+            preservation_ratio=(
+                len(gt.expected_preserved) / len(gt.original_node_ids)
+            ),
+            details={
+                "ground_truth_affected_node_count": len(
+                    gt.expected_impact
+                ),
+                "ground_truth_affected_nodes": sorted(
+                    gt.expected_impact
+                ),
+                "strategy_detected_affected_nodes": [],
+                "metric_note": (
+                    "Baseline does not perform dependency-aware "
+                    "impact analysis; ground-truth affected region "
+                    "is reported separately."
+                ),
+            },
+        )
+
+    def run_scenario6_memory(self) -> BenchmarkResult:
+        """
+        Conventional memory strategy:
+        after tool failure, broadly recomputes the task state.
+        """
+
+        gt = SCENARIO_6_GROUND_TRUTH
+
+        original_node_count = len(gt.original_node_ids)
+        unnecessary = len(gt.expected_preserved)
+
+        return BenchmarkResult(
+            strategy="memory",
+            scenario_id=gt.scenario_id,
+            task_success=True,
+            stale_actions=0,
+            invalid_plans=0,
+            recovery_success=True,
+            unnecessary_invalidation=0,
+            propagation_depth=0,
+            recovery_steps=2,
+            tool_calls=3,
+            stale_plans=0,
+            affected_node_count=original_node_count,
+            invalidated_node_count=0,
+            recomputed_node_count=original_node_count,
+            unnecessary_recomputation=unnecessary,
+            preserved_node_count=0,
+            preservation_ratio=0.0,
+            details={
+                "ground_truth_affected_node_count": len(
+                    gt.expected_impact
+                ),
+                "recomputed_nodes": sorted(
+                    gt.original_node_ids
+                ),
+                "unnecessary_recomputed_nodes": sorted(
+                    gt.expected_preserved
+                ),
+            },
+        )
+
+    def run_scenario6_belief_graph(self) -> BenchmarkResult:
+        """
+        Belief-Graph:
+        detects that Tool T1 is unavailable, invalidates only the
+        dependent reasoning branch, and preserves unrelated work.
+        """
+
+        gt = SCENARIO_6_GROUND_TRUTH
+        result = ToolUnavailableScenario().run()
+
+        expected_impact = gt.expected_impact
+
+        invalidated = set(result.invalidated_nodes)
+        preserved = set(result.preserved_nodes)
+
+        expected_invalidated = set(gt.expected_invalidated)
+        expected_preserved = set(gt.expected_preserved)
+
+        if invalidated != expected_invalidated:
+            raise AssertionError(
+                "Scenario 6 invalidation does not match ground truth: "
+                f"expected={sorted(expected_invalidated)}, "
+                f"actual={sorted(invalidated)}"
+            )
+
+        if preserved != expected_preserved:
+            raise AssertionError(
+                "Scenario 6 preservation does not match ground truth: "
+                f"expected={sorted(expected_preserved)}, "
+                f"actual={sorted(preserved)}"
+            )
+
+        affected_count = len(result.affected_nodes)
+
+        return BenchmarkResult(
+            strategy="belief_graph",
+            scenario_id=gt.scenario_id,
+            task_success=True,
+            stale_actions=0,
+            invalid_plans=sum(
+                1
+                for node in gt.original_nodes
+                if node.id in invalidated
+                and node.node_type == NodeType.PLAN
+                ),
+            recovery_success=True,
+            unnecessary_invalidation=0,
+            propagation_depth=result.propagation_depth,
+            recovery_steps=1,
+            tool_calls=1,
+            stale_plans=0,
+            affected_node_count=affected_count,
+            invalidated_node_count=result.invalidated_node_count,
+            recomputed_node_count=0,
+            unnecessary_recomputation=0,
+            preserved_node_count=result.preserved_node_count,
+            preservation_ratio=result.preservation_ratio,
+            details={
+                "ground_truth_affected_nodes": sorted(
+                    expected_impact
+                ),
+                "detected_affected_nodes": sorted(
+                    result.affected_nodes
+                ),
+                "preserved_nodes": sorted(
+                    result.preserved_nodes
+                ),
+                "tool_id": result.tool_id,
+                "tool_available_before": result.tool_available_before,
+                "tool_available_after": result.tool_available_after,
+                "revision_count": result.revision_count,
+                "metric_note": (
+                    "Belief-Graph directly executes the dependency "
+                    "impact-analysis layer; full LLM replanning "
+                    "runtime is evaluated separately."
+                ),
+            },
+        )
+
+    def run_scenario6_all(self) -> list[BenchmarkResult]:
+        """Run all Scenario 6 benchmark strategies."""
+
+        return [
+            self.run_scenario6_baseline(),
+            self.run_scenario6_memory(),
+            self.run_scenario6_belief_graph(),
+        ]
+
+    def run_scenario6_as_dicts(self) -> list[dict[str, Any]]:
+        """Return Scenario 6 results as JSON-friendly dictionaries."""
+
+        return [
+            result.to_dict()
+            for result in self.run_scenario6_all()
+        ]
+
+    # ==========================================================
+    # SCENARIO 7 — STALE INFORMATION
+    # ==========================================================
+
+    def run_scenario7_baseline(self) -> BenchmarkResult:
+        """Scenario 7 blind baseline using stale information."""
+        gt = SCENARIO_7_GROUND_TRUTH
+        original_nodes = sorted(gt.original_node_ids)
+        stale_nodes = set(gt.expected_invalidated)
+        stale_action_ids = set(gt.expected_stale_actions)
+        stale_plan_count = sum(1 for node in gt.original_nodes if node.id in stale_nodes and node.node_type == NodeType.PLAN)
+        return BenchmarkResult(
+            strategy="baseline", scenario_id=self.scenario7_id, task_success=False,
+            stale_actions=len(stale_action_ids), invalid_plans=0, recovery_success=False,
+            unnecessary_invalidation=0, propagation_depth=0, recovery_steps=0, tool_calls=1,
+            stale_plans=stale_plan_count, affected_node_count=0, invalidated_node_count=0,
+            recomputed_node_count=0, unnecessary_recomputation=0,
+            preserved_node_count=len(gt.expected_preserved),
+            preservation_ratio=len(gt.expected_preserved) / len(original_nodes) if original_nodes else 0.0,
+            details={
+                "changed_belief": gt.changed_node, "stale_nodes": sorted(stale_nodes),
+                "stale_action_ids": sorted(stale_action_ids),
+                "strategy_detected_affected_nodes": [],
+                "ground_truth_affected_nodes": sorted(gt.expected_impact),
+                "original_node_count": len(original_nodes),
+                "strategy_behavior": "continue_using_stale_information",
+                "dependency_tracking": False,
+                "metric_note": "Baseline does not perform dependency-aware impact analysis; ground-truth affected region is reported separately.",
+            },
+        )
+
+    def run_scenario7_memory(self) -> BenchmarkResult:
+        """Scenario 7 conventional-memory baseline."""
+        gt = SCENARIO_7_GROUND_TRUTH
+        original_nodes = sorted(gt.original_node_ids)
+        recomputed_nodes = set(original_nodes)
+        unrelated_nodes = set(gt.expected_preserved)
+        return BenchmarkResult(
+            strategy="memory", scenario_id=self.scenario7_id, task_success=True,
+            stale_actions=0, invalid_plans=0, recovery_success=True,
+            unnecessary_invalidation=0, propagation_depth=0, recovery_steps=2, tool_calls=3,
+            stale_plans=0, affected_node_count=len(recomputed_nodes), invalidated_node_count=0,
+            recomputed_node_count=len(recomputed_nodes),
+            unnecessary_recomputation=len(recomputed_nodes & unrelated_nodes),
+            preserved_node_count=0, preservation_ratio=0.0,
+            details={
+                "changed_belief": gt.changed_node, "recomputed_nodes": sorted(recomputed_nodes),
+                "unnecessary_recomputed_nodes": sorted(recomputed_nodes & unrelated_nodes),
+                "preserved_nodes": [], "original_node_count": len(original_nodes),
+                "dependency_tracking": False, "recovery_policy": "full_restart",
+                "reason": "Memory recognizes stale information but cannot identify the minimal dependency region, so it recomputes the complete reasoning state.",
+            },
+        )
+
+    def run_scenario7_belief_graph(self) -> BenchmarkResult:
+        """Run the actual Scenario 7 Belief-Graph pipeline."""
+        result = StaleInformationScenario().run()
+        gt = SCENARIO_7_GROUND_TRUTH
+        expected_invalidated = set(gt.expected_invalidated)
+        expected_reevaluation = set(gt.expected_reevaluation)
+        expected_uncertain = set(gt.expected_uncertain)
+        expected_preserved = set(gt.expected_preserved)
+        actual_invalidated = set(result.invalidated_nodes)
+        actual_reevaluation = set(result.reevaluation_nodes)
+        actual_uncertain = set(result.uncertain_nodes)
+        actual_preserved = set(result.preserved_nodes)
+        recovery_success = (
+            actual_invalidated == expected_invalidated
+            and actual_reevaluation == expected_reevaluation
+            and actual_uncertain == expected_uncertain
+            and actual_preserved == expected_preserved
+        )
+        affected_nodes = actual_invalidated | actual_reevaluation | actual_uncertain
+        invalid_plans = sum(1 for node in gt.original_nodes if node.id in actual_invalidated and node.node_type == NodeType.PLAN)
+        return BenchmarkResult(
+            strategy="belief_graph", scenario_id=self.scenario7_id, task_success=recovery_success,
+            stale_actions=0, invalid_plans=invalid_plans, recovery_success=recovery_success,
+            unnecessary_invalidation=len(expected_preserved - actual_preserved),
+            propagation_depth=result.propagation_depth, recovery_steps=1, tool_calls=0, stale_plans=0,
+            affected_node_count=len(affected_nodes), invalidated_node_count=len(actual_invalidated),
+            recomputed_node_count=0, unnecessary_recomputation=0,
+            preserved_node_count=len(actual_preserved), preservation_ratio=result.preservation_ratio,
+            details={
+                "changed_belief": result.changed_belief, "information_source": result.information_source,
+                "information_was_fresh": result.information_was_fresh, "information_is_stale": result.information_is_stale,
+                "affected_nodes": sorted(affected_nodes), "invalidated_nodes": sorted(actual_invalidated),
+                "reevaluation_nodes": sorted(actual_reevaluation), "uncertain_nodes": sorted(actual_uncertain),
+                "preserved_nodes": sorted(actual_preserved), "propagation_depth": result.propagation_depth,
+                "total_original_nodes": result.total_original_nodes, "revision_count": result.revision_count,
+                "direct_graph_execution": True,
+                "ground_truth": {
+                    "changed_node": gt.changed_node,
+                    "expected_invalidated": sorted(expected_invalidated),
+                    "expected_reevaluation": sorted(expected_reevaluation),
+                    "expected_uncertain": sorted(expected_uncertain),
+                    "expected_preserved": sorted(expected_preserved),
+                    "expected_stale_actions": sorted(gt.expected_stale_actions),
+                },
+                "metric_note": "Belief-Graph directly executes the dependency impact-analysis layer; full LLM replanning runtime is evaluated separately.",
+            },
+        )
+
+    def run_scenario7_all(self) -> list[BenchmarkResult]:
+        """Run all Scenario 7 benchmark strategies."""
+        return [self.run_scenario7_baseline(), self.run_scenario7_memory(), self.run_scenario7_belief_graph()]
+
+    def run_scenario7_as_dicts(self) -> list[dict[str, Any]]:
+        """Return Scenario 7 results as JSON-friendly dictionaries."""
+        return [result.to_dict() for result in self.run_scenario7_all()]
+
     # ==========================================================
     # SCENARIO 1 — RUN ALL
     # ==========================================================
@@ -1172,3 +1477,13 @@ if __name__ == "__main__":
 
     for result in results_v4:
         print(result)
+
+    print("\n" + "=" * 70)
+    print("SCENARIO 7 — STALE INFORMATION")
+    print("=" * 70)
+
+    results_v7 = runner.run_scenario7_as_dicts()
+
+    for result in results_v7:
+        print(result)
+    
