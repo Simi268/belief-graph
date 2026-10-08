@@ -233,3 +233,5 @@ class BeliefGraphSDK:
         Normal users should prefer the SDK methods above.
         """
         return self.runtime.graph
+
+    
