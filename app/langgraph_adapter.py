@@ -601,6 +601,122 @@ class LangGraphAdapter:
 
         return wrapper
 
+    def execute_api_action_with_recovery(
+        self,
+        environment: Any,
+        belief_id: str,
+        action_id: str,
+        evidence_id: str,
+        new_belief_id: str,
+        new_action_id: str,
+    ) -> dict[str, Any]:
+        """
+        Execute an API action and recover automatically when the
+        environment reports a supported API-version mismatch.
+
+        The existing AgentRuntime, RecoveryEngine, and Replanner
+        remain responsible for execution, revision, and replanning.
+        """
+
+        from .recovery import RecoveryEngine
+
+        runtime = self.belief_graph.runtime
+
+        # 1. Execute the original action.
+        action_result = runtime.execute_api_action(
+            environment=environment,
+            belief_id=belief_id,
+            action_id=action_id,
+        )
+
+        environment_result = action_result.get(
+            "environment_result"
+        )
+
+        # 2. Handle failures that do not contain environment evidence.
+        # For example, an already-invalid belief cannot be treated as
+        # an API-version mismatch.
+        if environment_result is None:
+            return {
+                "status": "action_failed",
+                "action_result": action_result,
+                "recovery": None,
+                "retry_result": None,
+            }
+
+        # 3. A successful action requires no recovery.
+        if environment_result.get("success") is True:
+            return {
+                "status": "success",
+                "action_result": action_result,
+                "recovery": None,
+                "retry_result": None,
+            }
+
+        # 4. Only recover automatically when the environment provides
+        # the fields required by the existing evidence-creation logic.
+        if (
+            "expected" not in environment_result
+            or "received" not in environment_result
+        ):
+            return {
+                "status": "unsupported_failure",
+                "action_result": action_result,
+                "recovery": None,
+                "retry_result": None,
+            }
+
+        # 5. Use the existing recovery pipeline.
+        recovery_result = RecoveryEngine(
+            runtime
+        ).recover_from_action_failure(
+            action_result=action_result,
+            evidence_id=evidence_id,
+            new_belief_id=new_belief_id,
+            new_action_id=new_action_id,
+        )
+
+        new_action = recovery_result.get("new_action")
+
+        # 6. Do not retry if replanning did not produce a replacement.
+        if (
+            recovery_result.get("status") != "recovered"
+            or new_action is None
+        ):
+            return {
+                "status": "recovery_failed",
+                "action_result": action_result,
+                "recovery": recovery_result,
+                "retry_result": None,
+            }
+
+        # 7. Execute the replacement action exactly once.
+        retry_result = runtime.execute_api_action(
+            environment=environment,
+            belief_id=new_belief_id,
+            action_id=new_action.id,
+        )
+
+        retry_environment_result = retry_result.get(
+            "environment_result"
+        )
+
+        retry_succeeded = (
+            retry_environment_result is not None
+            and retry_environment_result.get("success") is True
+        )
+
+        return {
+            "status": (
+                "recovered"
+                if retry_succeeded
+                else "retry_failed"
+            ),
+            "action_result": action_result,
+            "recovery": recovery_result,
+            "retry_result": retry_result,
+        }
+
     # ==========================================================
     # IMPACT ANALYSIS
     # ==========================================================
@@ -735,3 +851,6 @@ class LangGraphAdapter:
         """
 
         return self.belief_graph.graph
+
+
+    
