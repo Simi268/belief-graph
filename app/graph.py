@@ -642,7 +642,8 @@ class BeliefGraph:
         self,
         changed_nodes: list[str],
         initial_status: NodeStatus = NodeStatus.INVALID,
-        max_depth: int | None = None
+        max_depth: int | None = None,
+        metrics: dict[str, int] | None = None,
     ):
         """
         Analyze the combined impact of multiple changed nodes.
@@ -699,6 +700,11 @@ class BeliefGraph:
                 causes
             ) = queue.pop(0)
 
+            if metrics is not None:
+                metrics["queue_entries_processed"] = (
+                    metrics.get("queue_entries_processed", 0) + 1
+                )
+
             if (
                 max_depth is not None
                 and depth >= max_depth
@@ -723,6 +729,11 @@ class BeliefGraph:
             for dependent_id in self.graph.successors(
                 current_id
             ):
+                if metrics is not None:
+                    metrics["dependency_edges_examined"] = (
+                        metrics.get("dependency_edges_examined", 0) + 1
+                    )
+
                 dependency_type = self.get_dependency_type(
                     current_id,
                     dependent_id
@@ -732,6 +743,10 @@ class BeliefGraph:
                     current_status,
                     dependency_type
                 )
+                if metrics is not None:
+                    metrics["impact_classifications_computed"] = (
+                        metrics.get("impact_classifications_computed", 0) + 1
+                    )
 
                 target_depth = depth + 1
 
