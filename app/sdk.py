@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Any
+from uuid import uuid4
 
 from .agent import AgentRuntime
 from .models import (
@@ -29,6 +30,11 @@ class BeliefGraphSDK:
 
     def __init__(self, runtime: AgentRuntime | None = None):
         self.runtime = runtime or AgentRuntime()
+
+    def new_run(self):
+        """Create a new, isolated execution session."""
+        from .runs import RunSession
+        return RunSession()
 
     # ---------------------------------------------------------
     # BELIEFS

@@ -245,3 +245,120 @@ def test_langgraph_agent_and_belief_graph_end_to_end():
     assert impact["C1"]["affected_by"] == ["B1"]
     assert impact["P1"]["affected_by"] == ["B1"]
     assert impact["A1"]["affected_by"] == ["B1"]
+
+def test_end_to_end_langgraph_runs_are_isolated():
+    from app.runs import RunSession
+
+    run_a = RunSession()
+    run_b = RunSession()
+
+    adapter_a = run_a.langgraph_adapter()
+    adapter_b = run_b.langgraph_adapter()
+
+    class RunState(TypedDict):
+        result: str
+        last_producer: str | None
+
+    def retrieve_v1(state: RunState):
+        return {
+            "result": "Run A retrieved v1 data",
+            "last_producer": "retrieve",
+        }
+
+    def retrieve_v2(state: RunState):
+        return {
+            "result": "Run B retrieved v2 data",
+            "last_producer": "retrieve",
+        }
+
+    def reason(state: RunState):
+        return {
+            "result": state["result"] + " -> reasoned",
+            "last_producer": "reason",
+        }
+
+    def dependency_from_previous_node(state: RunState):
+        producer = state["last_producer"]
+        return [producer] if producer else []
+
+    wrapped_reason_a = adapter_a.wrap_node(
+        langgraph_node="reason",
+        fn=reason,
+        dependency_resolver=dependency_from_previous_node,
+        dependency_type=DependencyType.REQUIRES,
+    )
+
+    wrapped_reason_b = adapter_b.wrap_node(
+        langgraph_node="reason",
+        fn=reason,
+        dependency_resolver=dependency_from_previous_node,
+        dependency_type=DependencyType.REQUIRES,
+    )
+
+    builder_a = StateGraph(RunState)
+    builder_a.add_node("retrieve", retrieve_v1)
+    builder_a.add_node("reason", wrapped_reason_a)
+    builder_a.add_edge(START, "retrieve")
+    builder_a.add_edge("retrieve", "reason")
+    builder_a.add_edge("reason", END)
+    graph_a = builder_a.compile()
+
+    builder_b = StateGraph(RunState)
+    builder_b.add_node("retrieve", retrieve_v2)
+    builder_b.add_node("reason", wrapped_reason_b)
+    builder_b.add_edge(START, "retrieve")
+    builder_b.add_edge("retrieve", "reason")
+    builder_b.add_edge("reason", END)
+    graph_b = builder_b.compile()
+
+    result_a = graph_a.invoke(
+        {"result": "", "last_producer": None}
+    )
+    result_b = graph_b.invoke(
+        {"result": "", "last_producer": None}
+    )
+
+    assert result_a["result"] == (
+        "Run A retrieved v1 data -> reasoned"
+    )
+    assert result_b["result"] == (
+        "Run B retrieved v2 data -> reasoned"
+    )
+
+    # Each execution records its own dependency.
+    assert adapter_a.graph.get_dependency_type(
+        "lg::retrieve",
+        "lg::reason",
+    ) == DependencyType.REQUIRES
+
+    assert adapter_b.graph.get_dependency_type(
+        "lg::retrieve",
+        "lg::reason",
+    ) == DependencyType.REQUIRES
+
+    # The graphs must be independent objects.
+    assert adapter_a.graph is not adapter_b.graph
+
+         # Each run has its own independently registered node.
+    node_a = adapter_a.graph.get_node("lg::retrieve")
+    node_b = adapter_b.graph.get_node("lg::retrieve")
+
+    assert node_a is not node_b
+    assert node_a.id == node_b.id == "lg::retrieve"
+
+# The actual execution outputs remain specific to each run.
+    assert result_a["result"] == (
+        "Run A retrieved v1 data -> reasoned"
+        )
+    assert result_b["result"] == (
+        "Run B retrieved v2 data -> reasoned"
+        )
+
+# Running either workflow must not overwrite the other run's graph.
+    assert adapter_a.graph is not adapter_b.graph
+    assert adapter_a.graph.get_dependency_type(
+        "lg::retrieve", "lg::reason"
+        ) == DependencyType.REQUIRES
+    assert adapter_b.graph.get_dependency_type(
+        "lg::retrieve", "lg::reason"
+        ) == DependencyType.REQUIRES

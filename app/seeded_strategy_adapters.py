@@ -5,7 +5,7 @@ from .benchmark_instances import BenchmarkInstance
 from .graph import BeliefGraph
 from .models import BeliefNode, NodeStatus, NodeType
 from .multiseed_benchmark import SeedResult
-
+from app.stale_action_detector import detect_stale_actions
 
 def _node_types(instance: BenchmarkInstance) -> dict[str, NodeType]:
     """Return node-type metadata without relying on ID naming conventions."""
@@ -288,6 +288,27 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
 
     graph.apply_state_impact(impact)
 
+    # Detect stale actions from the actual runtime graph.
+    # The detector uses prerequisite-plan statuses, not benchmark expectations.
+    detected_stale_actions = detect_stale_actions(graph)
+    detected_stale_actions &= set(instance.node_ids)
+
+    node_types = _node_types(instance)
+
+    # A plan is stale when its runtime status requires invalidation,
+    # reevaluation, or uncertainty handling.
+    stale_plan_statuses = {
+        NodeStatus.INVALID,
+        NodeStatus.REQUIRES_REEVALUATION,
+        NodeStatus.UNCERTAIN,
+    }
+    stale_plans = {
+        node_id
+        for node_id in instance.node_ids
+        if node_types[node_id] == NodeType.PLAN
+        and graph.get_node(node_id).status in stale_plan_statuses
+    }
+
     actual_invalidated = {
         instance.changed_belief,
         *(
@@ -361,8 +382,8 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
 
     metrics = {
         "task_success": expected_success,
-        "stale_actions": 0,
-        "stale_plans": 0,
+        "stale_actions": len(detected_stale_actions),
+        "stale_plans": len(stale_plans),
         "invalid_plans": invalidated_plans,
         "recovery_success": expected_success,
         "unnecessary_invalidation": len(
@@ -393,6 +414,8 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
         "reevaluation_nodes": sorted(actual_reevaluation),
         "uncertain_nodes": sorted(actual_uncertain),
         "preserved_nodes": sorted(actual_preserved),
+        "stale_actions": sorted(detected_stale_actions),
+        "stale_plans": sorted(stale_plans),
         "expected_invalidated": sorted(
             instance.expected_invalidated
         ),
@@ -416,6 +439,7 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
         metrics=metrics,
         details=details,
     )
+
 
 
 def seeded_strategy_evaluators():

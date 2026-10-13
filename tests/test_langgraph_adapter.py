@@ -239,3 +239,88 @@ def test_runtime_wrapper_captures_dependency_from_state():
 
     assert "C1" in impact
     assert impact["C1"]["affected_by"] == ["B1"]
+
+    def test_langgraph_adapters_isolate_dependencies_between_runs():
+        from app.runs import RunSession
+
+        run_a = RunSession()
+        run_b = RunSession()
+
+        adapter_a = LangGraphAdapter(belief_graph=run_a.sdk)
+        adapter_b = LangGraphAdapter(belief_graph=run_b.sdk)
+        # Register identical node IDs in separate runs.
+        for adapter in (adapter_a, adapter_b):
+            adapter.register_node(
+                langgraph_node="retrieve",
+                belief_node_id="B1",
+                node_type=NodeType.BELIEF,
+                content="Retrieved information",
+                )
+            adapter.register_node(
+                langgraph_node="reason",
+                belief_node_id="C1",
+                node_type=NodeType.CONCLUSION,
+                content="Reasoning based on retrieved information",
+                )
+
+    # Add a dependency only to Run A.
+            adapter_a.add_dependency(
+                "retrieve",
+                "reason",
+                DependencyType.REQUIRES,
+                )
+
+    # Run A contains the dependency.
+            assert (
+                adapter_a.graph.get_dependency_type("B1", "C1")
+                == DependencyType.REQUIRES
+                )
+
+    # Run B must not inherit Run A's dependency.
+            assert (
+                adapter_b.graph.get_dependency_type("B1", "C1")
+                is None
+                )
+
+
+def test_langgraph_adapters_isolate_dependencies_between_runs():
+    from app.runs import RunSession
+
+    run_a = RunSession()
+    run_b = RunSession()
+
+    adapter_a = LangGraphAdapter(belief_graph=run_a.sdk)
+    adapter_b = LangGraphAdapter(belief_graph=run_b.sdk)
+
+    # Register identical nodes in both runs.
+    for adapter in (adapter_a, adapter_b):
+        adapter.register_node(
+            langgraph_node="retrieve",
+            belief_node_id="B1",
+            node_type=NodeType.BELIEF,
+            content="Retrieved information",
+        )
+
+        adapter.register_node(
+            langgraph_node="reason",
+            belief_node_id="C1",
+            node_type=NodeType.CONCLUSION,
+            content="Reasoning based on retrieved information",
+        )
+
+    # Add a dependency only to Run A.
+    adapter_a.add_dependency(
+        "retrieve",
+        "reason",
+        DependencyType.REQUIRES,
+    )
+
+    # Run A must contain the dependency.
+    assert (
+        adapter_a.graph.get_dependency_type("B1", "C1")
+        == DependencyType.REQUIRES
+    )
+
+    # Run B must not inherit Run A's dependency.
+    # Run B must not inherit Run A's dependency.
+    assert not adapter_b.graph.graph.has_edge("B1", "C1")
