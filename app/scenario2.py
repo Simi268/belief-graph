@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from .agent import AgentRuntime
 from .models import (
@@ -64,6 +64,7 @@ class MultiBranchScenarioResult:
     revision_count: int
 
     total_original_nodes: int
+    operation_metrics: dict[str, int] = field(default_factory=dict)
 
 
 class MultiBranchBeliefRevisionScenario:
@@ -273,9 +274,15 @@ class MultiBranchBeliefRevisionScenario:
         # BELIEF REVISION
         # ======================================================
 
+        operation_metrics = {
+            "nodes_visited": 0,
+            "dependency_edges_examined": 0,
+            "impact_classifications_computed": 0,
+        }
         impact = agent.graph.propagate_state_impact(
             "B1",
             NodeStatus.INVALID,
+            metrics=operation_metrics,
         )
 
         # ======================================================
@@ -476,4 +483,5 @@ class MultiBranchBeliefRevisionScenario:
             total_original_nodes=(
                 total_original_nodes
             ),
+            operation_metrics=operation_metrics,
         )

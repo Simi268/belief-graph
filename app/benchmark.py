@@ -630,6 +630,7 @@ class BenchmarkRunner:
                 "uncertain_node_count": result.uncertain_node_count,
                 "preserved_node_count": result.preserved_node_count,
                 "preservation_ratio": result.preservation_ratio,
+                "graph_operation_metrics": result.operation_metrics,
                 "affected_branch_count": result.affected_branch_count,
                 "revision_count": result.revision_count,
                 "propagation_depth": result.propagation_depth,

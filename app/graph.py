@@ -513,7 +513,8 @@ class BeliefGraph:
         self,
         node_id: str,
         initial_status: NodeStatus = NodeStatus.INVALID,
-        max_depth: int | None = None
+        max_depth: int | None = None,
+        metrics: dict[str, int] | None = None,
     ):
         """
         Propagate impact according to the state of
@@ -567,6 +568,8 @@ class BeliefGraph:
                 continue
 
             visited.add(current_id)
+            if metrics is not None:
+                metrics['nodes_visited'] = metrics.get('nodes_visited', 0) + 1
 
             if (
                 max_depth is not None
@@ -577,6 +580,8 @@ class BeliefGraph:
             for dependent_id in self.graph.successors(
                 current_id
             ):
+                if metrics is not None:
+                    metrics['dependency_edges_examined'] = metrics.get('dependency_edges_examined', 0) + 1
 
                 if dependent_id in visited:
                     continue
@@ -592,6 +597,8 @@ class BeliefGraph:
                     current_status,
                     dependency_type
                 )
+                if metrics is not None:
+                    metrics['impact_classifications_computed'] = metrics.get('impact_classifications_computed', 0) + 1
 
                 results[
                     dependent_id
