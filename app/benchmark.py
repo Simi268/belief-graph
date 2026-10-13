@@ -16,6 +16,7 @@ from app.ground_truth import (
     SCENARIO_7_GROUND_TRUTH,
 )
 from app.scenario7 import StaleInformationScenario
+from app.scenario8 import MultiFailureRecoveryScenario
 from .ground_truth import (
     SCENARIO_1_GROUND_TRUTH,
     SCENARIO_2_GROUND_TRUTH,
@@ -1434,6 +1435,187 @@ class BenchmarkRunner:
             for result in self.run_scenario2_all()
         ]
 
+        # ==========================================================
+    # SCENARIO 8 — SIMULTANEOUS MULTIPLE FAILURES
+    # ==========================================================
+
+    def run_scenario8_baseline(self) -> BenchmarkResult:
+        """Baseline: invalidate all nodes downstream of either failure."""
+
+        scenario = MultiFailureRecoveryScenario()
+
+        # Scenario 8 creates its nodes and dependencies during run().
+        # Initialize it before asking NetworkX to traverse B1/B2.
+        # The dependency edges remain available for this baseline traversal.
+        scenario.run()
+        graph = scenario.graph
+
+        original_nodes = set(graph.graph.nodes)
+        failure_sources = ["B1", "B2"]
+
+        missing_sources = set(failure_sources) - original_nodes
+        if missing_sources:
+            raise RuntimeError(
+                "Scenario 8 graph initialization failed; missing source nodes: "
+                f"{sorted(missing_sources)}"
+            )
+
+        # Conservative baseline: invalidate every reachable descendant.
+        invalidated = set()
+        for source in failure_sources:
+            invalidated.update(
+                nx.descendants(graph.graph, source)
+            )
+
+        invalidated.update(failure_sources)
+        preserved = original_nodes - invalidated
+
+        return BenchmarkResult(
+            strategy="baseline",
+            scenario_id="scenario8_multi_failure",
+            task_success=True,
+            stale_actions=0,
+            invalid_plans=sum(
+                node_id.startswith("P")
+                for node_id in invalidated
+            ),
+            recovery_success=True,
+            unnecessary_invalidation=0,
+            propagation_depth=0,
+            recovery_steps=1,
+            tool_calls=0,
+            affected_node_count=len(invalidated),
+            invalidated_node_count=len(invalidated),
+            recomputed_node_count=0,
+            unnecessary_recomputation=0,
+            preserved_node_count=len(preserved),
+            preservation_ratio=(
+                len(preserved) / len(original_nodes)
+                if original_nodes else 0.0
+            ),
+            details={
+                "failure_sources": failure_sources,
+                "invalidated_nodes": sorted(invalidated),
+                "preserved_nodes": sorted(preserved),
+                "policy": "invalidate_all_descendants",
+            },
+        )
+
+    def run_scenario8_memory(self) -> BenchmarkResult:
+        """Memory baseline: recompute the complete reasoning state."""
+
+        scenario = MultiFailureRecoveryScenario()
+
+        # Scenario 8 builds its graph inside run(); initialize it before
+        # measuring the full-recomputation baseline.
+        scenario_result = scenario.run()
+        original_nodes = set(scenario.graph.graph.nodes)
+        truly_affected = set(
+            getattr(scenario_result, "invalidated_nodes", [])
+        )
+        truly_affected.update(
+            getattr(scenario_result, "reevaluation_nodes", [])
+        )
+        truly_affected.update(
+            getattr(scenario_result, "uncertain_nodes", [])
+        )
+
+        if not original_nodes:
+            raise RuntimeError(
+                "Scenario 8 graph initialization failed; no nodes were created."
+            )
+
+        return BenchmarkResult(
+            strategy="memory",
+            scenario_id="scenario8_multi_failure",
+            task_success=True,
+            stale_actions=0,
+            invalid_plans=sum(
+                node_id.startswith("P")
+                for node_id in original_nodes
+            ),
+            recovery_success=True,
+            unnecessary_invalidation=0,
+            propagation_depth=0,
+            recovery_steps=1,
+            tool_calls=0,
+            affected_node_count=len(original_nodes),
+            invalidated_node_count=0,
+            recomputed_node_count=len(original_nodes),
+            unnecessary_recomputation=len(original_nodes - truly_affected),
+            preserved_node_count=0,
+            preservation_ratio=0.0,
+            details={
+                "failure_sources": ["B1", "B2"],
+                "recomputed_nodes": sorted(original_nodes),
+                "unnecessary_recomputed_nodes": sorted(original_nodes - truly_affected),
+                "true_affected_nodes": sorted(truly_affected),
+                "policy": "full_recomputation_without_dependency_tracking",
+            },
+        )
+
+    def run_scenario8_belief_graph(self) -> BenchmarkResult:
+        """Run Scenario 8's actual multi-source impact analysis."""
+
+        result = MultiFailureRecoveryScenario().run()
+
+        affected = (
+            set(result.invalidated_nodes)
+            | set(result.reevaluation_nodes)
+            | set(result.uncertain_nodes)
+        )
+
+        return BenchmarkResult(
+            strategy="belief_graph",
+            scenario_id="scenario8_multi_failure",
+            task_success=True,
+            stale_actions=0,
+            invalid_plans=sum(
+                node_id.startswith("P")
+                for node_id in result.invalidated_nodes
+            ),
+            recovery_success=True,
+            unnecessary_invalidation=0,
+            propagation_depth=result.propagation_depth,
+            recovery_steps=1,
+            tool_calls=0,
+            affected_node_count=len(affected),
+            invalidated_node_count=len(result.invalidated_nodes),
+            recomputed_node_count=0,
+            unnecessary_recomputation=0,
+            preserved_node_count=len(result.preserved_nodes),
+            preservation_ratio=result.preservation_ratio,
+            details={
+                "failure_sources": ["B1", "B2"],
+                "affected_nodes": sorted(affected),
+                "invalidated_nodes": sorted(result.invalidated_nodes),
+                "reevaluation_nodes": sorted(result.reevaluation_nodes),
+                "uncertain_nodes": sorted(result.uncertain_nodes),
+                "preserved_nodes": sorted(result.preserved_nodes),
+                "propagation_depth": result.propagation_depth,
+                "shared_node_attribution": getattr(result, "shared_node_attribution", {}),
+                "operation_metrics": getattr(result, "operation_metrics", {}),
+                "policy": "multi_source_dependency_aware_impact_analysis",
+            },
+        )
+
+    def run_scenario8_all(self) -> list[BenchmarkResult]:
+        """Run all Scenario 8 benchmark strategies."""
+
+        return [
+            self.run_scenario8_baseline(),
+            self.run_scenario8_memory(),
+            self.run_scenario8_belief_graph(),
+        ]
+
+    def run_scenario8_as_dicts(self) -> list[dict[str, Any]]:
+        """Return Scenario 8 results as JSON-friendly dictionaries."""
+
+        return [
+            result.to_dict()
+            for result in self.run_scenario8_all()
+        ]
+
 
 # ==============================================================
 # SCRIPT ENTRY POINT
@@ -1487,4 +1669,12 @@ if __name__ == "__main__":
 
     for result in results_v7:
         print(result)
-    
+
+    print("\\n" + "=" * 70)
+    print("SCENARIO 8 — SIMULTANEOUS MULTIPLE FAILURES")
+    print("=" * 70)
+
+    results_v8 = runner.run_scenario8_as_dicts()
+
+    for result in results_v8:
+        print(result)
