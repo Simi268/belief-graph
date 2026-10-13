@@ -17,6 +17,7 @@ class MultiFailureRecoveryResult:
     uncertain_nodes: list[str]
     preserved_nodes: list[str]
 
+    # Nodes affected by more than one causal failure source.
     shared_affected_nodes: dict[str, list[str]]
 
     propagation_depth: int
@@ -28,20 +29,19 @@ class MultiFailureRecoveryResult:
     total_original_nodes: int
 
     impact_details: dict = field(default_factory=dict)
+    operation_metrics: dict[str, int] = field(default_factory=dict)
 
 
 class MultiFailureRecoveryScenario:
     """
     Scenario 8: Multi-Failure Recovery.
 
-    Two independent beliefs fail simultaneously.
+    Two independent beliefs fail simultaneously. Their dependency branches
+    converge on a shared conclusion. The graph identifies the combined
+    impact while preserving an unrelated reasoning branch.
 
-    Their dependency branches converge on a shared conclusion.
-    The graph must identify the combined impact while preserving
-    an unrelated reasoning branch.
-
-    This scenario evaluates impact analysis and selective
-    invalidation. It does not execute external recovery actions.
+    This scenario evaluates impact analysis and selective invalidation.
+    It does not execute external recovery actions.
     """
 
     scenario_id = "multi_failure_recovery_v1"
@@ -145,56 +145,27 @@ class MultiFailureRecoveryScenario:
             self.graph.add_node(node)
 
         # Customer API dependency chain
-        self.graph.add_dependency(
-            "B1", "C1", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "C1", "P1", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "P1", "A1", DependencyType.REQUIRES
-        )
+        self.graph.add_dependency("B1", "C1", DependencyType.REQUIRES)
+        self.graph.add_dependency("C1", "P1", DependencyType.REQUIRES)
+        self.graph.add_dependency("P1", "A1", DependencyType.REQUIRES)
 
         # Database dependency chain
-        self.graph.add_dependency(
-            "B2", "C2", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "C2", "P2", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "P2", "A2", DependencyType.REQUIRES
-        )
+        self.graph.add_dependency("B2", "C2", DependencyType.REQUIRES)
+        self.graph.add_dependency("C2", "P2", DependencyType.REQUIRES)
+        self.graph.add_dependency("P2", "A2", DependencyType.REQUIRES)
 
         # Both failure branches converge on the same conclusion.
-        self.graph.add_dependency(
-            "A1", "S1", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "A2", "S1", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "S1", "A4", DependencyType.REQUIRES
-        )
+        self.graph.add_dependency("A1", "S1", DependencyType.REQUIRES)
+        self.graph.add_dependency("A2", "S1", DependencyType.REQUIRES)
+        self.graph.add_dependency("S1", "A4", DependencyType.REQUIRES)
 
         # Completely independent authentication branch
-        self.graph.add_dependency(
-            "B3", "C3", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "C3", "P3", DependencyType.REQUIRES
-        )
-        self.graph.add_dependency(
-            "P3", "A3", DependencyType.REQUIRES
-        )
+        self.graph.add_dependency("B3", "C3", DependencyType.REQUIRES)
+        self.graph.add_dependency("C3", "P3", DependencyType.REQUIRES)
+        self.graph.add_dependency("P3", "A3", DependencyType.REQUIRES)
 
     def simulate_simultaneous_failures(self) -> list[str]:
-        """
-        Mark both source beliefs invalid.
-
-        The invalidation sources are returned so the caller can
-        perform a single combined impact analysis.
-        """
+        """Mark both source beliefs invalid and return their identifiers."""
 
         changed_beliefs = ["B1", "B2"]
 
@@ -205,25 +176,30 @@ class MultiFailureRecoveryScenario:
         return changed_beliefs
 
     def run(self) -> MultiFailureRecoveryResult:
-        """Execute the multi-failure experiment."""
+        """Execute the multi-failure experiment and collect operation metrics."""
 
         self.build_initial_graph()
-
         original_node_ids = set(self.graph.graph.nodes)
 
-        # Introduce both failures before analyzing their impact.
+        # Introduce both failures before analyzing their combined impact.
         changed_beliefs = self.simulate_simultaneous_failures()
 
-        # Analyze both sources together, preserving causal attribution.
+        # Count actual work performed by the multi-source graph analysis.
+        operation_metrics: dict[str, int] = {
+            "queue_entries_processed": 0,
+            "dependency_edges_examined": 0,
+            "impact_classifications_computed": 0,
+        }
+
         impact_details = self.graph.analyze_multi_belief_impact(
             changed_nodes=changed_beliefs,
             initial_status=NodeStatus.INVALID,
+            metrics=operation_metrics,
         )
 
         # Apply the calculated impact to the graph.
         self.graph.apply_state_impact(impact_details)
 
-        # Classify affected nodes using the resulting graph states.
         invalidated_nodes = {
             node_id
             for node_id, details in impact_details.items()
@@ -245,21 +221,16 @@ class MultiFailureRecoveryScenario:
         # Include the failed beliefs themselves.
         invalidated_nodes.update(changed_beliefs)
 
-        affected_nodes = (
-            invalidated_nodes
-            | reevaluation_nodes
-            | uncertain_nodes
-        )
+        affected_nodes = invalidated_nodes | reevaluation_nodes | uncertain_nodes
 
-        # Find nodes whose impact has multiple causal sources.
+        # Retain the causal sources for nodes reached by multiple failures.
         shared_affected_nodes = {
             node_id: sorted(details.get("affected_by", []))
             for node_id, details in impact_details.items()
             if len(details.get("affected_by", [])) > 1
         }
 
-        # Anything outside the affected region must remain active
-        # to count as preserved.
+        # Nodes outside the affected region must remain active to be preserved.
         preserved_nodes = {
             node_id
             for node_id in original_node_ids
@@ -268,10 +239,7 @@ class MultiFailureRecoveryScenario:
         }
 
         propagation_depth = max(
-            (
-                details["depth"]
-                for details in impact_details.values()
-            ),
+            (details["depth"] for details in impact_details.values()),
             default=0,
         )
 
@@ -297,4 +265,5 @@ class MultiFailureRecoveryScenario:
             preservation_ratio=preservation_ratio,
             total_original_nodes=len(original_node_ids),
             impact_details=impact_details,
+            operation_metrics=operation_metrics,
         )

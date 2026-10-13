@@ -65,3 +65,25 @@ def test_every_reported_impact_has_causal_attribution():
 
     for details in result.impact_details.values():
         assert details["affected_by"]
+
+
+def test_operation_metrics_are_recorded():
+    result = MultiFailureRecoveryScenario().run()
+
+    metrics = result.operation_metrics
+
+    assert metrics["queue_entries_processed"] > 0
+    assert metrics["dependency_edges_examined"] > 0
+    assert metrics["impact_classifications_computed"] > 0
+
+    assert (
+        metrics["dependency_edges_examined"]
+        == metrics["impact_classifications_computed"]
+    )
+
+
+def test_shared_nodes_track_both_failure_sources():
+    result = MultiFailureRecoveryScenario().run()
+
+    assert result.shared_affected_nodes["S1"] == ["B1", "B2"]
+    assert result.shared_affected_nodes["A4"] == ["B1", "B2"]

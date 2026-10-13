@@ -1593,8 +1593,9 @@ class BenchmarkRunner:
                 "uncertain_nodes": sorted(result.uncertain_nodes),
                 "preserved_nodes": sorted(result.preserved_nodes),
                 "propagation_depth": result.propagation_depth,
-                "shared_node_attribution": getattr(result, "shared_node_attribution", {}),
-                "operation_metrics": getattr(result, "operation_metrics", {}),
+                # Use the actual field names exposed by MultiFailureRecoveryResult.
+                "shared_node_attribution": result.shared_affected_nodes,
+                "operation_metrics": result.operation_metrics,
                 "policy": "multi_source_dependency_aware_impact_analysis",
             },
         )
