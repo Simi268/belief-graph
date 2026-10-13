@@ -299,12 +299,19 @@ class AgentRuntime:
 
             affected_nodes.append(node_id)
 
-            causes[node_id] = list(
-                details.get(
-                    "affected_by",
-                    []
-                )
-            )
+            affected_by = details.get("affected_by")
+
+            if affected_by is not None:
+                causes[node_id] = list(affected_by)
+            else:
+                source = details.get("source")
+                if source is not None:
+                    causes[node_id] = [source]
+                else:
+                     causes[node_id] = []
+                                              
+
+            
 
             # --------------------------------------------------
             # 2. Identify nodes requiring replanning
