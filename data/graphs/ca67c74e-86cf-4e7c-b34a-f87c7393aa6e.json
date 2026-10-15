@@ -1,0 +1,50 @@
+{
+  "graph_id": "ca67c74e-86cf-4e7c-b34a-f87c7393aa6e",
+  "name": "Persistence Test",
+  "nodes": [
+    {
+      "id": "B1",
+      "attributes": {
+        "data": {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API uses version v1",
+          "value": "v1",
+          "source": "test",
+          "confidence": 0.95,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null
+        }
+      }
+    },
+    {
+      "id": "C1",
+      "attributes": {
+        "data": {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The application depends on API version v1",
+          "value": null,
+          "source": "test",
+          "confidence": 0.9,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "B1",
+      "target": "C1",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    }
+  ],
+  "graph_attributes": {},
+  "evidence": {},
+  "conflicts": {}
+}

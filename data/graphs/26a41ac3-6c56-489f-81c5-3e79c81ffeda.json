@@ -1,0 +1,328 @@
+{
+  "graph_id": "26a41ac3-6c56-489f-81c5-3e79c81ffeda",
+  "name": "Recovery Persistence Test",
+  "nodes": [
+    {
+      "id": "B_API_V1",
+      "attributes": {
+        "data": {
+          "id": "B_API_V1",
+          "node_type": "belief",
+          "content": "The external API uses version v1",
+          "value": "v1",
+          "source": "test",
+          "confidence": 0.95,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_API_V3",
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "C_API_DEPENDENCY",
+      "attributes": {
+        "data": {
+          "id": "C_API_DEPENDENCY",
+          "node_type": "conclusion",
+          "content": "The application depends on API version v1",
+          "value": null,
+          "source": "test",
+          "confidence": 0.9,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "P_API_UPDATE",
+      "attributes": {
+        "data": {
+          "id": "P_API_UPDATE",
+          "node_type": "plan",
+          "content": "Update the integration to use the supported API version",
+          "value": null,
+          "source": "test",
+          "confidence": 0.9,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A_API_CALL",
+      "attributes": {
+        "data": {
+          "id": "A_API_CALL",
+          "node_type": "action",
+          "content": "Call the external API using the version recorded in the belief",
+          "value": null,
+          "source": "test",
+          "confidence": 0.9,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "E_API_MISMATCH",
+      "attributes": {}
+    },
+    {
+      "id": "B_API_V2",
+      "attributes": {
+        "data": {
+          "id": "B_API_V2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 2,
+          "superseded_by": "B_API_V4",
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A_API_CALL_RETRY",
+      "attributes": {
+        "data": {
+          "id": "A_API_CALL_RETRY",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "E_API_MISMATCH_2",
+      "attributes": {}
+    },
+    {
+      "id": "B_API_V3",
+      "attributes": {
+        "data": {
+          "id": "B_API_V3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A_API_RETRY_2",
+      "attributes": {
+        "data": {
+          "id": "A_API_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "planned",
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "E_API_MISMATCH_4",
+      "attributes": {}
+    },
+    {
+      "id": "B_API_V4",
+      "attributes": {
+        "data": {
+          "id": "B_API_V4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 3,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A_API_RETRY_4",
+      "attributes": {
+        "data": {
+          "id": "A_API_RETRY_4",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_API_V4",
+            "action_id": "A_API_RETRY_4",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "B_API_V1",
+      "target": "C_API_DEPENDENCY",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "C_API_DEPENDENCY",
+      "target": "P_API_UPDATE",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "P_API_UPDATE",
+      "target": "A_API_CALL",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "E_API_MISMATCH",
+      "target": "B_API_V1",
+      "attributes": {
+        "dependency_type": "contradicts"
+      }
+    },
+    {
+      "source": "B_API_V2",
+      "target": "A_API_CALL_RETRY",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "E_API_MISMATCH_2",
+      "target": "B_API_V1",
+      "attributes": {
+        "dependency_type": "contradicts"
+      }
+    },
+    {
+      "source": "B_API_V3",
+      "target": "A_API_RETRY_2",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "E_API_MISMATCH_4",
+      "target": "B_API_V2",
+      "attributes": {
+        "dependency_type": "contradicts"
+      }
+    },
+    {
+      "source": "B_API_V4",
+      "target": "A_API_RETRY_4",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    }
+  ],
+  "graph_attributes": {},
+  "evidence": {
+    "E_API_MISMATCH": {
+      "id": "E_API_MISMATCH",
+      "content": "Environment reports API version v2, but agent used v1.",
+      "source": "environment",
+      "confidence": 1.0,
+      "metadata": {
+        "expected_version": "v2"
+      }
+    },
+    "E_API_MISMATCH_2": {
+      "id": "E_API_MISMATCH_2",
+      "content": "Environment reports API version v2, but agent used v1.",
+      "source": "environment",
+      "confidence": 1.0,
+      "metadata": {
+        "expected_version": "v2"
+      }
+    },
+    "E_API_MISMATCH_4": {
+      "id": "E_API_MISMATCH_4",
+      "content": "Environment reports API version v2, but agent used v1.",
+      "source": "environment",
+      "confidence": 1.0,
+      "metadata": {
+        "expected_version": "v2"
+      }
+    }
+  },
+  "conflicts": {
+    "CONFLICT-E_API_MISMATCH-B_API_V1": {
+      "id": "CONFLICT-E_API_MISMATCH-B_API_V1",
+      "evidence_id": "E_API_MISMATCH",
+      "belief_id": "B_API_V1",
+      "reason": "Evidence 'E_API_MISMATCH' contradicts belief 'B_API_V1'.",
+      "severity": "high",
+      "resolved": true
+    },
+    "CONFLICT-E_API_MISMATCH_2-B_API_V1": {
+      "id": "CONFLICT-E_API_MISMATCH_2-B_API_V1",
+      "evidence_id": "E_API_MISMATCH_2",
+      "belief_id": "B_API_V1",
+      "reason": "Evidence 'E_API_MISMATCH_2' contradicts belief 'B_API_V1'.",
+      "severity": "high",
+      "resolved": true
+    },
+    "CONFLICT-E_API_MISMATCH_4-B_API_V2": {
+      "id": "CONFLICT-E_API_MISMATCH_4-B_API_V2",
+      "evidence_id": "E_API_MISMATCH_4",
+      "belief_id": "B_API_V2",
+      "reason": "Evidence 'E_API_MISMATCH_4' contradicts belief 'B_API_V2'.",
+      "severity": "high",
+      "resolved": true
+    }
+  }
+}

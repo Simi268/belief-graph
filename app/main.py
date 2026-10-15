@@ -11,8 +11,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from app.agent import AgentRuntime
+from app.environment import DynamicAPIEnvironment
 from app.commitments import CommitmentRegistry
-from app.models import DependencyType, NodeType
+from app.models import (
+    BeliefNode, Conflict, ConflictSeverity, DependencyType, Evidence, NodeStatus, NodeType
+)
+from app.storage import GraphStorage
 from app.recovery import RecoveryEngine
 from app.sdk import BeliefGraphSDK
 
@@ -48,6 +52,92 @@ graphs: dict[str, BeliefGraphSDK] = {}
 graph_names: dict[str, str] = {}
 agents: dict[str, AgentRuntime] = {}
 recovery_engines: dict[str, RecoveryEngine] = {}
+storage = GraphStorage()
+
+
+def persist_graph(graph_id: str) -> None:
+    """Persist the current graph, evidence, and conflicts for one session."""
+    sdk = graphs[graph_id]
+    belief_graph = sdk.graph
+    storage.save(
+        graph_id=graph_id,
+        name=graph_names.get(graph_id, "Untitled Graph"),
+        graph=belief_graph.graph,
+        evidence=belief_graph.evidence,
+        conflicts=belief_graph.conflicts,
+    )
+
+
+def _restore_node(node_data: dict) -> BeliefNode:
+    data = dict(node_data)
+    data["node_type"] = NodeType(data["node_type"])
+    data["status"] = NodeStatus(data.get("status", NodeStatus.ACTIVE.value))
+    return BeliefNode(**data)
+
+
+def restore_session(payload: dict[str, Any]) -> None:
+    """Rebuild typed runtime objects from a saved JSON session."""
+    graph_id = payload["graph_id"]
+    agent = AgentRuntime()
+    sdk = BeliefGraphSDK(runtime=agent)
+    belief_graph = agent.graph
+
+    for item in payload.get("nodes", []):
+        attributes = item.get("attributes", {})
+        raw_node = attributes.get("data")
+        if isinstance(raw_node, dict):
+            node = _restore_node(raw_node)
+            belief_graph.add_node(node)
+        else:
+            # Preserve unusual legacy nodes rather than silently discarding them.
+            belief_graph.graph.add_node(item["id"], **attributes)
+
+    for item in payload.get("edges", []):
+        attributes = dict(item.get("attributes", {}))
+        dependency_type = attributes.get("dependency_type", DependencyType.REQUIRES.value)
+        attributes["dependency_type"] = DependencyType(dependency_type)
+        belief_graph.graph.add_edge(item["source"], item["target"], **attributes)
+
+    belief_graph.graph.graph.update(payload.get("graph_attributes", {}))
+
+    for evidence_id, raw_evidence in payload.get("evidence", {}).items():
+        evidence_data = dict(raw_evidence)
+        evidence_data.setdefault("id", evidence_id)
+        belief_graph.add_evidence(Evidence(**evidence_data))
+
+    for conflict_id, raw_conflict in payload.get("conflicts", {}).items():
+        conflict_data = dict(raw_conflict)
+        conflict_data.setdefault("id", conflict_id)
+        conflict_data["severity"] = ConflictSeverity(
+            conflict_data.get("severity", ConflictSeverity.MEDIUM.value)
+        )
+        conflict = Conflict(**conflict_data)
+        # Conflict is stored in the graph's conflict registry; the model's
+        # get_conflict()/resolve_conflict() methods use this mapping.
+        belief_graph.conflicts[conflict.id] = conflict
+
+    graphs[graph_id] = sdk
+    graph_names[graph_id] = payload.get("name", "Untitled Graph")
+    agents[graph_id] = agent
+    recovery_engines[graph_id] = RecoveryEngine(
+        agent=agent, commitment_registry=CommitmentRegistry()
+    )
+
+
+@app.on_event("startup")
+def load_saved_sessions() -> None:
+    """Restore saved graph sessions when the API starts."""
+    for metadata in storage.list_graphs():
+        graph_id = metadata.get("graph_id")
+        if not graph_id or graph_id in graphs:
+            continue
+        try:
+            payload = storage.load(graph_id)
+            if payload is not None:
+                restore_session(payload)
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            # One malformed file should not prevent the API from starting.
+            print(f"Warning: could not restore graph {graph_id}: {exc}")
 
 
 # ============================================================
@@ -255,12 +345,14 @@ def create_graph(request: CreateGraphRequest) -> dict[str, Any]:
     graph_names[graph_id] = request.name
     agents[graph_id] = agent
     recovery_engines[graph_id] = recovery_engine
+    persist_graph(graph_id)
 
     return graph_snapshot(graph_id)
 
 
 @app.get("/graphs", tags=["Graphs"])
 def list_graphs() -> dict[str, Any]:
+    # Sessions are restored at startup; merge storage metadata as a safety net.
     return {
         "count": len(graphs),
         "graphs": [
@@ -316,6 +408,7 @@ def create_node(
             detail=str(exc),
         ) from exc
 
+    persist_graph(graph_id)
     return {
         "message": "Node created successfully.",
         "node_id": request.node_id,
@@ -353,6 +446,7 @@ def create_dependency(
             detail=str(exc),
         ) from exc
 
+    persist_graph(graph_id)
     return {
         "message": "Dependency created successfully.",
         "source_id": request.source_id,
@@ -485,12 +579,47 @@ def recover_from_failure(
     action_result = dict(request.action_result)
     action_result["action_id"] = request.action_id
 
+    # The UI submits a simulated environment observation. Use its expected
+    # version as the actual version in the deterministic API environment so
+    # the replacement action is genuinely executed and its result is checked.
+    environment_result = action_result.get("environment_result")
+    if not isinstance(environment_result, dict):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="action_result.environment_result must be an object.",
+        )
+
+    actual_version = environment_result.get("expected")
+    assumed_version = environment_result.get("received")
+    if not isinstance(actual_version, str) or not actual_version.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="environment_result.expected must contain the actual API version.",
+        )
+    if not isinstance(assumed_version, str) or not assumed_version.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="environment_result.received must contain the assumed API version.",
+        )
+
+    # Ensure the submitted failure is actually a mismatch; do not let a
+    # contradictory payload trigger recovery.
+    if actual_version == assumed_version:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="The supplied failure evidence does not describe a version mismatch.",
+        )
+
+    environment = DynamicAPIEnvironment()
+    environment.set_api_version(actual_version)
+
     try:
         result = recovery_engine.recover_from_action_failure(
             action_result=action_result,
             evidence_id=request.evidence_id,
             new_belief_id=request.new_belief_id,
             new_action_id=request.new_action_id,
+            environment=environment,
         )
     except (ValueError, KeyError) as exc:
         raise HTTPException(
@@ -498,6 +627,16 @@ def recover_from_failure(
             detail=str(exc),
         ) from exc
 
+    # Only claim verified recovery when the environment confirms success.
+    execution = result.get("execution")
+    if isinstance(execution, dict):
+        result["status"] = "recovered" if execution.get("success") is True else "retry_failed"
+    elif result.get("new_action") is not None:
+        result["status"] = "recovery_planned"
+    else:
+        result["status"] = "revised"
+
+    persist_graph(graph_id)
     return {
         "graph_id": graph_id,
         "result": to_jsonable(result),
