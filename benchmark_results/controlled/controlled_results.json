@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "benchmark": "Belief-Graph Controlled Benchmark",
+    "timestamp_utc": "2026-10-15T17:38:34.851834+00:00",
+    "changed_node": "B1",
+    "expected_affected": [
+      "A1",
+      "B1",
+      "C1",
+      "P1"
+    ],
+    "expected_preserved": [
+      "B2"
+    ],
+    "strategy_count": 3,
+    "measurement_warning": "Results describe controlled graph classification and modeled recomputation. They do not establish production latency, end-to-end task success, or independent agent execution performance."
+  },
+  "results": [
+    {
+      "strategy": "naive",
+      "changed_node": "B1",
+      "expected_affected": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "expected_preserved": [
+        "B2"
+      ],
+      "predicted_affected": [],
+      "stale_nodes": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "recomputed_nodes": [],
+      "unnecessary_recomputation": [],
+      "preserved_unaffected_nodes": [
+        "B2"
+      ],
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "stale_node_count": 4,
+      "recomputed_node_count": 0,
+      "unnecessary_recomputation_count": 0,
+      "preservation_ratio": 1.0,
+      "declared_operations": 0,
+      "classification_success": false,
+      "measurement_scope": "Controlled graph impact classification and modeled recomputation; not end-to-end agent execution."
+    },
+    {
+      "strategy": "full_recomputation",
+      "changed_node": "B1",
+      "expected_affected": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "expected_preserved": [
+        "B2"
+      ],
+      "predicted_affected": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "P1"
+      ],
+      "stale_nodes": [],
+      "recomputed_nodes": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "P1"
+      ],
+      "unnecessary_recomputation": [
+        "B2"
+      ],
+      "preserved_unaffected_nodes": [],
+      "true_positives": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "false_positives": [
+        "B2"
+      ],
+      "false_negatives": [],
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1_score": 0.8889,
+      "stale_node_count": 0,
+      "recomputed_node_count": 5,
+      "unnecessary_recomputation_count": 1,
+      "preservation_ratio": 0.0,
+      "declared_operations": 5,
+      "classification_success": false,
+      "measurement_scope": "Controlled graph impact classification and modeled recomputation; not end-to-end agent execution."
+    },
+    {
+      "strategy": "belief_graph",
+      "changed_node": "B1",
+      "expected_affected": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "expected_preserved": [
+        "B2"
+      ],
+      "predicted_affected": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "stale_nodes": [],
+      "recomputed_nodes": [],
+      "unnecessary_recomputation": [],
+      "preserved_unaffected_nodes": [
+        "B2"
+      ],
+      "true_positives": [
+        "A1",
+        "B1",
+        "C1",
+        "P1"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "stale_node_count": 0,
+      "recomputed_node_count": 0,
+      "unnecessary_recomputation_count": 0,
+      "preservation_ratio": 1.0,
+      "declared_operations": 3,
+      "classification_success": true,
+      "measurement_scope": "Controlled graph impact classification and modeled recomputation; not end-to-end agent execution."
+    }
+  ]
+}
