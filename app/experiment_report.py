@@ -192,15 +192,13 @@ class ExperimentReportBuilder:
 
             for strategy in summary.strategies:
                 value = comparison.values.get(strategy)
-
                 if value is None:
-                    continue
-
-                formatted = ExperimentReportBuilder._format_value(
-                    value,
-                    comparison.format_type,
-                )
-
+                    formatted = "N/A"
+                else:
+                    formatted = ExperimentReportBuilder._format_value(
+                        value,
+                        comparison.format_type,
+                    )
                 lines.append(
                     f"  {strategy}: {formatted}"
                 )

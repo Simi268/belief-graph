@@ -81,21 +81,93 @@ def compare_strategies(
     instance: BenchmarkInstance,
     scenario: str = "unspecified",
 ) -> list[StrategyMeasurement]:
-    """Evaluate all registered strategies on the same instance."""
+    """Evaluate strategies using shared, category-aware ground truth."""
     evaluators = (
         run_seeded_baseline,
         run_seeded_memory,
         run_seeded_belief_graph,
     )
 
-    return [
-        measure_strategy(
+    measurements = []
+
+    expected_categories = None
+
+    if all(
+        hasattr(instance, attr)
+        for attr in (
+            "expected_invalidated",
+            "expected_reevaluation",
+            "expected_uncertain",
+            "expected_preserved",
+        )
+    ):
+        expected_categories = {
+            "invalidated_nodes": set(instance.expected_invalidated),
+            "reevaluation_nodes": set(instance.expected_reevaluation),
+            "uncertain_nodes": set(instance.expected_uncertain),
+            "preserved_nodes": set(instance.expected_preserved),
+        }
+
+    for evaluator in evaluators:
+        measurement = measure_strategy(
             instance=instance,
             evaluator=evaluator,
             scenario=scenario,
         )
-        for evaluator in evaluators
-    ]
+
+        details = measurement.details
+
+        # Only evaluate category-level predictions when the strategy
+        # explicitly exposes all four categories.
+        has_all_categories = (
+            expected_categories is not None
+            and all(key in details for key in expected_categories)
+        )
+        measurement.metrics["impact_classification_available"] = (
+            has_all_categories
+        )
+
+        if has_all_categories:
+            category_matches = {
+                category: set(details[category]) == expected
+                for category, expected in expected_categories.items()
+            }
+
+            measurement.metrics["category_exact_matches"] = (
+                category_matches
+            )
+            measurement.metrics["impact_ground_truth_match"] = all(
+                category_matches.values()
+            )
+
+            measurement.metrics["impact_true_positives"] = sum(
+                len(set(details[category]) & expected)
+                for category, expected in expected_categories.items()
+                if category != "preserved_nodes"
+            )
+
+            measurement.metrics["impact_false_positives"] = sum(
+                len(set(details[category]) - expected)
+                for category, expected in expected_categories.items()
+                if category != "preserved_nodes"
+            )
+
+            measurement.metrics["impact_false_negatives"] = sum(
+                len(expected - set(details[category]))
+                for category, expected in expected_categories.items()
+                if category != "preserved_nodes"
+            )
+        else:
+            measurement.metrics["category_exact_matches"] = None
+            measurement.metrics["impact_ground_truth_match"] = None
+            measurement.metrics["impact_true_positives"] = None
+            measurement.metrics["impact_false_positives"] = None
+            measurement.metrics["impact_false_negatives"] = None
+
+        measurements.append(measurement)
+
+    return measurements
+
 
 def generate_instance(
     scenario: str,

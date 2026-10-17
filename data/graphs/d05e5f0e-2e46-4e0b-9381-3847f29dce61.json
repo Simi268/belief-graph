@@ -1,0 +1,161 @@
+{
+  "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+  "name": "User Acceptance Test",
+  "nodes": [
+    {
+      "id": "B1",
+      "attributes": {
+        "data": {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_1",
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "C1",
+      "attributes": {
+        "data": {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A1",
+      "attributes": {
+        "data": {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "E_MISMATCH_MVCO3ELY",
+      "attributes": {}
+    },
+    {
+      "id": "B_REVISED_1",
+      "attributes": {
+        "data": {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A_RETRY_1",
+      "attributes": {
+        "data": {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "B1",
+      "target": "C1",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "B1",
+      "target": "A1",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "E_MISMATCH_MVCO3ELY",
+      "target": "B1",
+      "attributes": {
+        "dependency_type": "contradicts"
+      }
+    },
+    {
+      "source": "B_REVISED_1",
+      "target": "A_RETRY_1",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    }
+  ],
+  "graph_attributes": {},
+  "evidence": {
+    "E_MISMATCH_MVCO3ELY": {
+      "id": "E_MISMATCH_MVCO3ELY",
+      "content": "Environment reports API version v2, but agent used v1.",
+      "source": "environment",
+      "confidence": 1.0,
+      "metadata": {
+        "expected_version": "v2"
+      }
+    }
+  },
+  "conflicts": {
+    "CONFLICT-E_MISMATCH_MVCO3ELY-B1": {
+      "id": "CONFLICT-E_MISMATCH_MVCO3ELY-B1",
+      "evidence_id": "E_MISMATCH_MVCO3ELY",
+      "belief_id": "B1",
+      "reason": "Evidence 'E_MISMATCH_MVCO3ELY' contradicts belief 'B1'.",
+      "severity": "high",
+      "resolved": true
+    }
+  }
+}

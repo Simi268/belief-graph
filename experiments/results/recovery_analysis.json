@@ -1,0 +1,831 @@
+{
+  "experiment": "belief_graph_recovery_comparison",
+  "total_evaluations": 105,
+  "overall_by_strategy": {
+    "baseline": {
+      "evaluations": 35,
+      "mean_runtime_ms": 0.0187,
+      "median_runtime_ms": 0.0155,
+      "impact_classification": {},
+      "recovery_outcome": {
+        "task_success_rate": null,
+        "recovery_success_rate": null,
+        "status": "not_independently_verified",
+        "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+      },
+      "recovery_cost": {
+        "stale_actions_mean": 1.2857,
+        "stale_plans_mean": 1.2857,
+        "invalid_plans_mean": 0,
+        "affected_node_count_mean": 0,
+        "invalidated_node_count_mean": 0,
+        "recomputed_node_count_mean": 0,
+        "unnecessary_recomputation_mean": 0,
+        "preservation_ratio_mean": 0.0,
+        "recovery_steps_mean": 0,
+        "tool_calls_mean": 0,
+        "propagation_depth_mean": 0
+      }
+    },
+    "belief_graph": {
+      "evaluations": 35,
+      "mean_runtime_ms": 0.2867,
+      "median_runtime_ms": 0.2442,
+      "impact_classification": {
+        "impact_ground_truth_match_rate": 1.0,
+        "category_exact_matches": {
+          "invalidated_nodes": {
+            "correct": 35,
+            "evaluated": 35
+          },
+          "preserved_nodes": {
+            "correct": 35,
+            "evaluated": 35
+          },
+          "reevaluation_nodes": {
+            "correct": 35,
+            "evaluated": 35
+          },
+          "uncertain_nodes": {
+            "correct": 35,
+            "evaluated": 35
+          }
+        },
+        "impact_true_positives_mean": 4.2857,
+        "impact_false_positives_mean": 0,
+        "impact_false_negatives_mean": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "recovery_outcome": {
+        "task_success_rate": null,
+        "recovery_success_rate": null,
+        "status": "not_independently_verified",
+        "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+      },
+      "recovery_cost": {
+        "stale_actions_mean": 1.2857,
+        "stale_plans_mean": 1.2857,
+        "invalid_plans_mean": 1,
+        "affected_node_count_mean": 4.2857,
+        "invalidated_node_count_mean": 4,
+        "recomputed_node_count_mean": 0,
+        "unnecessary_recomputation_mean": 0,
+        "preservation_ratio_mean": 0.6343,
+        "recovery_steps_mean": 1,
+        "tool_calls_mean": 0,
+        "propagation_depth_mean": 3
+      }
+    },
+    "memory": {
+      "evaluations": 35,
+      "mean_runtime_ms": 0.0129,
+      "median_runtime_ms": 0.012,
+      "impact_classification": {},
+      "recovery_outcome": {
+        "task_success_rate": null,
+        "recovery_success_rate": null,
+        "status": "not_independently_verified",
+        "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+      },
+      "recovery_cost": {
+        "stale_actions_mean": 0,
+        "stale_plans_mean": 0,
+        "invalid_plans_mean": 0,
+        "affected_node_count_mean": 12.8,
+        "invalidated_node_count_mean": 0,
+        "recomputed_node_count_mean": 12.8,
+        "unnecessary_recomputation_mean": 8.5143,
+        "preservation_ratio_mean": 0.0,
+        "recovery_steps_mean": 2,
+        "tool_calls_mean": 3,
+        "propagation_depth_mean": 0
+      }
+    }
+  },
+  "by_scenario": {
+    "scenario1": {
+      "baseline": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0234,
+        "median_runtime_ms": 0.0209,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 0,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 0,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 0
+        }
+      },
+      "belief_graph": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.3451,
+        "median_runtime_ms": 0.3044,
+        "impact_classification": {
+          "impact_ground_truth_match_rate": 1.0,
+          "category_exact_matches": {
+            "invalidated_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "preserved_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "reevaluation_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "uncertain_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            }
+          },
+          "impact_true_positives_mean": 4,
+          "impact_false_positives_mean": 0,
+          "impact_false_negatives_mean": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 1,
+          "affected_node_count_mean": 4,
+          "invalidated_node_count_mean": 4,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.6667,
+          "recovery_steps_mean": 1,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 3
+        }
+      },
+      "memory": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0138,
+        "median_runtime_ms": 0.0126,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 0,
+          "stale_plans_mean": 0,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 12.8,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 12.8,
+          "unnecessary_recomputation_mean": 8.8,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 2,
+          "tool_calls_mean": 3,
+          "propagation_depth_mean": 0
+        }
+      }
+    },
+    "scenario2": {
+      "baseline": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0238,
+        "median_runtime_ms": 0.0157,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 3,
+          "stale_plans_mean": 3,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 0,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 0,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 0
+        }
+      },
+      "belief_graph": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.2935,
+        "median_runtime_ms": 0.2993,
+        "impact_classification": {
+          "impact_ground_truth_match_rate": 1.0,
+          "category_exact_matches": {
+            "invalidated_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "preserved_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "reevaluation_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "uncertain_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            }
+          },
+          "impact_true_positives_mean": 6,
+          "impact_false_positives_mean": 0,
+          "impact_false_negatives_mean": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 3,
+          "stale_plans_mean": 3,
+          "invalid_plans_mean": 1,
+          "affected_node_count_mean": 6,
+          "invalidated_node_count_mean": 4,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.5,
+          "recovery_steps_mean": 1,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 3
+        }
+      },
+      "memory": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0129,
+        "median_runtime_ms": 0.0146,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 0,
+          "stale_plans_mean": 0,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 12,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 12,
+          "unnecessary_recomputation_mean": 6,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 2,
+          "tool_calls_mean": 3,
+          "propagation_depth_mean": 0
+        }
+      }
+    },
+    "scenario3": {
+      "baseline": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0185,
+        "median_runtime_ms": 0.0155,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 0,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 0,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 0
+        }
+      },
+      "belief_graph": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.3179,
+        "median_runtime_ms": 0.2264,
+        "impact_classification": {
+          "impact_ground_truth_match_rate": 1.0,
+          "category_exact_matches": {
+            "invalidated_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "preserved_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "reevaluation_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "uncertain_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            }
+          },
+          "impact_true_positives_mean": 4,
+          "impact_false_positives_mean": 0,
+          "impact_false_negatives_mean": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 1,
+          "affected_node_count_mean": 4,
+          "invalidated_node_count_mean": 4,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.7533,
+          "recovery_steps_mean": 1,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 3
+        }
+      },
+      "memory": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0139,
+        "median_runtime_ms": 0.013,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 0,
+          "stale_plans_mean": 0,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 16.8,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 16.8,
+          "unnecessary_recomputation_mean": 12.8,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 2,
+          "tool_calls_mean": 3,
+          "propagation_depth_mean": 0
+        }
+      }
+    },
+    "scenario4": {
+      "baseline": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.015,
+        "median_runtime_ms": 0.0143,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 0,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 0,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 0
+        }
+      },
+      "belief_graph": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.2206,
+        "median_runtime_ms": 0.1953,
+        "impact_classification": {
+          "impact_ground_truth_match_rate": 1.0,
+          "category_exact_matches": {
+            "invalidated_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "preserved_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "reevaluation_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "uncertain_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            }
+          },
+          "impact_true_positives_mean": 4,
+          "impact_false_positives_mean": 0,
+          "impact_false_negatives_mean": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 1,
+          "affected_node_count_mean": 4,
+          "invalidated_node_count_mean": 4,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.7367,
+          "recovery_steps_mean": 1,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 3
+        }
+      },
+      "memory": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0118,
+        "median_runtime_ms": 0.012,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 0,
+          "stale_plans_mean": 0,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 16,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 16,
+          "unnecessary_recomputation_mean": 12,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 2,
+          "tool_calls_mean": 3,
+          "propagation_depth_mean": 0
+        }
+      }
+    },
+    "scenario5": {
+      "baseline": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0139,
+        "median_runtime_ms": 0.0141,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 0,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 0,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 0
+        }
+      },
+      "belief_graph": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.1535,
+        "median_runtime_ms": 0.144,
+        "impact_classification": {
+          "impact_ground_truth_match_rate": 1.0,
+          "category_exact_matches": {
+            "invalidated_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "preserved_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "reevaluation_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "uncertain_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            }
+          },
+          "impact_true_positives_mean": 4,
+          "impact_false_positives_mean": 0,
+          "impact_false_negatives_mean": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 1,
+          "affected_node_count_mean": 4,
+          "invalidated_node_count_mean": 4,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.5,
+          "recovery_steps_mean": 1,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 3
+        }
+      },
+      "memory": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0118,
+        "median_runtime_ms": 0.0117,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 0,
+          "stale_plans_mean": 0,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 8,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 8,
+          "unnecessary_recomputation_mean": 4,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 2,
+          "tool_calls_mean": 3,
+          "propagation_depth_mean": 0
+        }
+      }
+    },
+    "scenario6": {
+      "baseline": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0144,
+        "median_runtime_ms": 0.0121,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 0,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 0,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 0
+        }
+      },
+      "belief_graph": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.3893,
+        "median_runtime_ms": 0.1802,
+        "impact_classification": {
+          "impact_ground_truth_match_rate": 1.0,
+          "category_exact_matches": {
+            "invalidated_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "preserved_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "reevaluation_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "uncertain_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            }
+          },
+          "impact_true_positives_mean": 4,
+          "impact_false_positives_mean": 0,
+          "impact_false_negatives_mean": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 1,
+          "affected_node_count_mean": 4,
+          "invalidated_node_count_mean": 4,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.6667,
+          "recovery_steps_mean": 1,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 3
+        }
+      },
+      "memory": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0113,
+        "median_runtime_ms": 0.0101,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 0,
+          "stale_plans_mean": 0,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 12.8,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 12.8,
+          "unnecessary_recomputation_mean": 8.8,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 2,
+          "tool_calls_mean": 3,
+          "propagation_depth_mean": 0
+        }
+      }
+    },
+    "scenario7": {
+      "baseline": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0218,
+        "median_runtime_ms": 0.0218,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 0,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 0,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 0
+        }
+      },
+      "belief_graph": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.2867,
+        "median_runtime_ms": 0.318,
+        "impact_classification": {
+          "impact_ground_truth_match_rate": 1.0,
+          "category_exact_matches": {
+            "invalidated_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "preserved_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "reevaluation_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            },
+            "uncertain_nodes": {
+              "correct": 5,
+              "evaluated": 5
+            }
+          },
+          "impact_true_positives_mean": 4,
+          "impact_false_positives_mean": 0,
+          "impact_false_negatives_mean": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 1,
+          "stale_plans_mean": 1,
+          "invalid_plans_mean": 1,
+          "affected_node_count_mean": 4,
+          "invalidated_node_count_mean": 4,
+          "recomputed_node_count_mean": 0,
+          "unnecessary_recomputation_mean": 0,
+          "preservation_ratio_mean": 0.6167,
+          "recovery_steps_mean": 1,
+          "tool_calls_mean": 0,
+          "propagation_depth_mean": 3
+        }
+      },
+      "memory": {
+        "evaluations": 5,
+        "mean_runtime_ms": 0.0146,
+        "median_runtime_ms": 0.0149,
+        "impact_classification": {},
+        "recovery_outcome": {
+          "task_success_rate": null,
+          "recovery_success_rate": null,
+          "status": "not_independently_verified",
+          "reason": "A shared evaluator must verify the resulting state against the same acceptance conditions for every strategy."
+        },
+        "recovery_cost": {
+          "stale_actions_mean": 0,
+          "stale_plans_mean": 0,
+          "invalid_plans_mean": 0,
+          "affected_node_count_mean": 11.2,
+          "invalidated_node_count_mean": 0,
+          "recomputed_node_count_mean": 11.2,
+          "unnecessary_recomputation_mean": 7.2,
+          "preservation_ratio_mean": 0.0,
+          "recovery_steps_mean": 2,
+          "tool_calls_mean": 3,
+          "propagation_depth_mean": 0
+        }
+      }
+    }
+  },
+  "interpretation_warning": "Impact classification and recovery cost are reported separately. Task success and recovery success are deliberately marked not independently verified because strategy-provided success flags do not use a common independent evaluator. Runtime measures adapter execution, not necessarily end-to-end agent runtime. Stale-action metrics must not be interpreted as residual stale state unless the benchmark explicitly measures stale actions remaining after recovery."
+}

@@ -120,11 +120,10 @@ def test_strategy_comparison_contains_requested_metrics():
     }
 
     assert comparison["belief_graph"] == {
-        "task_success": 1.0,
-        "preservation_ratio": 0.5,
-        "unnecessary_recomputation": 0.0,
+    "task_success": None,
+    "preservation_ratio": 0.5,
+    "unnecessary_recomputation": 0.0,
     }
-
 def test_strategy_comparison_rejects_missing_metric():
     report = build_report()
 
@@ -155,8 +154,8 @@ def test_dashboard_data_contains_core_experiment_metrics():
         if item.strategy == "belief_graph"
     )
 
-    assert belief_graph.task_success == 1.0
-    assert belief_graph.recovery_success == 1.0
+    assert belief_graph.task_success is None
+    assert belief_graph.recovery_success is None
     assert belief_graph.preservation_ratio == 0.5
     assert belief_graph.affected_node_count == 6.0
     assert belief_graph.invalidated_node_count == 4.0

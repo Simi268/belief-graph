@@ -854,6 +854,9 @@ class BeliefGraph:
                 details["affected_by"]
             )
 
+        for root_id in roots:
+            results.pop(root_id, None)
+
         return results
 
 

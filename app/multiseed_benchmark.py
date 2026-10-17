@@ -261,15 +261,16 @@ class MultiSeedBenchmarkRunner:
                 values = [
                     float(result.metrics[metric])
                     for result in strategy_results
+                    if result.metrics.get(metric) is not None
                 ]
 
                 metrics.append(
                     AggregateMetric(
                         metric=metric,
-                        mean=mean(values),
-                        population_std=pstdev(values),
-                    )
-                )
+                        mean=mean(values) if values else None,
+                        population_std=pstdev(values) if values else None,
+                        )
+                        )
 
             aggregates.append(
                 StrategyAggregate(

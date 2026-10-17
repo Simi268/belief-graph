@@ -57,7 +57,9 @@ def test_seeded_belief_graph_matches_ground_truth():
 
     result = run_seeded_belief_graph(instance)
 
-    assert result.metrics["task_success"] is True
+    assert result.metrics["classification_success"] is True
+    assert result.metrics["task_success"] is None
+    assert result.metrics["recovery_success"] is None
     assert result.metrics["affected_node_count"] == 6
     assert result.metrics["invalidated_node_count"] == 4
     assert result.metrics["invalid_plans"] == 1
@@ -71,7 +73,9 @@ def test_seeded_belief_graph_uses_generated_namespace_directly():
 
     result = run_seeded_belief_graph(instance)
 
-    assert result.metrics["task_success"] is True
+    assert result.metrics["classification_success"] is True
+    assert result.metrics["task_success"] is None
+    assert result.metrics["recovery_success"] is None
     assert all(
         "_S0017" in node_id
         for node_id in result.details["affected_nodes"]

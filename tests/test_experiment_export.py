@@ -60,6 +60,8 @@ def test_export_preserves_belief_graph_results(tmp_path):
         if result["strategy"] == "belief_graph"
     )
 
-    assert belief_graph["metrics"]["task_success"] is True
+    assert belief_graph["metrics"]["task_success"] is None
+    assert belief_graph["metrics"]["recovery_success"] is None
+    assert belief_graph["metrics"]["classification_success"] is True
     assert belief_graph["metrics"]["preservation_ratio"] == 0.5
     assert belief_graph["metrics"]["unnecessary_recomputation"] == 0

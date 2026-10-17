@@ -2,16 +2,18 @@ from dataclasses import dataclass
 
 from .experiment import ExperimentReport
 
+
 @dataclass(frozen=True)
 class StrategyComparison:
     strategy: str
-    task_success: float
-    recovery_success: float
+    task_success: float | None
+    recovery_success: float | None
     preservation_ratio: float
     affected_node_count: float
     invalidated_node_count: float
     recomputed_node_count: float
     unnecessary_recomputation: float
+
 
 @dataclass(frozen=True)
 class StrategyMetricPoint:
@@ -82,11 +84,13 @@ class ExperimentVisualizationData:
     def strategy_comparison(
         report: ExperimentReport,
         metrics: tuple[str, ...],
-    ) -> dict[str, dict[str, float]]:
-        comparison: dict[str, dict[str, float]] = {}
+    ) -> dict[str, dict[str, float | None]]:
+        comparison: dict[str, dict[str, float | None]] = {}
+
+        optional_metrics = {"task_success", "recovery_success"}
 
         for aggregate in report.aggregates:
-            strategy_metrics: dict[str, float] = {}
+            strategy_metrics: dict[str, float | None] = {}
 
             for metric_name in metrics:
                 value = next(
@@ -98,7 +102,7 @@ class ExperimentVisualizationData:
                     None,
                 )
 
-                if value is None:
+                if value is None and metric_name not in optional_metrics:
                     raise ValueError(
                         f"Metric {metric_name!r} is not available "
                         f"for strategy {aggregate.strategy!r}."

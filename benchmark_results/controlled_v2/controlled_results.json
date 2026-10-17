@@ -1,14 +1,17 @@
 {
   "metadata": {
     "benchmark": "Belief-Graph Controlled Benchmark v2",
-    "timestamp_utc": "2026-10-16T10:55:58.652891+00:00",
-    "scenario_count": 5,
+    "timestamp_utc": "2026-10-16T14:27:36.141045+00:00",
+    "scenario_count": 6,
     "strategy_count": 3,
-    "result_count": 15,
+    "result_count": 18,
     "scenarios": {
       "linear": {
         "label": "Linear Dependency",
         "changed_node": "B1",
+        "changed_nodes": [
+          "B1"
+        ],
         "expected_affected": [
           "A1",
           "B1",
@@ -22,6 +25,9 @@
       "multi_branch": {
         "label": "Multiple Dependency Branches",
         "changed_node": "B1",
+        "changed_nodes": [
+          "B1"
+        ],
         "expected_affected": [
           "A1",
           "A2",
@@ -39,6 +45,9 @@
       "shared_dependency": {
         "label": "Shared Dependency",
         "changed_node": "B1",
+        "changed_nodes": [
+          "B1"
+        ],
         "expected_affected": [
           "A1",
           "B1",
@@ -53,6 +62,9 @@
       "deep_chain": {
         "label": "Deep Dependency Chain",
         "changed_node": "B1",
+        "changed_nodes": [
+          "B1"
+        ],
         "expected_affected": [
           "A1",
           "A2",
@@ -69,6 +81,9 @@
       "diamond_dependency": {
         "label": "Diamond Dependency",
         "changed_node": "B1",
+        "changed_nodes": [
+          "B1"
+        ],
         "expected_affected": [
           "A1",
           "B1",
@@ -78,6 +93,26 @@
         ],
         "expected_preserved": [
           "B2"
+        ]
+      },
+      "multi_belief_change": {
+        "label": "Simultaneous Multi-Belief Change",
+        "changed_node": "B1",
+        "changed_nodes": [
+          "B1",
+          "B2"
+        ],
+        "expected_affected": [
+          "A1",
+          "B1",
+          "B2",
+          "C1",
+          "C2",
+          "P1"
+        ],
+        "expected_preserved": [
+          "B3",
+          "C3"
         ]
       }
     },
@@ -91,6 +126,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 5,
       "expected_affected": [
         "A1",
@@ -129,6 +167,12 @@
       "preserved_unaffected_count": 1,
       "preservation_ratio": 1.0,
       "declared_operations": 0,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "leave_downstream_state_unchanged",
+        "stale_node_count": 3,
+        "note": "This is a modeled baseline. Stale nodes are inferred from the expected impact set; no real agent action is executed."
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -139,6 +183,9 @@
       "impact_metric_interpretation": "recomputation_footprint_proxy",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 5,
       "expected_affected": [
         "A1",
@@ -187,6 +234,15 @@
       "preserved_unaffected_count": 0,
       "preservation_ratio": 0.0,
       "declared_operations": 5,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "recompute_entire_graph",
+        "changed_root_count": 1,
+        "unnecessary_recomputation": [
+          "B2"
+        ],
+        "unnecessary_recomputation_count": 1
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -197,6 +253,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 5,
       "expected_affected": [
         "A1",
@@ -236,6 +295,64 @@
       "preserved_unaffected_count": 1,
       "preservation_ratio": 1.0,
       "declared_operations": 3,
+      "strategy_details": {
+        "dependency_tracking": true,
+        "policy": "selective_dependency_aware_propagation",
+        "changed_root_count": 1,
+        "changed_roots": [
+          "B1"
+        ],
+        "downstream_affected_nodes": [
+          "A1",
+          "C1",
+          "P1"
+        ],
+        "propagation_depth": 3,
+        "unnecessary_invalidation": [],
+        "missed_affected_nodes": [],
+        "unnecessary_invalidation_count": 0,
+        "missed_affected_node_count": 0,
+        "source_roots": {
+          "B1": [
+            "A1",
+            "C1",
+            "P1"
+          ]
+        },
+        "impact_result": {
+          "C1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 2,
+            "source": "C1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "A1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 3,
+            "source": "P1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          }
+        },
+        "note": "This evaluates predicted impact without mutating the graph. Actual recovery and execution must be measured separately."
+      },
       "classification_success": true,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -246,6 +363,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 9,
       "expected_affected": [
         "A1",
@@ -295,6 +415,12 @@
       "preserved_unaffected_count": 2,
       "preservation_ratio": 1.0,
       "declared_operations": 0,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "leave_downstream_state_unchanged",
+        "stale_node_count": 6,
+        "note": "This is a modeled baseline. Stale nodes are inferred from the expected impact set; no real agent action is executed."
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -305,6 +431,9 @@
       "impact_metric_interpretation": "recomputation_footprint_proxy",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 9,
       "expected_affected": [
         "A1",
@@ -370,6 +499,16 @@
       "preserved_unaffected_count": 0,
       "preservation_ratio": 0.0,
       "declared_operations": 9,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "recompute_entire_graph",
+        "changed_root_count": 1,
+        "unnecessary_recomputation": [
+          "B2",
+          "C3"
+        ],
+        "unnecessary_recomputation_count": 2
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -380,6 +519,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 9,
       "expected_affected": [
         "A1",
@@ -430,6 +572,100 @@
       "preserved_unaffected_count": 2,
       "preservation_ratio": 1.0,
       "declared_operations": 6,
+      "strategy_details": {
+        "dependency_tracking": true,
+        "policy": "selective_dependency_aware_propagation",
+        "changed_root_count": 1,
+        "changed_roots": [
+          "B1"
+        ],
+        "downstream_affected_nodes": [
+          "A1",
+          "A2",
+          "C1",
+          "C2",
+          "P1",
+          "P2"
+        ],
+        "propagation_depth": 3,
+        "unnecessary_invalidation": [],
+        "missed_affected_nodes": [],
+        "unnecessary_invalidation_count": 0,
+        "missed_affected_node_count": 0,
+        "source_roots": {
+          "B1": [
+            "A1",
+            "A2",
+            "C1",
+            "C2",
+            "P1",
+            "P2"
+          ]
+        },
+        "impact_result": {
+          "C1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "C2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 2,
+            "source": "C1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 2,
+            "source": "C2",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "A1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 3,
+            "source": "P1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "A2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 3,
+            "source": "P2",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          }
+        },
+        "note": "This evaluates predicted impact without mutating the graph. Actual recovery and execution must be measured separately."
+      },
       "classification_success": true,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -440,6 +676,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 6,
       "expected_affected": [
         "A1",
@@ -480,6 +719,12 @@
       "preserved_unaffected_count": 2,
       "preservation_ratio": 1.0,
       "declared_operations": 0,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "leave_downstream_state_unchanged",
+        "stale_node_count": 3,
+        "note": "This is a modeled baseline. Stale nodes are inferred from the expected impact set; no real agent action is executed."
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -490,6 +735,9 @@
       "impact_metric_interpretation": "recomputation_footprint_proxy",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 6,
       "expected_affected": [
         "A1",
@@ -543,6 +791,16 @@
       "preserved_unaffected_count": 0,
       "preservation_ratio": 0.0,
       "declared_operations": 6,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "recompute_entire_graph",
+        "changed_root_count": 1,
+        "unnecessary_recomputation": [
+          "B2",
+          "B3"
+        ],
+        "unnecessary_recomputation_count": 2
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -553,6 +811,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 6,
       "expected_affected": [
         "A1",
@@ -594,6 +855,64 @@
       "preserved_unaffected_count": 2,
       "preservation_ratio": 1.0,
       "declared_operations": 3,
+      "strategy_details": {
+        "dependency_tracking": true,
+        "policy": "selective_dependency_aware_propagation",
+        "changed_root_count": 1,
+        "changed_roots": [
+          "B1"
+        ],
+        "downstream_affected_nodes": [
+          "A1",
+          "C1",
+          "P1"
+        ],
+        "propagation_depth": 3,
+        "unnecessary_invalidation": [],
+        "missed_affected_nodes": [],
+        "unnecessary_invalidation_count": 0,
+        "missed_affected_node_count": 0,
+        "source_roots": {
+          "B1": [
+            "A1",
+            "C1",
+            "P1"
+          ]
+        },
+        "impact_result": {
+          "C1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 2,
+            "source": "C1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "A1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 3,
+            "source": "P1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          }
+        },
+        "note": "This evaluates predicted impact without mutating the graph. Actual recovery and execution must be measured separately."
+      },
       "classification_success": true,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -604,6 +923,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 8,
       "expected_affected": [
         "A1",
@@ -651,6 +973,12 @@
       "preserved_unaffected_count": 1,
       "preservation_ratio": 1.0,
       "declared_operations": 0,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "leave_downstream_state_unchanged",
+        "stale_node_count": 6,
+        "note": "This is a modeled baseline. Stale nodes are inferred from the expected impact set; no real agent action is executed."
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -661,6 +989,9 @@
       "impact_metric_interpretation": "recomputation_footprint_proxy",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 8,
       "expected_affected": [
         "A1",
@@ -721,6 +1052,15 @@
       "preserved_unaffected_count": 0,
       "preservation_ratio": 0.0,
       "declared_operations": 8,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "recompute_entire_graph",
+        "changed_root_count": 1,
+        "unnecessary_recomputation": [
+          "B2"
+        ],
+        "unnecessary_recomputation_count": 1
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -731,6 +1071,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 8,
       "expected_affected": [
         "A1",
@@ -779,6 +1122,100 @@
       "preserved_unaffected_count": 1,
       "preservation_ratio": 1.0,
       "declared_operations": 6,
+      "strategy_details": {
+        "dependency_tracking": true,
+        "policy": "selective_dependency_aware_propagation",
+        "changed_root_count": 1,
+        "changed_roots": [
+          "B1"
+        ],
+        "downstream_affected_nodes": [
+          "A1",
+          "A2",
+          "C1",
+          "C2",
+          "P1",
+          "P2"
+        ],
+        "propagation_depth": 6,
+        "unnecessary_invalidation": [],
+        "missed_affected_nodes": [],
+        "unnecessary_invalidation_count": 0,
+        "missed_affected_node_count": 0,
+        "source_roots": {
+          "B1": [
+            "A1",
+            "A2",
+            "C1",
+            "C2",
+            "P1",
+            "P2"
+          ]
+        },
+        "impact_result": {
+          "C1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 2,
+            "source": "C1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "A1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 3,
+            "source": "P1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "C2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 4,
+            "source": "A1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 5,
+            "source": "C2",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "A2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 6,
+            "source": "P2",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          }
+        },
+        "note": "This evaluates predicted impact without mutating the graph. Actual recovery and execution must be measured separately."
+      },
       "classification_success": true,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -789,6 +1226,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 6,
       "expected_affected": [
         "A1",
@@ -830,6 +1270,12 @@
       "preserved_unaffected_count": 1,
       "preservation_ratio": 1.0,
       "declared_operations": 0,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "leave_downstream_state_unchanged",
+        "stale_node_count": 4,
+        "note": "This is a modeled baseline. Stale nodes are inferred from the expected impact set; no real agent action is executed."
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -840,6 +1286,9 @@
       "impact_metric_interpretation": "recomputation_footprint_proxy",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 6,
       "expected_affected": [
         "A1",
@@ -892,6 +1341,15 @@
       "preserved_unaffected_count": 0,
       "preservation_ratio": 0.0,
       "declared_operations": 6,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "recompute_entire_graph",
+        "changed_root_count": 1,
+        "unnecessary_recomputation": [
+          "B2"
+        ],
+        "unnecessary_recomputation_count": 1
+      },
       "classification_success": false,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     },
@@ -902,6 +1360,9 @@
       "impact_metric_interpretation": "impact_prediction",
       "recomputation_is_modeled": true,
       "changed_node": "B1",
+      "changed_nodes": [
+        "B1"
+      ],
       "total_nodes": 6,
       "expected_affected": [
         "A1",
@@ -944,6 +1405,364 @@
       "preserved_unaffected_count": 1,
       "preservation_ratio": 1.0,
       "declared_operations": 4,
+      "strategy_details": {
+        "dependency_tracking": true,
+        "policy": "selective_dependency_aware_propagation",
+        "changed_root_count": 1,
+        "changed_roots": [
+          "B1"
+        ],
+        "downstream_affected_nodes": [
+          "A1",
+          "C1",
+          "C2",
+          "P1"
+        ],
+        "propagation_depth": 3,
+        "unnecessary_invalidation": [],
+        "missed_affected_nodes": [],
+        "unnecessary_invalidation_count": 0,
+        "missed_affected_node_count": 0,
+        "source_roots": {
+          "B1": [
+            "A1",
+            "C1",
+            "C2",
+            "P1"
+          ]
+        },
+        "impact_result": {
+          "C1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "C2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 2,
+            "source": "C2",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "A1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 3,
+            "source": "P1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          }
+        },
+        "note": "This evaluates predicted impact without mutating the graph. Actual recovery and execution must be measured separately."
+      },
+      "classification_success": true,
+      "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
+    },
+    {
+      "scenario_key": "multi_belief_change",
+      "scenario_label": "Simultaneous Multi-Belief Change",
+      "strategy": "naive",
+      "impact_metric_interpretation": "impact_prediction",
+      "recomputation_is_modeled": true,
+      "changed_node": "B1",
+      "changed_nodes": [
+        "B1",
+        "B2"
+      ],
+      "total_nodes": 8,
+      "expected_affected": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "expected_preserved": [
+        "B3",
+        "C3"
+      ],
+      "predicted_affected": [],
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "stale_downstream_nodes": [
+        "A1",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "stale_downstream_count": 4,
+      "recomputed_nodes": [],
+      "recomputed_node_count": 0,
+      "unnecessary_recomputation": [],
+      "unnecessary_recomputation_count": 0,
+      "correctly_preserved_nodes": [
+        "B3",
+        "C3"
+      ],
+      "preserved_unaffected_count": 2,
+      "preservation_ratio": 1.0,
+      "declared_operations": 0,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "leave_downstream_state_unchanged",
+        "stale_node_count": 4,
+        "note": "This is a modeled baseline. Stale nodes are inferred from the expected impact set; no real agent action is executed."
+      },
+      "classification_success": false,
+      "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
+    },
+    {
+      "scenario_key": "multi_belief_change",
+      "scenario_label": "Simultaneous Multi-Belief Change",
+      "strategy": "full_recomputation",
+      "impact_metric_interpretation": "recomputation_footprint_proxy",
+      "recomputation_is_modeled": true,
+      "changed_node": "B1",
+      "changed_nodes": [
+        "B1",
+        "B2"
+      ],
+      "total_nodes": 8,
+      "expected_affected": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "expected_preserved": [
+        "B3",
+        "C3"
+      ],
+      "predicted_affected": [
+        "A1",
+        "B1",
+        "B2",
+        "B3",
+        "C1",
+        "C2",
+        "C3",
+        "P1"
+      ],
+      "true_positives": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "false_positives": [
+        "B3",
+        "C3"
+      ],
+      "false_negatives": [],
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1_score": 0.8571,
+      "stale_downstream_nodes": [],
+      "stale_downstream_count": 0,
+      "recomputed_nodes": [
+        "A1",
+        "B1",
+        "B2",
+        "B3",
+        "C1",
+        "C2",
+        "C3",
+        "P1"
+      ],
+      "recomputed_node_count": 8,
+      "unnecessary_recomputation": [
+        "B3",
+        "C3"
+      ],
+      "unnecessary_recomputation_count": 2,
+      "correctly_preserved_nodes": [],
+      "preserved_unaffected_count": 0,
+      "preservation_ratio": 0.0,
+      "declared_operations": 8,
+      "strategy_details": {
+        "dependency_tracking": false,
+        "policy": "recompute_entire_graph",
+        "changed_root_count": 2,
+        "unnecessary_recomputation": [
+          "B3",
+          "C3"
+        ],
+        "unnecessary_recomputation_count": 2
+      },
+      "classification_success": false,
+      "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
+    },
+    {
+      "scenario_key": "multi_belief_change",
+      "scenario_label": "Simultaneous Multi-Belief Change",
+      "strategy": "belief_graph",
+      "impact_metric_interpretation": "impact_prediction",
+      "recomputation_is_modeled": true,
+      "changed_node": "B1",
+      "changed_nodes": [
+        "B1",
+        "B2"
+      ],
+      "total_nodes": 8,
+      "expected_affected": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "expected_preserved": [
+        "B3",
+        "C3"
+      ],
+      "predicted_affected": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "true_positives": [
+        "A1",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "P1"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "stale_downstream_nodes": [],
+      "stale_downstream_count": 0,
+      "recomputed_nodes": [],
+      "recomputed_node_count": 0,
+      "unnecessary_recomputation": [],
+      "unnecessary_recomputation_count": 0,
+      "correctly_preserved_nodes": [
+        "B3",
+        "C3"
+      ],
+      "preserved_unaffected_count": 2,
+      "preservation_ratio": 1.0,
+      "declared_operations": 4,
+      "strategy_details": {
+        "dependency_tracking": true,
+        "policy": "selective_dependency_aware_propagation",
+        "changed_root_count": 2,
+        "changed_roots": [
+          "B1",
+          "B2"
+        ],
+        "downstream_affected_nodes": [
+          "A1",
+          "C1",
+          "C2",
+          "P1"
+        ],
+        "propagation_depth": 3,
+        "unnecessary_invalidation": [],
+        "missed_affected_nodes": [],
+        "unnecessary_invalidation_count": 0,
+        "missed_affected_node_count": 0,
+        "source_roots": {
+          "B1": [
+            "A1",
+            "C1",
+            "P1"
+          ],
+          "B2": [
+            "A1",
+            "C2",
+            "P1"
+          ]
+        },
+        "impact_result": {
+          "C1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1"
+            ]
+          },
+          "P1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 2,
+            "source": "C1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1",
+              "B2"
+            ]
+          },
+          "A1": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 3,
+            "source": "P1",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B1",
+              "B2"
+            ]
+          },
+          "C2": {
+            "impact": "invalid",
+            "dependency_type": "requires",
+            "depth": 1,
+            "source": "B2",
+            "source_status": "invalid",
+            "causal_roots": [
+              "B2"
+            ]
+          }
+        },
+        "note": "This evaluates predicted impact without mutating the graph. Actual recovery and execution must be measured separately."
+      },
       "classification_success": true,
       "measurement_scope": "Graph impact classification and modeled recomputation; not end-to-end agent execution or production latency."
     }

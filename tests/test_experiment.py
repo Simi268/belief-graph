@@ -62,7 +62,8 @@ def test_experiment_produces_expected_strategy_aggregates():
         for metric in aggregates["belief_graph"].metrics
     }
 
-    assert belief_graph_metrics["task_success"].mean == 1.0
+    assert belief_graph_metrics["task_success"].mean is None
+    assert belief_graph_metrics["task_success"].population_std is None
     assert belief_graph_metrics["preservation_ratio"].mean == 0.5
     assert belief_graph_metrics["preservation_ratio"].population_std == 0.0
 

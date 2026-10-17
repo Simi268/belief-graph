@@ -35,7 +35,9 @@ def test_scenario5_belief_graph_selects_strong_evidence():
         generate_scenario5_instance(1)
     )
 
-    assert result.metrics["task_success"] is True
+    assert result.metrics["classification_success"] is True
+    assert result.metrics["task_success"] is None
+    assert result.metrics["recovery_success"] is None
     assert result.metrics["evidence_selection_correct"] is True
     assert result.metrics["revision_count"] == 1
     assert result.metrics["affected_node_count"] == 4

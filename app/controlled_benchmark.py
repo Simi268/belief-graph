@@ -170,6 +170,34 @@ SCENARIOS = {
         "expected_affected": {"B1", "C1", "C2", "P1", "A1"},
         "expected_preserved": {"B2"},
     },
+    "multi_belief_change": {
+        "label": "Simultaneous Multi-Belief Change",
+        "changed_nodes": ["B1", "B2"],
+        "changed_node": "B1",
+        "nodes": {
+            "B1": ("BELIEF", "First changed belief"),
+            "B2": ("BELIEF", "Second changed belief"),
+            "C1": ("CONCLUSION", "Conclusion dependent on B1"),
+            "C2": ("CONCLUSION", "Conclusion dependent on B2"),
+            "P1": ("PLAN", "Plan depending on both conclusions"),
+            "A1": ("ACTION", "Action depending on the shared plan"),
+            "B3": ("BELIEF", "Independent unchanged belief"),
+            "C3": ("CONCLUSION", "Conclusion depending on B3"),
+        },
+        "edges": [
+            ("B1", "C1"),
+            ("B2", "C2"),
+            ("C1", "P1"),
+            ("C2", "P1"),
+            ("P1", "A1"),
+            ("B3", "C3"),
+        ],
+        "expected_affected": {
+            "B1", "B2", "C1", "C2", "P1", "A1"
+        },
+        "expected_preserved": {"B3", "C3"},
+    },
+
 }
 
 
@@ -277,12 +305,16 @@ def evaluate_strategy(
 
     graph = build_graph(scenario)
 
-    changed_node = scenario["changed_node"]
+    changed_nodes = scenario.get(
+        "changed_nodes",
+        [scenario["changed_node"]],
+    )
+    changed_node = changed_nodes[0]
+    changed_root_set = set(changed_nodes)
 
     expected_affected = set(
         scenario["expected_affected"]
     )
-
     expected_preserved = set(
         scenario["expected_preserved"]
     )
@@ -303,7 +335,7 @@ def evaluate_strategy(
     # Evaluate the selected strategy.
     result = strategy.evaluate(
         graph=graph,
-        changed_node=changed_node,
+        changed_nodes=changed_nodes,
         expected_affected=expected_affected,
     )
 
@@ -356,7 +388,9 @@ def evaluate_strategy(
     # The changed node itself is excluded because this metric
     # measures missed propagation to dependent nodes.
 
-    expected_downstream = expected_affected - {changed_node}
+    expected_downstream = (
+        expected_affected - changed_root_set
+    )
 
     stale_downstream = (
         expected_downstream - predicted_affected
@@ -401,6 +435,7 @@ def evaluate_strategy(
         }[strategy_name],
         "recomputation_is_modeled": True,
         "changed_node": changed_node,
+        "changed_nodes": changed_nodes,
 
         "total_nodes": len(all_nodes),
 
@@ -442,6 +477,7 @@ def evaluate_strategy(
         ),
 
         "declared_operations": result.operations,
+        "strategy_details": result.details,
 
         "classification_success": (
             predicted_affected == expected_affected
@@ -507,10 +543,14 @@ def save_results(
         "strategy_count": 3,
         "result_count": len(results),
 
-        "scenarios": {
+                "scenarios": {
             key: {
                 "label": scenario["label"],
                 "changed_node": scenario["changed_node"],
+                "changed_nodes": scenario.get(
+                    "changed_nodes",
+                    [scenario["changed_node"]],
+                ),
                 "expected_affected": sorted(
                     scenario["expected_affected"]
                 ),
@@ -580,7 +620,11 @@ def save_results(
     for scenario_key, scenario in SCENARIOS.items():
         print("\n" + "=" * 88)
         print(f"SCENARIO: {scenario['label']}")
-        print(f"Changed node: {scenario['changed_node']}")
+        changed_nodes = scenario.get(
+            "changed_nodes",
+            [scenario["changed_node"]],
+        )
+        print(f"Changed roots: {changed_nodes}")
         print(
             "Expected affected: "
             f"{sorted(scenario['expected_affected'])}"

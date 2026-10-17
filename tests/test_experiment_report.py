@@ -89,7 +89,7 @@ def test_report_formats_success_metrics_as_percentages():
     assert "Task success:" in text
     assert "baseline: 0.0%" in text
     assert "memory: 100.0%" in text
-    assert "belief_graph: 100.0%" in text
+    assert "belief_graph: N/A" in text
 
 
 def test_report_formats_node_metrics_as_integers():

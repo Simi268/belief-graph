@@ -340,21 +340,23 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
         set(instance.node_ids) - actual_affected
     )
 
-    expected_success = (
-        actual_invalidated
-        == set(instance.expected_invalidated)
-        and actual_reevaluation
-        == set(instance.expected_reevaluation)
-        and actual_uncertain
-        == set(instance.expected_uncertain)
-        and actual_preserved
-        == set(instance.expected_preserved)
-        and (
-            not _has_evidence(instance)
-            or selected_evidence
-            == instance.expected_selected_evidence
-        )
+    classification_success = (
+    actual_invalidated
+    == set(instance.expected_invalidated)
+    and actual_reevaluation
+    == set(instance.expected_reevaluation)
+    and actual_uncertain
+    == set(instance.expected_uncertain)
+    and actual_preserved
+    == set(instance.expected_preserved)
     )
+    evidence_selection_success = (
+        not _has_evidence(instance)
+        or selected_evidence == instance.expected_selected_evidence
+        )
+    classification_success = (
+        classification_success and evidence_selection_success
+)
 
     node_types = _node_types(instance)
 
@@ -381,11 +383,12 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
     )
 
     metrics = {
-        "task_success": expected_success,
+        "classification_success": classification_success,
+        "task_success": None,
         "stale_actions": len(detected_stale_actions),
         "stale_plans": len(stale_plans),
         "invalid_plans": invalidated_plans,
-        "recovery_success": expected_success,
+        "recovery_success": None,
         "unnecessary_invalidation": len(
             set(instance.expected_preserved)
             - actual_preserved

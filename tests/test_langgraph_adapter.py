@@ -324,3 +324,11 @@ def test_langgraph_adapters_isolate_dependencies_between_runs():
     # Run B must not inherit Run A's dependency.
     # Run B must not inherit Run A's dependency.
     assert not adapter_b.graph.graph.has_edge("B1", "C1")
+
+
+def test_missing_dependency_is_not_detected_by_impact_analysis():
+    adapter = LangGraphAdapter()
+    adapter.register_node(langgraph_node="retrieve", belief_node_id="B1", node_type=NodeType.BELIEF, content="Deployment environment is staging")
+    adapter.register_node(langgraph_node="plan", belief_node_id="P1", node_type=NodeType.PLAN, content="Deploy to staging")
+    impact = adapter.analyze_impact(["retrieve"])
+    assert "P1" not in impact
