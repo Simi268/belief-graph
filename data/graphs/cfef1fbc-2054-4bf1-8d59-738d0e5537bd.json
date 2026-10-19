@@ -1,0 +1,288 @@
+{
+  "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+  "name": "Execution Replay Test",
+  "nodes": [
+    {
+      "id": "B1",
+      "attributes": {
+        "data": {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B6",
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A1",
+      "attributes": {
+        "data": {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "B2",
+      "attributes": {
+        "data": {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "B3",
+      "attributes": {
+        "data": {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A2",
+      "attributes": {
+        "data": {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "B4",
+      "attributes": {
+        "data": {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "EV_API_V3",
+      "attributes": {}
+    },
+    {
+      "id": "B5",
+      "attributes": {
+        "data": {
+          "id": "B5",
+          "node_type": "belief",
+          "content": "API version is v3",
+          "value": "v3",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A1_RETRY",
+      "attributes": {
+        "data": {
+          "id": "A1_RETRY",
+          "node_type": "action",
+          "content": "Call customer API using v3",
+          "value": "v3",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B5",
+            "action_id": "A1_RETRY",
+            "assumed_version": "v3",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "B6",
+      "attributes": {
+        "data": {
+          "id": "B6",
+          "node_type": "belief",
+          "content": "API version is v3",
+          "value": "v3",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "A1_RETRY_2",
+      "attributes": {
+        "data": {
+          "id": "A1_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v3",
+          "value": "v3",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B6",
+            "action_id": "A1_RETRY_2",
+            "assumed_version": "v3",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "B1",
+      "target": "A1",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "A1",
+      "target": "B3",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "B2",
+      "target": "A1",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "B3",
+      "target": "A2",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "A2",
+      "target": "B4",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "EV_API_V3",
+      "target": "B1",
+      "attributes": {
+        "dependency_type": "contradicts"
+      }
+    },
+    {
+      "source": "B5",
+      "target": "A1_RETRY",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    },
+    {
+      "source": "B6",
+      "target": "A1_RETRY_2",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    }
+  ],
+  "graph_attributes": {},
+  "evidence": {
+    "EV_API_V3": {
+      "id": "EV_API_V3",
+      "content": "Environment reports API version v3, but agent used v2.",
+      "source": "environment",
+      "confidence": 1.0,
+      "metadata": {
+        "expected_version": "v3"
+      }
+    }
+  },
+  "conflicts": {
+    "CONFLICT-EV_API_V3-B1": {
+      "id": "CONFLICT-EV_API_V3-B1",
+      "evidence_id": "EV_API_V3",
+      "belief_id": "B1",
+      "reason": "Evidence 'EV_API_V3' contradicts belief 'B1'.",
+      "severity": "high",
+      "resolved": true
+    }
+  }
+}

@@ -49,7 +49,12 @@ a { color: inherit; text-decoration: none; }
 .environment-badge svg { color: #6ee7b7; }
 .icon-button { display: grid; place-items: center; width: 35px; height: 35px; color: #a8b3c4; background: #1b2431; border: 1px solid #303b4b; border-radius: 9px; }
 .icon-button:hover { color: #fff; background: #253142; }
-.page-container { max-width: 1600px; margin: 0 auto; padding: 34px 35px 22px; }
+.page-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 36px 40px 28px;
+}
 .page-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 29px; }
 .eyebrow { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; color: #6ee7b7; font-size: 10px; font-weight: 700; letter-spacing: 1.35px; }
 .page-heading h2 { margin: 0; font-size: 29px; letter-spacing: -1px; font-weight: 650; }
@@ -231,4 +236,47 @@ select:focus { border-color: #6ee7b7; }
 .warning-banner svg {
   flex: 0 0 auto;
   margin-top: 1px;
+}
+/* Desktop readability improvements */
+@media (min-width: 1201px) {
+  .sidebar {
+    width: 245px;
+  }
+
+  .page-heading h2 {
+    font-size: 32px;
+  }
+
+  .page-heading p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .panel-heading h3 {
+    font-size: 15px;
+  }
+
+  .panel-heading p {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .stat-label,
+  .stat-detail {
+    font-size: 12px;
+  }
+
+  .form-field label,
+  .graph-selector label {
+    font-size: 12px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    font-size: 12px;
+  }
+
+  .footer {
+    font-size: 11px;
+  }
 }

@@ -1,0 +1,200 @@
+{
+  "experiment": "retroactive_completed_commitment_reconciliation",
+  "scenario": "A post-completion eligibility correction invalidates a compensable refund, an irreversible customer notice, and an external effect of unknown reversibility, while an unrelated shipment remains valid.",
+  "ground_truth": {
+    "affected_commitments": [
+      "audit-001",
+      "notice-001",
+      "refund-001"
+    ],
+    "refund_must_be_cancelled_and_verified": true,
+    "irreversible_notice_and_unknown_effect_must_be_flagged_for_review": true,
+    "shipment_must_remain_untouched": true
+  },
+  "strategies": {
+    "dependency_only": {
+      "strategy": "dependency_only",
+      "semantic_nodes_selected": [
+        "C_ELIGIBILITY",
+        "P_REFUND"
+      ],
+      "semantic_nodes_recomputed": [
+        "C_ELIGIBILITY",
+        "P_REFUND"
+      ],
+      "semantic_node_count": 2,
+      "commitment_records_assessed": 0,
+      "commitment_registry_scan_passes": 0,
+      "affected_commitments_identified": [],
+      "recommendations": {},
+      "commitment_statuses": {
+        "refund-001": "active",
+        "notice-001": "active",
+        "audit-001": "active",
+        "shipment-001": "active"
+      },
+      "external_state": {
+        "refund_issued": true,
+        "customer_notice_sent": true,
+        "audit_exported": true,
+        "shipment_reserved": true
+      },
+      "compensation_attempts": 0,
+      "unflagged_affected_commitments": [
+        "refund-001",
+        "notice-001",
+        "audit-001"
+      ],
+      "unaffected_effect_preserved": true,
+      "compensation_verified": false,
+      "duplicate_compensation_prevented": false,
+      "success": false,
+      "checks": {
+        "affected_refund_handled": false,
+        "irreversible_notice_and_unknown_effect_flagged_for_review": false,
+        "unrelated_shipment_preserved": true,
+        "no_affected_commitment_left_active": false,
+        "duplicate_compensation_prevented": false,
+        "semantic_recomputation_succeeded": true,
+        "corrected_eligibility_value": true,
+        "unaffected_inventory_value": true
+      }
+    },
+    "full_restart": {
+      "strategy": "full_restart",
+      "semantic_nodes_selected": [
+        "C_ELIGIBILITY",
+        "C_INVENTORY",
+        "P_REFUND",
+        "P_SHIPMENT"
+      ],
+      "semantic_nodes_recomputed": [
+        "C_ELIGIBILITY",
+        "C_INVENTORY",
+        "P_REFUND",
+        "P_SHIPMENT"
+      ],
+      "semantic_node_count": 4,
+      "commitment_records_assessed": 16,
+      "commitment_registry_scan_passes": 4,
+      "affected_commitments_identified": [
+        "audit-001",
+        "notice-001",
+        "refund-001"
+      ],
+      "recommendations": {
+        "audit-001": "human_review",
+        "notice-001": "human_review",
+        "refund-001": "compensate"
+      },
+      "commitment_statuses": {
+        "refund-001": "reconciled",
+        "notice-001": "requires_review",
+        "audit-001": "requires_review",
+        "shipment-001": "active"
+      },
+      "external_state": {
+        "refund_issued": false,
+        "customer_notice_sent": true,
+        "audit_exported": true,
+        "shipment_reserved": true
+      },
+      "compensation_attempts": 1,
+      "unflagged_affected_commitments": [],
+      "unaffected_effect_preserved": true,
+      "compensation_verified": true,
+      "duplicate_compensation_prevented": true,
+      "success": true,
+      "checks": {
+        "affected_refund_handled": true,
+        "irreversible_notice_and_unknown_effect_flagged_for_review": true,
+        "unrelated_shipment_preserved": true,
+        "no_affected_commitment_left_active": true,
+        "duplicate_compensation_prevented": true,
+        "semantic_recomputation_succeeded": true,
+        "corrected_eligibility_value": true,
+        "unaffected_inventory_value": true
+      }
+    },
+    "beliefgraph_selective": {
+      "strategy": "beliefgraph_selective",
+      "semantic_nodes_selected": [
+        "C_ELIGIBILITY",
+        "P_REFUND"
+      ],
+      "semantic_nodes_recomputed": [
+        "C_ELIGIBILITY",
+        "P_REFUND"
+      ],
+      "semantic_node_count": 2,
+      "commitment_records_assessed": 16,
+      "commitment_registry_scan_passes": 4,
+      "affected_commitments_identified": [
+        "audit-001",
+        "notice-001",
+        "refund-001"
+      ],
+      "recommendations": {
+        "audit-001": "human_review",
+        "notice-001": "human_review",
+        "refund-001": "compensate"
+      },
+      "commitment_statuses": {
+        "refund-001": "reconciled",
+        "notice-001": "requires_review",
+        "audit-001": "requires_review",
+        "shipment-001": "active"
+      },
+      "external_state": {
+        "refund_issued": false,
+        "customer_notice_sent": true,
+        "audit_exported": true,
+        "shipment_reserved": true
+      },
+      "compensation_attempts": 1,
+      "unflagged_affected_commitments": [],
+      "unaffected_effect_preserved": true,
+      "compensation_verified": true,
+      "duplicate_compensation_prevented": true,
+      "success": true,
+      "checks": {
+        "affected_refund_handled": true,
+        "irreversible_notice_and_unknown_effect_flagged_for_review": true,
+        "unrelated_shipment_preserved": true,
+        "no_affected_commitment_left_active": true,
+        "duplicate_compensation_prevented": true,
+        "semantic_recomputation_succeeded": true,
+        "corrected_eligibility_value": true,
+        "unaffected_inventory_value": true
+      }
+    }
+  },
+  "comparison": {
+    "selective_vs_full_semantic_nodes_saved": 2,
+    "selective_vs_full_semantic_node_reduction_percent": 50.0,
+    "full_restart_success": true,
+    "beliefgraph_selective_success": true,
+    "dependency_only_success": false,
+    "same_commitment_scan_cost_for_full_and_selective": true,
+    "full_restart_commitment_registry_passes": 4,
+    "selective_commitment_registry_passes": 4,
+    "full_restart_commitment_records_examined": 16,
+    "selective_commitment_records_examined": 16
+  },
+  "interpretation_limits": [
+    "This is a deterministic in-memory scenario, not a production benchmark.",
+    "The dependency-only comparator intentionally has no commitment registry or reconciliation policy.",
+    "Full restart uses the same commitment policy as BeliefGraph to avoid weakening its safety baseline.",
+    "BeliefGraph currently scans all registered commitments during impact analysis; this experiment does not claim to reduce that scan cost.",
+    "The reconciler trusts its compensation callback's verification evidence. The simulated adapter checks external state itself; production adapters must independently verify the actual external state.",
+    "This scenario is orchestrated directly from existing graph/commitment components; the public RecoveryEngine does not currently expose a dedicated retroactive-correction entry point.",
+    "This result does not establish superiority over REVISE, DART, Corollary, or other published systems."
+  ],
+  "go_no_go": {
+    "technical_scenario_passed": true,
+    "selective_saves_semantic_recomputation_vs_full": true,
+    "beats_dependency_only_on_external_commitment_safety": true,
+    "evidence_of_novelty_vs_published_systems": false,
+    "novelty_verdict": "NOT ESTABLISHED; literature-level differentiation still required"
+  }
+}

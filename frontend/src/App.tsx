@@ -6,6 +6,7 @@ import {
   Brain,
   CheckCircle2,
   CircleDot,
+  Clock3,
   GitBranch,
   Layers3,
   Network,
@@ -23,6 +24,7 @@ import {
   type Node,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import "./App.css";
 
 const API_BASE = "http://127.0.0.1:8000";
 
@@ -55,6 +57,147 @@ type GraphSnapshot = {
   }[];
 };
 
+type ReplayEvent = {
+  event_id: string;
+  graph_id: string;
+  sequence: number;
+  event_type: string;
+  summary: string;
+  timestamp: string;
+  details: Record<string, unknown>;
+  snapshot?: GraphSnapshot | null;
+};
+
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : {};
+}
+
+function displayRecordedValue(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "Not recorded";
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  return JSON.stringify(value, null, 2);
+}
+
+function recordedStringList(value: unknown): string[] {
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === "string")
+    : [];
+}
+
+function RecoveryReplayDetails({ event }: { event: ReplayEvent }) {
+  const details = asRecord(event.details);
+  const revision = asRecord(details.revision_event);
+  const execution = asRecord(details.execution);
+  const verification = asRecord(details.verification);
+  const recoveryPlan = asRecord(details.recovery_plan);
+  const newAction = asRecord(details.new_action);
+  const invalidated = recordedStringList(revision.invalidated_nodes);
+  const affected = recordedStringList(revision.affected_nodes);
+  const reevaluation = recordedStringList(revision.reevaluation_nodes);
+  const uncertain = recordedStringList(revision.uncertain_nodes);
+  const verified = verification.verified === true;
+  const verificationPerformed = verification.verification_performed === true;
+  const status = typeof details.status === "string" ? details.status : "unknown";
+
+  const summaryCard = (label: string, value: string, key: string) => (
+    <div className="causal-summary-card" key={key}>
+      <span>{label}</span>
+      <strong style={{ overflowWrap: "anywhere" }}>{value}</strong>
+    </div>
+  );
+
+  const nodeGroup = (label: string, items: string[], key: string) => (
+    <div key={key} style={{ marginTop: 12 }}>
+      <strong>{label} ({items.length})</strong>
+      <p className="muted-note" style={{ marginTop: 4 }}>
+        {items.length ? items.join(", ") : "None recorded"}
+      </p>
+    </div>
+  );
+
+  return (
+    <section className="panel" style={{ marginTop: 18, padding: 18 }}>
+      <PanelHeading
+        title="Recovery Replay"
+        subtitle="Structured view of the recovery data recorded by the backend"
+        icon={<RefreshCw size={18} />}
+      />
+
+      <div className="causal-summary-grid" style={{ marginTop: 16 }}>
+        {summaryCard("Recovery status", status.replaceAll("_", " "), "status")}
+        {summaryCard("Replacement action executed", execution.action_id ? "Yes" : "No execution record", "action-executed")}
+        {summaryCard("Execution result", execution.success === true ? "Succeeded" : execution.success === false ? "Failed" : "Not recorded", "execution-result")}
+        {summaryCard("Independent verification", !verificationPerformed ? "Not performed" : verified ? "Verified" : "Did not pass", "verification")}
+      </div>
+
+      <h4 style={{ marginTop: 20 }}>Failure context</h4>
+      <div className="causal-detail-grid">
+        <div><span>Original action</span><strong>{displayRecordedValue(details.action_id)}</strong></div>
+        <div><span>Evidence ID</span><strong>{displayRecordedValue(revision.conflict_id ?? details.evidence_id)}</strong></div>
+      </div>
+      {typeof execution.error === "string" && (
+        <div className="warning-banner" style={{ marginTop: 12 }}>
+          <AlertTriangle size={17} /><span>{execution.error}</span>
+        </div>
+      )}
+
+      <h4 style={{ marginTop: 20 }}>Belief revision</h4>
+      <div className="causal-detail-grid">
+        <div><span>Previous belief</span><strong>{displayRecordedValue(revision.old_belief_id)}</strong></div>
+        <div><span>Revised belief</span><strong>{displayRecordedValue(revision.new_belief_id ?? details.new_belief_id)}</strong></div>
+        <div><span>Reason</span><strong>{displayRecordedValue(revision.reason)}</strong></div>
+      </div>
+
+      {nodeGroup("Affected nodes", affected, "affected")}
+      {nodeGroup("Invalidated nodes", invalidated, "invalidated")}
+      {nodeGroup("Requires reevaluation", reevaluation, "reevaluation")}
+      {nodeGroup("Uncertain nodes", uncertain, "uncertain")}
+
+      <h4 style={{ marginTop: 20 }}>Replacement action</h4>
+      <div className="causal-detail-grid">
+        <div><span>Planned action ID</span><strong>{displayRecordedValue(newAction.id ?? details.new_action_id ?? execution.action_id)}</strong></div>
+        <div><span>Old action ID</span><strong>{displayRecordedValue(revision.old_action_id ?? details.action_id)}</strong></div>
+        <div><span>Execution success</span><strong>{execution.success === true ? "Yes" : execution.success === false ? "No" : "Not recorded"}</strong></div>
+      </div>
+      {Object.keys(recoveryPlan).length > 0 && (
+        <details style={{ marginTop: 12 }}>
+          <summary style={{ cursor: "pointer" }}>Recorded recovery plan</summary>
+          <pre style={{ marginTop: 8, padding: 12, borderRadius: 10, overflowX: "auto", background: "rgba(15, 23, 42, 0.72)", color: "#dbeafe", fontSize: 12, whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
+            {JSON.stringify(recoveryPlan, null, 2)}
+          </pre>
+        </details>
+      )}
+
+      <h4 style={{ marginTop: 20 }}>Verification</h4>
+      <p className="muted-note">
+        {!verificationPerformed
+          ? "Not independently verified. Expected node statuses were not supplied or the backend did not record a verification run."
+          : verified
+            ? "The backend recorded a passing independent verification result."
+            : "The backend recorded a verification result that did not pass all checks."}
+      </p>
+      {typeof verification.reason === "string" && <p>{verification.reason}</p>}
+      {Object.keys(verification).length > 0 && (
+        <details style={{ marginTop: 10 }}>
+          <summary style={{ cursor: "pointer" }}>Recorded verification details</summary>
+          <pre style={{ marginTop: 8, padding: 12, borderRadius: 10, overflowX: "auto", background: "rgba(15, 23, 42, 0.72)", color: "#dbeafe", fontSize: 12, whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
+            {JSON.stringify(verification, null, 2)}
+          </pre>
+        </details>
+      )}
+
+      <p className="muted-note" style={{ marginTop: 16 }}>
+        This view presents the recorded recovery event. Missing fields are shown as not recorded; replay does not rerun actions or invent intermediate events.
+      </p>
+    </section>
+  );
+}
+
 type Health = {
   status: string;
   service: string;
@@ -67,6 +210,7 @@ const navigation = [
   { label: "Belief Graph", icon: Network },
   { label: "Impact Analysis", icon: GitBranch },
   { label: "Recovery", icon: RefreshCw },
+  { label: "Execution Replay", icon: Clock3 },
 ];
 
 function statusColor(status?: string) {
@@ -137,6 +281,11 @@ function App() {
   });
   const [recoverySubmitting, setRecoverySubmitting] = useState(false);
   const [recoveryResult, setRecoveryResult] = useState<Record<string, unknown> | null>(null);
+  const [expectedStatusesJson, setExpectedStatusesJson] = useState("");
+  const [replayEvents, setReplayEvents] = useState<ReplayEvent[]>([]);
+  const [replaySequence, setReplaySequence] = useState<number | null>(null);
+  const [replaySnapshot, setReplaySnapshot] = useState<GraphSnapshot | null>(null);
+  const [replayLoading, setReplayLoading] = useState(false);
 
   async function request<T>(path: string, init?: RequestInit): Promise<T> {
     const response = await fetch(`${API_BASE}${path}`, init);
@@ -258,6 +407,42 @@ function App() {
       new_action_id: safeActionId,
     }));
 
+    let expectedStatuses: Record<string, string> | undefined;
+
+if (expectedStatusesJson.trim()) {
+  try {
+    const parsed: unknown = JSON.parse(expectedStatusesJson);
+
+    if (
+      parsed === null ||
+      typeof parsed !== "object" ||
+      Array.isArray(parsed)
+    ) {
+      throw new Error("Expected statuses must be a JSON object.");
+    }
+
+    expectedStatuses = parsed as Record<string, string>;
+
+    for (const [nodeId, nodeStatus] of Object.entries(expectedStatuses)) {
+      if (
+        !nodeId.trim() ||
+        !["active", "invalid", "uncertain", "requires_reevaluation"].includes(nodeStatus)
+      ) {
+        throw new Error(
+          `Invalid expected status for "${nodeId}".`
+        );
+      }
+    }
+  } catch (err) {
+    setError(
+      err instanceof Error
+        ? err.message
+        : "Expected statuses must be valid JSON."
+    );
+    return;
+  }
+}
+
     setRecoverySubmitting(true);
     setError("");
     setSuccessMessage("");
@@ -275,6 +460,7 @@ function App() {
           evidence_id: recoveryForm.evidence_id.trim() || freshEvidenceId(),
           new_belief_id: safeBeliefId,
           new_action_id: safeActionId,
+          expected_statuses: expectedStatuses,
           action_result: {
             belief_id: recoveryForm.belief_id,
             action_id: recoveryForm.action_id,
@@ -298,6 +484,66 @@ function App() {
       setRecoverySubmitting(false);
     }
   }
+
+  async function loadReplayEvents(graphId: string) {
+    if (!graphId) {
+      setReplayEvents([]);
+      setReplaySequence(null);
+      setReplaySnapshot(null);
+      return;
+    }
+    setReplayLoading(true);
+    setError("");
+    try {
+      const data = await request<{ graph_id: string; count: number; events: ReplayEvent[] }>(
+        `/graphs/${graphId}/events`,
+      );
+      const ordered = [...data.events].sort((a, b) => a.sequence - b.sequence);
+      setReplayEvents(ordered);
+      if (ordered.length > 0) {
+        const latestSequence = ordered[ordered.length - 1].sequence;
+        await selectReplayEvent(graphId, latestSequence);
+      } else {
+        setReplaySequence(null);
+        setReplaySnapshot(null);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to load replay history.");
+      setReplayEvents([]);
+      setReplaySequence(null);
+      setReplaySnapshot(null);
+    } finally {
+      setReplayLoading(false);
+    }
+  }
+
+  async function selectReplayEvent(graphId: string, sequence: number) {
+    setReplayLoading(true);
+    setError("");
+    try {
+      const data = await request<{
+        graph_id: string;
+        sequence: number;
+        event: ReplayEvent;
+        snapshot: GraphSnapshot | null;
+        read_only: boolean;
+      }>(`/graphs/${graphId}/replay/${sequence}`);
+      setReplaySequence(sequence);
+      setReplaySnapshot(data.snapshot);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to load historical event.");
+    } finally {
+      setReplayLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (activePage === "Execution Replay" && selectedGraphId) {
+      void loadReplayEvents(selectedGraphId);
+    }
+    // Replay data is fetched when the user opens the page or changes graphs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePage, selectedGraphId]);
 
   async function createGraph() {
     const name = newGraphName.trim();
@@ -492,6 +738,13 @@ function App() {
   );
 
   const selectedNode = snapshot?.nodes.find((node) => node.id === selectedNodeId);
+  const recoveryVerification =
+    recoveryResult?.verification &&
+    typeof recoveryResult.verification === "object"
+      ? recoveryResult.verification as Record<string, unknown>
+      : undefined;
+  const verificationList = (value: unknown): string[] =>
+    Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
 
   return (
     <div className="app-shell">
@@ -728,6 +981,20 @@ function App() {
                         <input required value={recoveryForm.new_action_id} onChange={(event) => setRecoveryForm((f) => ({ ...f, new_action_id: event.target.value }))} />
                       </label>
                     </div>
+                    <label className="form-field">
+                      <span>Expected node statuses (optional JSON)</span>
+                      <textarea
+                        value={expectedStatusesJson}
+                        onChange={(event) => setExpectedStatusesJson(event.target.value)}
+                        placeholder={'{"B1":"invalid","A_RETRY_1":"active"}'}
+                        rows={4}
+                        aria-describedby="expected-statuses-help"
+                      />
+                      <span id="expected-statuses-help" className="muted-note">
+                        Enter independently established expected states to enable graph verification.
+                        Allowed values: active, invalid, uncertain, requires_reevaluation.
+                      </span>
+                    </label>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
                       <button type="submit" className="primary-button" disabled={recoverySubmitting || snapshot.nodes.filter((node) => node.node_type?.toLowerCase() === "action").length === 0 || snapshot.nodes.filter((node) => node.node_type?.toLowerCase() === "belief").length === 0}>
                         {recoverySubmitting ? "Running recovery…" : "Run recovery workflow"} <ArrowRight size={15} />
@@ -744,7 +1011,7 @@ function App() {
                         {recoveryResult.status === "recovered" ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
                         <span>
                           {recoveryResult.status === "recovered"
-                            ? "Recovery verified: the replacement action executed and the environment confirmed success."
+                            ? "Replacement action succeeded. Review the independent verification report to determine whether graph recovery was verified."
                             : recoveryResult.status === "retry_failed"
                               ? "The replacement action executed but failed. Inspect the execution result below."
                               : recoveryResult.status === "recovery_planned"
@@ -752,6 +1019,84 @@ function App() {
                                 : `Recovery result status: ${String(recoveryResult.status ?? "unknown")}. Inspect the details below.`}
                         </span>
                       </div>
+                      {recoveryVerification && (
+                        <div className="panel" style={{ padding: 18 }}>
+                          <PanelHeading
+                            title="Independent recovery verification"
+                            subtitle={
+                              recoveryVerification.verification_performed === false
+                                ? "Not performed — expected node statuses were not supplied."
+                                : recoveryVerification.verified === true
+                                  ? "Verified — expected graph states and execution checks passed."
+                                  : "Verification did not pass all checks."
+                            }
+                            icon={<ShieldCheck size={18} />}
+                          />
+                          <div className="causal-summary-grid" style={{ marginTop: 16 }}>
+                            <div className="causal-summary-card">
+                              <span>Verified</span>
+                              <strong>{recoveryVerification.verified === true ? "Yes" : "No"}</strong>
+                            </div>
+                            <div className="causal-summary-card">
+                              <span>Graph correct</span>
+                              <strong>
+                                {typeof recoveryVerification.graph_correct === "boolean"
+                                  ? recoveryVerification.graph_correct ? "Yes" : "No"
+                                  : "Not checked"}
+                              </strong>
+                            </div>
+                            <div className="causal-summary-card">
+                              <span>Execution successful</span>
+                              <strong>{recoveryVerification.execution_successful === true ? "Yes" : "No"}</strong>
+                            </div>
+                          </div>
+                          {typeof recoveryVerification.reason === "string" && (
+                            <p className="muted-note" style={{ marginTop: 12 }}>
+                              {recoveryVerification.reason}
+                            </p>
+                          )}
+                          {([
+                            ["Stale nodes", "stale_nodes"],
+                            ["Unnecessarily invalidated nodes", "unnecessarily_invalidated_nodes"],
+                            ["Missing nodes", "missing_nodes"],
+                          ] as const).map(([label, key]) => {
+                            const items = verificationList(recoveryVerification[key]);
+                            return (
+                              <div key={key} style={{ marginTop: 12 }}>
+                                <strong>{label} ({items.length})</strong>
+                                <p className="muted-note" style={{ marginTop: 4 }}>
+                                  {items.length ? items.join(", ") : "None reported"}
+                                </p>
+                              </div>
+                            );
+                          })}
+                          {typeof recoveryVerification.status_mismatches === "object" &&
+  recoveryVerification.status_mismatches !== null &&
+  Object.keys(
+    recoveryVerification.status_mismatches as Record<string, unknown>
+  ).length > 0 && (
+    <div style={{ marginTop: 12 }}>
+      <strong>Status mismatches</strong>
+      <pre
+        style={{
+          margin: "8px 0 0",
+          padding: 12,
+          borderRadius: 10,
+          overflowX: "auto",
+          background: "rgba(15, 23, 42, 0.72)",
+          color: "#dbeafe",
+        }}
+      >
+        {JSON.stringify(
+          recoveryVerification.status_mismatches,
+          null,
+          2
+        )}
+      </pre>
+    </div>
+  )}
+                        </div>
+                      )}
                       <div className="panel" style={{ padding: 18 }}>
                         <PanelHeading title="Recovery result" subtitle={`Status: ${String(recoveryResult.status ?? "completed")}`} icon={<ShieldCheck size={18} />} />
                         <pre style={{ margin: "16px 0 0", padding: 16, borderRadius: 10, overflowX: "auto", background: "rgba(15, 23, 42, 0.72)", color: "#dbeafe", fontSize: 12, lineHeight: 1.6, whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{JSON.stringify(recoveryResult, null, 2)}</pre>
@@ -759,6 +1104,182 @@ function App() {
                     </div>
                   )}
                 </>
+              )}
+            </section>
+          )}
+
+          {activePage === "Execution Replay" && (
+            <section className="panel full-panel">
+              <PanelHeading
+                title="Execution Replay"
+                subtitle="Inspect recorded graph history in sequence. Replay is read-only and never reruns actions."
+                icon={<Clock3 size={18} />}
+              />
+              {!selectedGraphId ? (
+                <EmptyState title="Select a graph first" description="Choose a graph session to inspect its recorded event history." />
+              ) : replayLoading && replayEvents.length === 0 ? (
+                <div className="loading-banner"><Activity size={17} />Loading recorded events…</div>
+              ) : replayEvents.length === 0 ? (
+                <EmptyState
+                  title="No recorded events yet"
+                  description="This graph has no event history. Create a new graph or add a node/dependency, then refresh the replay page. Events created before event recording was enabled are not reconstructed retroactively."
+                />
+              ) : (
+                <div style={{ display: "grid", gridTemplateColumns: "minmax(250px, 0.8fr) minmax(0, 1.5fr)", gap: 18, alignItems: "start" }}>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                      <div><strong>Recorded timeline</strong><p className="muted-note">{replayEvents.length} event{replayEvents.length === 1 ? "" : "s"}</p></div>
+                      <button className="secondary-button" disabled={replayLoading} onClick={() => void loadReplayEvents(selectedGraphId)}>Refresh</button>
+                    </div>
+                    <div style={{ display: "grid", gap: 8 }}>
+                      {replayEvents.map((item) => (
+                        <button
+                          key={item.event_id}
+                          className={`session-item ${replaySequence === item.sequence ? "selected" : ""}`}
+                          onClick={() => void selectReplayEvent(selectedGraphId, item.sequence)}
+                          disabled={replayLoading}
+                          style={{ width: "100%", textAlign: "left", cursor: "pointer" }}
+                        >
+                          <div className="session-icon"><Clock3 size={17} /></div>
+                          <div className="session-copy" style={{ minWidth: 0 }}>
+                            <strong>#{item.sequence} · {item.event_type.replaceAll("_", " ")}</strong>
+                            <span>{item.summary}</span>
+                            <span>{new Date(item.timestamp).toLocaleString()}</span>
+                          </div>
+                          <ArrowRight size={15} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="panel" style={{ padding: 18, minWidth: 0 }}>
+                    {(() => {
+                      const selectedEvent = replayEvents.find((item) => item.sequence === replaySequence);
+                      if (!selectedEvent) {
+                        return <EmptyState title="Select an event" description="Choose an event from the timeline to inspect its recorded state." />;
+                      }
+                      return (
+                        <>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
+                            <div>
+                              <span className="eyebrow">EVENT {selectedEvent.sequence}</span>
+                              <h3 style={{ margin: "8px 0" }}>{selectedEvent.summary}</h3>
+                              <p className="muted-note">{new Date(selectedEvent.timestamp).toLocaleString()}</p>
+                            </div>
+                            <span className="status-pill success">Read-only replay</span>
+                          </div>
+                          <div style={{ display: "flex", gap: 8, margin: "16px 0", flexWrap: "wrap" }}>
+                            <button
+                              className="secondary-button"
+                              disabled={replayLoading || replaySequence === null || replayEvents.length === 0 || replaySequence <= replayEvents[0].sequence}
+                              onClick={() => { if (replaySequence !== null) void selectReplayEvent(selectedGraphId, replaySequence - 1); }}
+                            >← Previous</button>
+                            <button
+                              className="secondary-button"
+                              disabled={replayLoading || replaySequence === null || replayEvents.length === 0 || replaySequence >= replayEvents[replayEvents.length - 1].sequence}
+                              onClick={() => { if (replaySequence !== null) void selectReplayEvent(selectedGraphId, replaySequence + 1); }}
+                            >Next →</button>
+                          </div>
+                          <div className="causal-summary-grid">
+                            <div className="causal-summary-card"><span>Event type</span><strong>{selectedEvent.event_type.replaceAll("_", " ")}</strong></div>
+                            <div className="causal-summary-card"><span>Nodes at this point</span><strong>{replaySnapshot?.node_count ?? "Unavailable"}</strong></div>
+                            <div className="causal-summary-card"><span>Dependencies at this point</span><strong>{replaySnapshot?.edge_count ?? "Unavailable"}</strong></div>
+                          </div>
+                          {replaySnapshot ? (
+                            <>
+                              <h4 style={{ marginTop: 22 }}>Historical graph visualization</h4>
+                              {replaySnapshot.nodes.length > 0 ? (
+                                <div style={{ height: 360, marginTop: 10, border: "1px solid #334155", borderRadius: 12, overflow: "hidden", background: "#0f172a" }}>
+                                  <ReactFlow
+                                    nodes={replaySnapshot.nodes.map((node, index) => ({
+                                      id: node.id,
+                                      position: { x: (index % 3) * 250, y: Math.floor(index / 3) * 145 },
+                                      data: {
+                                        label: (
+                                          <div style={{ minWidth: 150, color: "#e5e7eb", fontSize: 12 }}>
+                                            <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginBottom: 6 }}>
+                                              <strong>{node.id}</strong>
+                                              <span style={{ color: statusColor(node.status) }}>{node.status ?? "unknown"}</span>
+                                            </div>
+                                            <div style={{ color: "#94a3b8", marginBottom: 5 }}>{node.node_type ?? "Node"}</div>
+                                            <div>{node.content ?? "No description available"}</div>
+                                          </div>
+                                        ),
+                                      },
+                                      style: {
+                                        width: 215,
+                                        padding: 12,
+                                        borderRadius: 10,
+                                        background: "#172033",
+                                        border: `1px solid ${statusColor(node.status)}88`,
+                                        color: "#e5e7eb",
+                                      },
+                                    }))}
+                                    edges={replaySnapshot.edges.map((edge, index) => ({
+                                      id: `replay-${edge.source}-${edge.target}-${index}`,
+                                      source: edge.source,
+                                      target: edge.target,
+                                      label: edge.dependency_type ?? "",
+                                      style: { stroke: "#64748b", strokeWidth: 1.6 },
+                                      labelStyle: { fill: "#cbd5e1", fontSize: 10 },
+                                    }))}
+                                    fitView
+                                    nodesDraggable={false}
+                                    nodesConnectable={false}
+                                    elementsSelectable={false}
+                                    proOptions={{ hideAttribution: true }}
+                                  >
+                                    <Background color="#334155" gap={22} />
+                                    <Controls showInteractive={false} />
+                                    <MiniMap nodeColor={(node) => {
+                                      const historicalNode = replaySnapshot.nodes.find((item) => item.id === node.id);
+                                      return statusColor(historicalNode?.status);
+                                    }} />
+                                  </ReactFlow>
+                                </div>
+                              ) : (
+                                <div className="empty-state" style={{ marginTop: 10 }}>
+                                  <div className="empty-icon"><Network size={24} /></div>
+                                  <strong>Historical graph is empty</strong>
+                                  <p>This recorded snapshot contains no nodes at this point in the timeline.</p>
+                                </div>
+                              )}
+                              <h4 style={{ marginTop: 22 }}>Historical node details</h4>
+                              <div style={{ display: "grid", gap: 8, marginTop: 10 }}>
+                                {replaySnapshot.nodes.map((node) => (
+                                  <div key={node.id} className="causal-result-card" style={{ padding: 12 }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+                                      <strong>{node.id} <span className="causal-node-type">{node.node_type ?? "Node"}</span></strong>
+                                      <span className="status-pill" style={{ color: statusColor(node.status) }}>{node.status ?? "unknown"}</span>
+                                    </div>
+                                    <p style={{ marginTop: 6 }}>{node.content ?? "No description available"}</p>
+                                  </div>
+                                ))}
+                                {replaySnapshot.nodes.length === 0 && <p className="muted-note">This recorded snapshot contains no nodes.</p>}
+                              </div>
+                              <h4 style={{ marginTop: 20 }}>Recorded dependencies</h4>
+                              {replaySnapshot.edges.length ? (
+                                <div style={{ display: "grid", gap: 6, marginTop: 10 }}>
+                                  {replaySnapshot.edges.map((edge, index) => (
+                                    <div key={`${edge.source}-${edge.target}-${index}`} className="dependency-preview">
+                                      <strong>{edge.source}</strong><ArrowRight size={14} /><span>{(edge.dependency_type ?? "dependency").replaceAll("_", " ")}</span><ArrowRight size={14} /><strong>{edge.target}</strong>
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : <p className="muted-note">No dependencies were recorded at this point.</p>}
+                            </>
+                          ) : (
+                            <div className="warning-banner" style={{ marginTop: 16 }}><AlertTriangle size={17} /><span>This event has no stored graph snapshot.</span></div>
+                          )}
+                          {selectedEvent.event_type === "recovery_completed" && (
+                            <RecoveryReplayDetails event={selectedEvent} />
+                          )}
+                          <h4 style={{ marginTop: 22 }}>Event details</h4>
+                          <pre style={{ marginTop: 10, padding: 14, borderRadius: 10, overflowX: "auto", background: "rgba(15, 23, 42, 0.72)", color: "#dbeafe", fontSize: 12, lineHeight: 1.6, whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{JSON.stringify(selectedEvent.details ?? {}, null, 2)}</pre>
+                        </>
+                      );
+                    })()}
+                  </div>
+                </div>
               )}
             </section>
           )}

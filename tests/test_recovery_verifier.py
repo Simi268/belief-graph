@@ -302,3 +302,99 @@ def test_end_to_end_verifier_rejects_unnecessary_invalidation():
     assert report['graph_correct'] is False
     assert report['verified'] is False
     assert 'B_UNRELATED' in report['unnecessarily_invalidated_nodes']
+
+def test_planned_recovery_without_execution_is_not_verified():
+    from app.agent import AgentRuntime
+    from app.models import NodeType
+    from app.recovery_verifier import verify_recovery_run
+
+    agent = AgentRuntime()
+
+    expected_statuses = {
+        "B1": NodeStatus.INVALID,
+        "B2": NodeStatus.ACTIVE,
+    }
+
+    agent.create_belief(
+        belief_id="B1",
+        content="Old belief",
+        value="v1",
+    )
+    agent.create_belief(
+        belief_id="B2",
+        content="Replacement belief",
+        value="v2",
+    )
+
+    # Set up the graph to match the expected recovered state.
+    agent.graph.get_node("B1").status = NodeStatus.INVALID
+
+    report = verify_recovery_run(
+        agent=agent,
+        recovery_result={
+            "status": "recovered",
+            "new_action": None,
+            "execution": None,
+        },
+        expected_statuses=expected_statuses,
+    )
+
+    assert report["graph_correct"] is True
+    assert report["execution_successful"] is False
+    assert report["verified"] is False
+
+
+def test_failed_replacement_execution_is_not_verified():
+    from app.agent import AgentRuntime
+    from app.models import ActionExecutionStatus, NodeType
+    from app.recovery_verifier import verify_recovery_run
+
+    agent = AgentRuntime()
+
+    agent.create_belief(
+        belief_id="B1",
+        content="Old belief",
+        value="v1",
+    )
+    agent.create_belief(
+        belief_id="B2",
+        content="Replacement belief",
+        value="v2",
+    )
+
+    # Match the expected graph state before testing execution verification.
+    agent.graph.get_node("B1").status = NodeStatus.INVALID
+
+    action = agent.create_node(
+        node_id="A2",
+        node_type=NodeType.ACTION,
+        content="Replacement API action",
+        value="v2",
+    )
+
+    action.execution_status = ActionExecutionStatus.FAILED
+    action.execution_result = {
+        "success": False,
+        "action_id": "A2",
+    }
+
+    expected_statuses = {
+        "B1": NodeStatus.INVALID,
+        "B2": NodeStatus.ACTIVE,
+        "A2": NodeStatus.ACTIVE,
+    }
+
+    # The verifier must use the failed result stored on the actual action.
+    report = verify_recovery_run(
+        agent=agent,
+        recovery_result={
+            "status": "recovered",
+            "new_action": action,
+            "execution": {"success": True},
+        },
+        expected_statuses=expected_statuses,
+    )
+
+    assert report["graph_correct"] is True
+    assert report["execution_successful"] is False
+    assert report["verified"] is False

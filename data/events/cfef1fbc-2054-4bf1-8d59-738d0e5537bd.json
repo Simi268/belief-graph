@@ -1,0 +1,1763 @@
+[
+  {
+    "event_id": "8840ee8f-bd78-447f-9f08-1f18561a6aae",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 1,
+    "event_type": "graph_created",
+    "summary": "Created graph: Execution Replay Test",
+    "timestamp": "2026-10-18T06:54:36.755143+00:00",
+    "details": {
+      "name": "Execution Replay Test"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 0,
+      "edge_count": 0,
+      "nodes": [],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "c16fd3c7-d088-4edb-b017-44e1a89dc8f1",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 2,
+    "event_type": "node_created",
+    "summary": "Created node: B1",
+    "timestamp": "2026-10-18T07:03:42.663890+00:00",
+    "details": {
+      "node_id": "B1",
+      "node_type": "belief",
+      "content": "The API is running version v2"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 1,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "e082a654-781a-4b7e-bf38-49f3be919e8f",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 3,
+    "event_type": "node_created",
+    "summary": "Created node: A1",
+    "timestamp": "2026-10-18T07:19:33.401323+00:00",
+    "details": {
+      "node_id": "A1",
+      "node_type": "action",
+      "content": "Fetch user data using /users"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 2,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "ac2de051-2742-4045-9268-36fe684d26f2",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 4,
+    "event_type": "node_created",
+    "summary": "Created node: B2",
+    "timestamp": "2026-10-18T07:20:01.789355+00:00",
+    "details": {
+      "node_id": "B2",
+      "node_type": "belief",
+      "content": "The API endpoint /users is available"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 3,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "9b391068-8ad6-4f98-903e-d709e83afc76",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 5,
+    "event_type": "node_created",
+    "summary": "Created node: B3",
+    "timestamp": "2026-10-18T07:20:20.192639+00:00",
+    "details": {
+      "node_id": "B3",
+      "node_type": "belief",
+      "content": "User data was fetched successfully"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 4,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "cb83067b-d74b-448f-b1ef-0b6524913cf5",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 6,
+    "event_type": "node_created",
+    "summary": "Created node: A2",
+    "timestamp": "2026-10-18T07:20:42.421464+00:00",
+    "details": {
+      "node_id": "A2",
+      "node_type": "action",
+      "content": "Transform the fetched user data"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 5,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "692107ae-2055-4737-84a3-19ddbd389b9f",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 7,
+    "event_type": "node_created",
+    "summary": "Created node: B4",
+    "timestamp": "2026-10-18T07:21:00.186118+00:00",
+    "details": {
+      "node_id": "B4",
+      "node_type": "belief",
+      "content": "User data is ready for the dashboard"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 6,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "6a194eb7-42bf-406a-ba9e-891df9c704c4",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 8,
+    "event_type": "dependency_created",
+    "summary": "Added dependency: B1 → A1",
+    "timestamp": "2026-10-18T07:21:21.719903+00:00",
+    "details": {
+      "source_id": "B1",
+      "target_id": "A1",
+      "dependency_type": "requires"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 6,
+      "edge_count": 1,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "281848ad-2baa-4201-b90a-6bffd6d9e2f4",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 9,
+    "event_type": "dependency_created",
+    "summary": "Added dependency: B2 → A1",
+    "timestamp": "2026-10-18T07:21:38.078454+00:00",
+    "details": {
+      "source_id": "B2",
+      "target_id": "A1",
+      "dependency_type": "requires"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 6,
+      "edge_count": 2,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B2",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "8e4f0f40-4aa7-481f-8309-298a0a59b732",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 10,
+    "event_type": "dependency_created",
+    "summary": "Added dependency: A1 → B3",
+    "timestamp": "2026-10-18T07:21:54.096936+00:00",
+    "details": {
+      "source_id": "A1",
+      "target_id": "B3",
+      "dependency_type": "requires"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 6,
+      "edge_count": 3,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A1",
+          "target": "B3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B2",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "227e44d7-dd32-4e30-84da-2390a324bd33",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 11,
+    "event_type": "dependency_created",
+    "summary": "Added dependency: B3 → A2",
+    "timestamp": "2026-10-18T07:22:21.465960+00:00",
+    "details": {
+      "source_id": "B3",
+      "target_id": "A2",
+      "dependency_type": "requires"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 6,
+      "edge_count": 4,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A1",
+          "target": "B3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B2",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B3",
+          "target": "A2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "df66da9c-56db-472d-bf30-5b0b317c78e8",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 12,
+    "event_type": "dependency_created",
+    "summary": "Added dependency: A2 → B4",
+    "timestamp": "2026-10-18T07:22:37.359343+00:00",
+    "details": {
+      "source_id": "A2",
+      "target_id": "B4",
+      "dependency_type": "requires"
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 6,
+      "edge_count": 5,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A1",
+          "target": "B3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B2",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B3",
+          "target": "A2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A2",
+          "target": "B4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "f0c40727-9df5-49aa-b5b7-7a1dfc45c36a",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 13,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-18T07:45:34.779382+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B5",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-EV_API_V3-B1",
+        "conflict_id": "CONFLICT-EV_API_V3-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B5",
+        "old_action_id": "A1",
+        "new_action_id": "A1_RETRY",
+        "affected_nodes": [
+          "A1",
+          "B3",
+          "A2",
+          "B4",
+          "B1",
+          "B5"
+        ],
+        "invalidated_nodes": [
+          "A1",
+          "B3",
+          "A2",
+          "B4",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B5.",
+        "timestamp": "2026-10-18 07:45:34.778505+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "A2",
+          "B3",
+          "B4"
+        ],
+        "replan_nodes": [
+          "A1",
+          "A2"
+        ],
+        "preserved_nodes": [
+          "B2"
+        ],
+        "causes": {
+          "A1": [
+            "B1"
+          ],
+          "B3": [
+            "A1"
+          ],
+          "A2": [
+            "B3"
+          ],
+          "B4": [
+            "A2"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A1_RETRY",
+        "node_type": "action",
+        "content": "Call customer API using v3",
+        "value": "v3",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B5",
+          "action_id": "A1_RETRY",
+          "assumed_version": "v3",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A1_RETRY",
+      "execution": {
+        "success": true,
+        "belief_id": "B5",
+        "action_id": "A1_RETRY",
+        "assumed_version": "v3",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": false,
+        "graph_correct": false,
+        "execution_successful": true,
+        "stale_nodes": [],
+        "unnecessarily_invalidated_nodes": [
+          "B1",
+          "B3",
+          "B4"
+        ],
+        "status_mismatches": {
+          "B1": {
+            "expected": "active",
+            "actual": "invalid"
+          },
+          "B3": {
+            "expected": "active",
+            "actual": "invalid"
+          },
+          "B4": {
+            "expected": "active",
+            "actual": "invalid"
+          }
+        },
+        "missing_nodes": []
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "B3",
+          "A2",
+          "B4",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "B3",
+          "A2",
+          "B4",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 9,
+      "edge_count": 7,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B5",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "EV_API_V3"
+        },
+        {
+          "id": "B5",
+          "node_type": "belief",
+          "content": "API version is v3",
+          "value": "v3",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1_RETRY",
+          "node_type": "action",
+          "content": "Call customer API using v3",
+          "value": "v3",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B5",
+            "action_id": "A1_RETRY",
+            "assumed_version": "v3",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A1",
+          "target": "B3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B2",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B3",
+          "target": "A2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A2",
+          "target": "B4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "EV_API_V3",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B5",
+          "target": "A1_RETRY",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "0bdee67a-805d-4e1b-a79a-c2446df79fe0",
+    "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+    "sequence": 14,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-18T08:02:07.695645+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B6",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-EV_API_V3-B1",
+        "conflict_id": "CONFLICT-EV_API_V3-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B6",
+        "old_action_id": "A1",
+        "new_action_id": "A1_RETRY_2",
+        "affected_nodes": [
+          "A1",
+          "B3",
+          "A2",
+          "B4",
+          "B1",
+          "B6"
+        ],
+        "invalidated_nodes": [
+          "A1",
+          "B3",
+          "A2",
+          "B4",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B6.",
+        "timestamp": "2026-10-18 08:02:07.694576+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "A2",
+          "B3",
+          "B4"
+        ],
+        "replan_nodes": [
+          "A1",
+          "A2"
+        ],
+        "preserved_nodes": [
+          "A1_RETRY",
+          "B2",
+          "B5"
+        ],
+        "causes": {
+          "A1": [
+            "B1"
+          ],
+          "B3": [
+            "A1"
+          ],
+          "A2": [
+            "B3"
+          ],
+          "B4": [
+            "A2"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A1_RETRY_2",
+        "node_type": "action",
+        "content": "Call customer API using v3",
+        "value": "v3",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B6",
+          "action_id": "A1_RETRY_2",
+          "assumed_version": "v3",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A1_RETRY_2",
+      "execution": {
+        "success": true,
+        "belief_id": "B6",
+        "action_id": "A1_RETRY_2",
+        "assumed_version": "v3",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": true,
+        "graph_correct": true,
+        "execution_successful": true,
+        "stale_nodes": [],
+        "unnecessarily_invalidated_nodes": [],
+        "status_mismatches": {},
+        "missing_nodes": []
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "B3",
+          "A2",
+          "B4",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "B3",
+          "A2",
+          "B4",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "cfef1fbc-2054-4bf1-8d59-738d0e5537bd",
+      "name": "Execution Replay Test",
+      "node_count": 11,
+      "edge_count": 8,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API is running version v2",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B6",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Fetch user data using /users",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B2",
+          "node_type": "belief",
+          "content": "The API endpoint /users is available",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B3",
+          "node_type": "belief",
+          "content": "User data was fetched successfully",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A2",
+          "node_type": "action",
+          "content": "Transform the fetched user data",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "B4",
+          "node_type": "belief",
+          "content": "User data is ready for the dashboard",
+          "value": null,
+          "source": "frontend",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "EV_API_V3"
+        },
+        {
+          "id": "B5",
+          "node_type": "belief",
+          "content": "API version is v3",
+          "value": "v3",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1_RETRY",
+          "node_type": "action",
+          "content": "Call customer API using v3",
+          "value": "v3",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B5",
+            "action_id": "A1_RETRY",
+            "assumed_version": "v3",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "B6",
+          "node_type": "belief",
+          "content": "API version is v3",
+          "value": "v3",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v3",
+          "value": "v3",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B6",
+            "action_id": "A1_RETRY_2",
+            "assumed_version": "v3",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A1",
+          "target": "B3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B2",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B3",
+          "target": "A2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "A2",
+          "target": "B4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "EV_API_V3",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B5",
+          "target": "A1_RETRY",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B6",
+          "target": "A1_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  }
+]

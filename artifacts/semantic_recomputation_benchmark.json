@@ -1,0 +1,6069 @@
+{
+  "benchmark": "beliefgraph_semantic_recomputation",
+  "trials_per_strategy_per_size": 100,
+  "graph_chain_sizes": [
+    5,
+    20,
+    50
+  ],
+  "total_trials": 600,
+  "semantics": "Each derived node adds its one-based position to its predecessor. The independent branch computes (100 + 7) * 2.",
+  "summary": {
+    "full_n5": {
+      "trials": 100,
+      "correct_trials": 100,
+      "correctness_rate": 1.0,
+      "mean_evaluated_nodes": 7,
+      "mean_latency_ms": 0.05502,
+      "median_latency_ms": 0.0299,
+      "p95_latency_ms": 0.1403
+    },
+    "selective_n5": {
+      "trials": 100,
+      "correct_trials": 100,
+      "correctness_rate": 1.0,
+      "mean_evaluated_nodes": 5,
+      "mean_latency_ms": 0.021967,
+      "median_latency_ms": 0.0209,
+      "p95_latency_ms": 0.0265
+    },
+    "full_n20": {
+      "trials": 100,
+      "correct_trials": 100,
+      "correctness_rate": 1.0,
+      "mean_evaluated_nodes": 22,
+      "mean_latency_ms": 0.111562,
+      "median_latency_ms": 0.09455,
+      "p95_latency_ms": 0.1929
+    },
+    "selective_n20": {
+      "trials": 100,
+      "correct_trials": 100,
+      "correctness_rate": 1.0,
+      "mean_evaluated_nodes": 20,
+      "mean_latency_ms": 0.101338,
+      "median_latency_ms": 0.08515,
+      "p95_latency_ms": 0.1698
+    },
+    "full_n50": {
+      "trials": 100,
+      "correct_trials": 100,
+      "correctness_rate": 1.0,
+      "mean_evaluated_nodes": 52,
+      "mean_latency_ms": 0.227914,
+      "median_latency_ms": 0.21384999999999998,
+      "p95_latency_ms": 0.2835
+    },
+    "selective_n50": {
+      "trials": 100,
+      "correct_trials": 100,
+      "correctness_rate": 1.0,
+      "mean_evaluated_nodes": 50,
+      "mean_latency_ms": 0.244595,
+      "median_latency_ms": 0.2041,
+      "p95_latency_ms": 0.3548
+    }
+  },
+  "measurements": [
+    {
+      "strategy": "full",
+      "trial": 1,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0352,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 1,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.024,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 2,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0375,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 2,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0216,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 3,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0305,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 3,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0234,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 4,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0293,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 4,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0209,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 5,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0301,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 5,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0235,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 6,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.038,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 6,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0242,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 7,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0371,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 7,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0222,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 8,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0299,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 8,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0226,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 9,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0293,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 9,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0212,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 10,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0296,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 10,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0219,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 11,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0427,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 11,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0319,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 12,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0557,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 12,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 13,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0293,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 13,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0241,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 14,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0291,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 14,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0211,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 15,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0325,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 15,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0219,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 16,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0291,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 16,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 17,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.033,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 17,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0217,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 18,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0354,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 18,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0213,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 19,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0288,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 19,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0265,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 20,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0322,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 20,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 21,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0296,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 21,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0238,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 22,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0329,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 22,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0252,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 23,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.136,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 23,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0203,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 24,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0299,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 24,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0211,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 25,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0334,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 25,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0212,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 26,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.029,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 26,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0256,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 27,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0438,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 27,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0217,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 28,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1675,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 28,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 29,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0295,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 29,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0202,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 30,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0288,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 30,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.025,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 31,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0297,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 31,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0205,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 32,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0331,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 32,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0239,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 33,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1254,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 33,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 34,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 34,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0209,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 35,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0299,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 35,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0218,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 36,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0295,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 36,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 37,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0325,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 37,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 38,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1229,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 38,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0221,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 39,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0288,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 39,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 40,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0337,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 40,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0206,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 41,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0412,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 41,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 42,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.032,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 42,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0238,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 43,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.7975,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 43,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 44,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 44,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0202,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 45,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 45,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 46,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0294,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 46,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 47,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0393,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 47,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0203,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 48,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1343,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 48,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 49,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0334,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 49,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0198,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 50,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 50,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0203,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 51,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0296,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 51,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0234,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 52,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0301,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 52,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 53,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1334,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 53,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 54,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0283,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 54,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0203,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 55,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0285,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 55,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0214,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 56,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 56,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0205,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 57,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0374,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 57,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0239,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 58,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1537,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 58,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0219,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 59,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0284,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 59,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0209,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 60,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0287,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 60,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0234,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 61,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0293,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 61,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0205,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 62,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0294,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 62,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0206,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 63,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1361,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 63,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0206,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 64,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0282,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 64,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0212,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 65,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0292,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 65,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0215,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 66,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0297,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 66,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0212,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 67,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0298,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 67,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 68,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1244,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 68,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 69,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0291,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 69,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 70,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.029,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 70,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 71,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0291,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 71,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 72,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 72,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 73,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1505,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 73,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0205,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 74,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0327,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 74,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 75,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0296,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 75,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0218,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 76,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0293,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 76,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 77,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0295,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 77,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 78,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1273,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 78,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0222,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 79,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0318,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 79,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 80,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0291,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 80,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0208,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 81,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0294,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 81,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 82,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0325,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 82,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0231,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 83,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1254,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 83,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0203,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 84,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0288,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 84,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0508,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 85,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0356,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 85,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0205,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 86,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0293,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 86,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0205,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 87,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0345,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 87,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0209,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 88,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1403,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 88,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0219,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 89,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 89,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0209,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 90,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0296,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 90,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0202,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 91,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0291,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 91,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.021,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 92,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0331,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 92,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0213,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 93,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1388,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 93,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0266,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 94,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0342,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 94,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0205,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 95,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0288,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 95,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 96,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0328,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 96,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0211,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 97,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0351,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 97,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0215,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 98,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.1359,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 98,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 99,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0283,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 99,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0202,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 100,
+      "chain_length": 5,
+      "selected_count": 7,
+      "evaluated_count": 7,
+      "correct": true,
+      "elapsed_ms": 0.0297,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 100,
+      "chain_length": 5,
+      "selected_count": 5,
+      "evaluated_count": 5,
+      "correct": true,
+      "elapsed_ms": 0.0216,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 1,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0996,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 1,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.089,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 2,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0983,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 2,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0927,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 3,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0939,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 3,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.115,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 4,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1089,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 4,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0812,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 5,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.098,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 5,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0785,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 6,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0977,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 6,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.081,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 7,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1569,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 7,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1469,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 8,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0902,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 8,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.178,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 9,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1115,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 9,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0838,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 10,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1929,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 10,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1279,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 11,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1648,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 11,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0985,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 12,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1206,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 12,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0804,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 13,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1185,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 13,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0856,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 14,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1036,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 14,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1522,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 15,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.2688,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 15,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0836,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 16,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1283,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 16,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1698,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 17,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0995,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 17,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1351,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 18,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1686,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 18,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1213,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 19,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0868,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 19,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1373,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 20,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.143,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 20,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1497,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 21,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0925,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 21,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1262,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 22,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1503,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 22,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0878,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 23,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1067,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 23,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1863,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 24,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.224,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 24,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0834,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 25,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1743,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 25,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.196,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 26,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.146,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 26,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1386,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 27,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1085,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 27,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0798,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 28,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1277,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 28,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1305,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 29,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1297,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 29,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0817,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 30,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0879,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 30,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0973,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 31,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.184,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 31,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1479,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 32,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1293,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 32,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0781,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 33,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0857,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 33,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 34,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0881,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 34,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0806,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 35,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0864,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 35,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0838,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 36,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1021,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 36,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1231,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 37,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1888,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 37,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0844,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 38,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1358,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 38,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0854,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 39,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.09,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 39,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1634,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 40,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0903,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 40,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.163,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 41,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1318,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 41,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1067,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 42,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0867,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 42,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0921,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 43,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0859,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 43,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1638,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 44,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1801,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 44,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1576,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 45,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1679,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 45,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1602,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 46,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1146,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 46,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1409,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 47,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.2522,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 47,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1219,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 48,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.2118,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 48,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1579,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 49,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0884,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 49,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0777,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 50,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0905,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 50,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0781,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 51,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0929,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 51,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0769,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 52,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0856,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 52,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0999,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 53,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.099,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 53,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0828,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 54,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0985,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 54,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0861,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 55,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0922,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 55,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0811,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 56,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0861,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 56,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0854,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 57,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0907,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 57,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0866,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 58,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0863,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 58,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0929,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 59,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0902,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 59,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1366,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 60,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0884,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 60,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0818,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 61,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0927,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 61,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0777,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 62,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0928,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 62,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0848,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 63,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0946,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 63,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0773,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 64,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0848,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 64,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0782,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 65,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1189,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 65,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0865,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 66,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.092,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 66,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0871,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 67,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0862,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 67,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0849,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 68,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0872,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 68,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0827,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 69,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0936,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 69,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0768,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 70,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0861,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 70,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1057,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 71,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0976,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 71,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0796,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 72,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0855,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 72,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0818,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 73,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0914,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 73,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0766,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 74,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0892,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 74,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0808,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 75,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0859,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 75,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0833,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 76,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1093,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 76,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.1949,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 77,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1091,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 77,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0773,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 78,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0933,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 78,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0803,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 79,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0846,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 79,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.076,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 80,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0859,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 80,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0781,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 81,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0854,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 81,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0765,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 82,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0987,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 82,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0895,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 83,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1075,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 83,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0766,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 84,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1291,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 84,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0819,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 85,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.085,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 85,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0768,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 86,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0872,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 86,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.079,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 87,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0847,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 87,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0763,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 88,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0958,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 88,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0864,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 89,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.099,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 89,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.078,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 90,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0945,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 90,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0784,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 91,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.086,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 91,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0874,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 92,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1055,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 92,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0896,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 93,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0849,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 93,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0773,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 94,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0854,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 94,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0866,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 95,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0849,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 95,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0787,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 96,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0907,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 96,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0785,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 97,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.1262,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 97,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.078,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 98,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0856,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 98,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0795,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 99,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0866,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 99,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0794,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 100,
+      "chain_length": 20,
+      "selected_count": 22,
+      "evaluated_count": 22,
+      "correct": true,
+      "elapsed_ms": 0.0945,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 100,
+      "chain_length": 20,
+      "selected_count": 20,
+      "evaluated_count": 20,
+      "correct": true,
+      "elapsed_ms": 0.0772,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 1,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2138,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 1,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1939,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 2,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2055,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 2,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2124,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 3,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2124,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 3,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2025,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 4,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2207,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 4,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1892,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 5,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2096,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 5,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2375,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 6,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.5885,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 6,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2934,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 7,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2047,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 7,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2048,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 8,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1997,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 8,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1994,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 9,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1997,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 9,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2041,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 10,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2099,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 10,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 1.3444,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 11,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2241,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 11,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1945,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 12,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2296,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 12,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1878,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 13,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2225,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 13,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2079,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 14,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2368,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 14,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1897,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 15,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2538,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 15,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2278,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 16,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2218,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 16,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2171,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 17,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2374,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 17,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1993,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 18,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2165,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 18,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2118,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 19,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1988,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 19,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2671,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 20,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2095,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 20,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2051,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 21,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2073,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 21,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1893,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 22,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2228,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 22,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.189,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 23,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.202,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 23,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2107,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 24,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.3117,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 24,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.22,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 25,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2055,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 25,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2041,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 26,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2037,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 26,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1974,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 27,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2112,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 27,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2122,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 28,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2835,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 28,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2981,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 29,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2116,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 29,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2542,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 30,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.226,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 30,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2311,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 31,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2344,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 31,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1912,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 32,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2163,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 32,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2164,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 33,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2764,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 33,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1937,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 34,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2063,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 34,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2103,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 35,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2131,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 35,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2559,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 36,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 36,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2149,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 37,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2038,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 37,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.256,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 38,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2221,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 38,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2129,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 39,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2129,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 39,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1908,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 40,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2117,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 40,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1902,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 41,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2355,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 41,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1911,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 42,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2602,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 42,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.198,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 43,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2808,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 43,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2021,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 44,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2095,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 44,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1938,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 45,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.22,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 45,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1929,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 46,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.225,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 46,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.251,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 47,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2022,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 47,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2048,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 48,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2272,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 48,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2236,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 49,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2321,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 49,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2033,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 50,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2147,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 50,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1927,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 51,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2569,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 51,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2112,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 52,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2003,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 52,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1946,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 53,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2048,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 53,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.217,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 54,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2093,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 54,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1907,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 55,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2138,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 55,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2458,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 56,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2354,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 56,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1963,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 57,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2136,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 57,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.203,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 58,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2057,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 58,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2183,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 59,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2227,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 59,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2265,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 60,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2806,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 60,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1988,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 61,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2065,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 61,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1988,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 62,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2536,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 62,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2085,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 63,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.198,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 63,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2026,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 64,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2306,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 64,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 1.8765,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 65,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1973,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 65,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1876,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 66,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1973,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 66,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.193,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 67,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.4318,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 67,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2159,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 68,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2267,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 68,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1889,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 69,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.29,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 69,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2223,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 70,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2057,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 70,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2129,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 71,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.204,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 71,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2038,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 72,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2264,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 72,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2337,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 73,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2014,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 73,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2583,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 74,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2139,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 74,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1969,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 75,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2677,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 75,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1923,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 76,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2274,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 76,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2037,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 77,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2227,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 77,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1959,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 78,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2561,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 78,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2054,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 79,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2086,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 79,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1992,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 80,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2289,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 80,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2074,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 81,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2069,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 81,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2531,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 82,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2288,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 82,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2725,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 83,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2214,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 83,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2686,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 84,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2143,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 84,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1989,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 85,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2168,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 85,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1887,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 86,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2117,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 86,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1949,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 87,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2548,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 87,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1921,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 88,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1994,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 88,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.4051,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 89,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2326,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 89,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2158,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 90,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1995,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 90,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2008,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 91,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2028,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 91,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.258,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 92,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2063,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 92,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.2333,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 93,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2105,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 93,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1945,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 94,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2111,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 94,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.3548,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 95,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2529,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 95,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1929,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 96,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2797,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 96,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1978,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 97,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1999,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 97,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1902,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 98,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.1976,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 98,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1949,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 99,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2018,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 99,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.1907,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "full",
+      "trial": 100,
+      "chain_length": 50,
+      "selected_count": 52,
+      "evaluated_count": 52,
+      "correct": true,
+      "elapsed_ms": 0.2001,
+      "failed_nodes": []
+    },
+    {
+      "strategy": "selective",
+      "trial": 100,
+      "chain_length": 50,
+      "selected_count": 50,
+      "evaluated_count": 50,
+      "correct": true,
+      "elapsed_ms": 0.3747,
+      "failed_nodes": []
+    }
+  ]
+}

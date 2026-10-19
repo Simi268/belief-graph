@@ -20,6 +20,10 @@ from app.storage import GraphStorage
 from app.recovery import RecoveryEngine
 from app.sdk import BeliefGraphSDK
 
+from app.recovery_verifier import verify_graph_recovery
+
+from app.event_store import EventStore
+
 
 # ============================================================
 # APP CONFIGURATION
@@ -53,6 +57,7 @@ graph_names: dict[str, str] = {}
 agents: dict[str, AgentRuntime] = {}
 recovery_engines: dict[str, RecoveryEngine] = {}
 storage = GraphStorage()
+event_store = EventStore()
 
 
 def persist_graph(graph_id: str) -> None:
@@ -173,6 +178,7 @@ class RecoverFromFailureRequest(BaseModel):
     new_belief_id: str = Field(min_length=1, max_length=100)
     new_action_id: str = Field(min_length=1, max_length=100)
     action_result: dict[str, Any]
+    expected_statuses: dict[str, str] | None = None
 
 
 # ============================================================
@@ -297,6 +303,21 @@ def graph_snapshot(graph_id: str) -> dict[str, Any]:
         "edges": edges,
     }
 
+def record_graph_event(
+    graph_id: str,
+    event_type: str,
+    summary: str,
+    details: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Record a real graph event and its resulting graph snapshot."""
+    return event_store.append(
+        graph_id=graph_id,
+        event_type=event_type,
+        summary=summary,
+        details=details or {},
+        snapshot=graph_snapshot(graph_id),
+    )
+
 
 def ensure_node_exists(sdk: BeliefGraphSDK, node_id: str) -> None:
     if node_id not in sdk.graph.graph:
@@ -346,7 +367,12 @@ def create_graph(request: CreateGraphRequest) -> dict[str, Any]:
     agents[graph_id] = agent
     recovery_engines[graph_id] = recovery_engine
     persist_graph(graph_id)
-
+    record_graph_event(
+        graph_id,
+        "graph_created",
+        f"Created graph: {request.name}",
+        {"name": request.name},
+    )
     return graph_snapshot(graph_id)
 
 
@@ -409,6 +435,17 @@ def create_node(
         ) from exc
 
     persist_graph(graph_id)
+    record_graph_event(
+        graph_id,
+        "node_created",
+        f"Created node: {request.node_id}",
+        {
+            "node_id": request.node_id,
+            "node_type": request.node_type.value,
+            "content": request.content,
+        },
+    )
+
     return {
         "message": "Node created successfully.",
         "node_id": request.node_id,
@@ -447,6 +484,17 @@ def create_dependency(
         ) from exc
 
     persist_graph(graph_id)
+    record_graph_event(
+        graph_id,
+        "dependency_created",
+        f"Added dependency: {request.source_id} → {request.target_id}",
+        {
+            "source_id": request.source_id,
+            "target_id": request.target_id,
+            "dependency_type": request.dependency_type.value,
+        },
+    )
+
     return {
         "message": "Dependency created successfully.",
         "source_id": request.source_id,
@@ -629,14 +677,97 @@ def recover_from_failure(
 
     # Only claim verified recovery when the environment confirms success.
     execution = result.get("execution")
+
     if isinstance(execution, dict):
-        result["status"] = "recovered" if execution.get("success") is True else "retry_failed"
+        result["status"] = (
+            "recovered"
+            if execution.get("success") is True
+            else "retry_failed"
+        )
     elif result.get("new_action") is not None:
         result["status"] = "recovery_planned"
     else:
         result["status"] = "revised"
 
+    # Full verification requires independently supplied expected statuses.
+    if request.expected_statuses is not None:
+        allowed_statuses = {item.value for item in NodeStatus}
+
+        invalid_statuses = {
+            node_id: node_status
+            for node_id, node_status in request.expected_statuses.items()
+            if node_status not in allowed_statuses
+        }
+
+        if invalid_statuses:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail={
+                    "message": "Unsupported expected node status.",
+                    "invalid_statuses": invalid_statuses,
+                    "allowed_statuses": sorted(allowed_statuses),
+                },
+            )
+
+        verification = verify_graph_recovery(
+            graph=agent.graph,
+            expected_statuses=request.expected_statuses,
+            execution_result=execution,
+        )
+
+        result["verification"] = verification.to_dict()
+    else:
+        result["verification"] = {
+            "verified": False,
+            "verification_performed": False,
+            "reason": (
+                "Expected node statuses were not supplied; "
+                "graph correctness has not been independently verified."
+            ),
+            "execution_successful": (
+                isinstance(execution, dict)
+                and execution.get("success") is True
+            ),
+        }
+
     persist_graph(graph_id)
+    record_graph_event(
+    graph_id,
+    "recovery_completed",
+    f"Recovery processed for action: {request.action_id}",
+    {
+        # Original failure
+        "action_id": request.action_id,
+
+        # Belief revision
+        "new_belief_id": request.new_belief_id,
+        "revision_event": to_jsonable(result.get("event")),
+
+        # Selective recovery
+        "recovery_plan": to_jsonable(result.get("recovery_plan")),
+        "new_action": to_jsonable(result.get("new_action")),
+        "new_action_id": request.new_action_id,
+
+        # Actual execution outcome
+        "execution": to_jsonable(result.get("execution")),
+        "status": result.get("status"),
+
+        # Independent verification
+        "verification": to_jsonable(result.get("verification")),
+
+        # Additional recovery diagnostics
+        "commitment_impact": to_jsonable(
+            result.get("commitment_impact")
+        ),
+        "commitment_dependency_report": to_jsonable(
+            result.get("commitment_dependency_report")
+        ),
+        "commitment_recommendations": to_jsonable(
+            result.get("commitment_recommendations")
+        ),
+    },
+)
+
     return {
         "graph_id": graph_id,
         "result": to_jsonable(result),
@@ -654,3 +785,62 @@ def recover_from_failure(
 )
 def export_graph(graph_id: str) -> dict[str, Any]:
     return graph_snapshot(graph_id)
+
+# ============================================================
+# EXECUTION REPLAY
+# ============================================================
+
+@app.get("/graphs/{graph_id}/events", tags=["Replay"])
+def get_graph_events(graph_id: str) -> dict[str, Any]:
+    """Return recorded events in chronological sequence."""
+    get_sdk(graph_id)
+
+    events = event_store.list_events(graph_id)
+
+    return {
+        "graph_id": graph_id,
+        "count": len(events),
+        "events": events,
+    }
+
+
+@app.get(
+    "/graphs/{graph_id}/replay/{sequence}",
+    tags=["Replay"],
+)
+def replay_graph_event(
+    graph_id: str,
+    sequence: int,
+) -> dict[str, Any]:
+    """Inspect a recorded historical state without executing actions."""
+    get_sdk(graph_id)
+
+    if sequence < 1:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Sequence must be at least 1.",
+        )
+
+    events = event_store.list_events(graph_id)
+
+    event = next(
+        (
+            item for item in events
+            if item.get("sequence") == sequence
+        ),
+        None,
+    )
+
+    if event is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Replay event {sequence} was not found.",
+        )
+
+    return {
+        "graph_id": graph_id,
+        "sequence": sequence,
+        "event": event,
+        "snapshot": event.get("snapshot"),
+        "read_only": True,
+    }

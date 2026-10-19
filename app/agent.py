@@ -242,6 +242,158 @@ class AgentRuntime:
             dependency_type
         )
 
+    def execute_selective_recovery(
+        self,
+        recovery_plan: dict,
+        recompute_node,
+    ) -> dict:
+        """Execute recovery only for nodes selected by a recovery plan.
+
+        ``recompute_node`` is a caller-provided function accepting a graph node
+        object and returning its recomputation result. This runtime does not
+        invent domain-specific recomputation logic for arbitrary plans/actions.
+
+        Preserved nodes are deliberately not passed to the callback. Metrics
+        count callback invocations as actual recomputation attempts.
+        """
+        from time import perf_counter
+
+        if not callable(recompute_node):
+            raise TypeError("recompute_node must be callable.")
+
+        started_at = perf_counter()
+        recovery_ids = list(dict.fromkeys(
+            recovery_plan.get("replan_nodes", recovery_plan.get("recovery_nodes", []))
+        ))
+        preserved_ids = list(dict.fromkeys(
+            recovery_plan.get("preserved_nodes", [])
+        ))
+
+        missing_nodes = [
+            node_id for node_id in recovery_ids
+            if node_id not in self.graph.graph
+        ]
+        if missing_nodes:
+            raise ValueError(
+                "Recovery plan references missing nodes: "
+                + ", ".join(sorted(missing_nodes))
+            )
+
+        overlap = set(recovery_ids) & set(preserved_ids)
+        if overlap:
+            raise ValueError(
+                "Recovery plan cannot mark nodes as both recovery candidates "
+                "and preserved: " + ", ".join(sorted(overlap))
+            )
+
+        # Dependencies are directed from prerequisite to dependent. A
+        # topological ordering therefore recomputes prerequisites first.
+        # Only edges between selected recovery candidates affect this order.
+        selected_subgraph = self.graph.graph.subgraph(recovery_ids)
+        try:
+            ordered_recovery_ids = list(
+                __import__("networkx").topological_sort(selected_subgraph)
+            )
+        except __import__("networkx").NetworkXUnfeasible as exc:
+            raise ValueError(
+                "Cannot execute selective recovery: selected recovery nodes "
+                "contain a dependency cycle."
+            ) from exc
+
+        outcomes = []
+        failed_or_skipped_ids = set()
+        attempted_node_ids = []
+        failed_node_ids = []
+        skipped_node_ids = []
+
+        for node_id in ordered_recovery_ids:
+            # A selected node must not be recomputed if one of its selected
+            # prerequisites failed or was skipped earlier in topological order.
+            selected_predecessors = [
+                predecessor_id
+                for predecessor_id in selected_subgraph.predecessors(node_id)
+            ]
+            blocked_predecessors = [
+                predecessor_id
+                for predecessor_id in selected_predecessors
+                if predecessor_id in failed_or_skipped_ids
+            ]
+
+            if blocked_predecessors:
+                skipped_node_ids.append(node_id)
+                failed_or_skipped_ids.add(node_id)
+                outcomes.append({
+                    "node_id": node_id,
+                    "success": False,
+                    "skipped": True,
+                    "reason": (
+                        "Skipped because prerequisite recomputation failed "
+                        "or was skipped: "
+                        + ", ".join(blocked_predecessors)
+                    ),
+                    "blocked_by": blocked_predecessors,
+                    "duration_ms": 0.0,
+                })
+                continue
+
+            node = self.graph.get_node(node_id)
+            started_node = perf_counter()
+            attempted_node_ids.append(node_id)
+            try:
+                result = recompute_node(node)
+                outcomes.append({
+                    "node_id": node_id,
+                    "success": True,
+                    "skipped": False,
+                    "result": result,
+                    "duration_ms": round(
+                        (perf_counter() - started_node) * 1000, 3
+                    ),
+                })
+            except Exception as exc:
+                failed_node_ids.append(node_id)
+                failed_or_skipped_ids.add(node_id)
+                outcomes.append({
+                    "node_id": node_id,
+                    "success": False,
+                    "skipped": False,
+                    "error": str(exc),
+                    "duration_ms": round(
+                        (perf_counter() - started_node) * 1000, 3
+                    ),
+                })
+
+        elapsed_ms = round((perf_counter() - started_at) * 1000, 3)
+        successful = len(attempted_node_ids) - len(failed_node_ids)
+        failed = len(failed_node_ids)
+        skipped = len(skipped_node_ids)
+
+        return {
+            "status": (
+                "completed"
+                if failed == 0 and skipped == 0
+                else "partial_failure"
+            ),
+            # This list contains nodes whose callbacks were actually invoked.
+            "recomputed_node_ids": attempted_node_ids,
+            "execution_order": ordered_recovery_ids,
+            "preserved_node_ids": preserved_ids,
+            "failed_node_ids": failed_node_ids,
+            "skipped_node_ids": skipped_node_ids,
+            "outcomes": outcomes,
+            "metrics": {
+                "recomputed_node_count": len(attempted_node_ids),
+                "dependency_order_enforced": True,
+                "successful_recomputations": successful,
+                "failed_recomputations": failed,
+                "skipped_recomputations": skipped,
+                "preserved_node_count": len(preserved_ids),
+                "unnecessary_recomputations": 0,
+                "recovery_duration_ms": elapsed_ms,
+                "execution_performed": True,
+            },
+        }
+
     # --------------------------------------------------
     # CAUSAL RECOVERY PLANNING
     # --------------------------------------------------
@@ -407,3 +559,4 @@ class AgentRuntime:
             ),
             "causes": causes
         }
+

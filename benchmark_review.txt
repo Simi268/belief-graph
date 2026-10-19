@@ -1,0 +1,776 @@
+`n======================================================================`nFILE: app\executable_recovery_benchmark.py`n======================================================================
+"""Executable, deterministic benchmark for dependency-aware recovery.
+
+Unlike the abstract seeded benchmark, every derived node here has a real
+Python computation. The benchmark compares:
+- baseline: update the changed belief but leave derived values stale;
+- full_recompute: recompute every derived node in topological order;
+- belief_graph: recompute only descendants of the changed belief.
+
+This is a controlled correctness/cost experiment, not an end-to-end LLM-agent
+benchmark. It uses only the Python standard library.
+"""
+
+from __future__ import annotations
+
+import json
+from collections import defaultdict, deque
+from copy import deepcopy
+from dataclasses import dataclass
+from pathlib import Path
+from statistics import mean, median
+from typing import Callable, Any
+
+
+ComputeFn = Callable[[dict[str, float]], float]
+
+
+@dataclass(frozen=True)
+class NodeSpec:
+    node_id: str
+    dependencies: tuple[str, ...] = ()
+    compute: ComputeFn | None = None
+
+    @property
+    def is_belief(self) -> bool:
+        return self.compute is None
+
+
+@dataclass
+class ExecutableGraph:
+    specs: dict[str, NodeSpec]
+    values: dict[str, float]
+    dependents: dict[str, set[str]]
+
+    @classmethod
+    def create(cls, belief_values: dict[str, float]) -> "ExecutableGraph":
+        specs = {
+            "price": NodeSpec("price"),
+            "quantity": NodeSpec("quantity"),
+            "tax_rate": NodeSpec("tax_rate"),
+            "discount": NodeSpec("discount"),
+            "shipping_rate": NodeSpec("shipping_rate"),
+            "service_fee": NodeSpec("service_fee"),
+            "spare_belief": NodeSpec("spare_belief"),
+            "subtotal": NodeSpec(
+                "subtotal", ("price", "quantity"),
+                lambda v: v["price"] * v["quantity"],
+            ),
+            "tax": NodeSpec(
+                "tax", ("subtotal", "tax_rate"),
+                lambda v: v["subtotal"] * v["tax_rate"],
+            ),
+            "shipping": NodeSpec(
+                "shipping", ("quantity", "shipping_rate"),
+                lambda v: v["quantity"] * v["shipping_rate"],
+            ),
+            "service_cost": NodeSpec(
+                "service_cost", ("service_fee", "quantity"),
+                lambda v: v["service_fee"] * v["quantity"],
+            ),
+            "total": NodeSpec(
+                "total", ("subtotal", "tax", "shipping", "service_cost"),
+                lambda v: v["subtotal"] + v["tax"] + v["shipping"] + v["service_cost"],
+            ),
+            "discounted_total": NodeSpec(
+                "discounted_total", ("total", "discount"),
+                lambda v: max(0.0, v["total"] - v["discount"]),
+            ),
+            "spare_metric": NodeSpec(
+                "spare_metric", ("spare_belief",),
+                lambda v: v["spare_belief"] * 3.0,
+            ),
+        }
+        missing = set(specs) - set(belief_values) - {
+            node_id for node_id, spec in specs.items() if not spec.is_belief
+        }
+        if missing:
+            raise ValueError(f"Missing initial belief values: {sorted(missing)}")
+
+        dependents: dict[str, set[str]] = defaultdict(set)
+        for node_id, spec in specs.items():
+            for dependency in spec.dependencies:
+                if dependency not in specs:
+                    raise ValueError(
+                        f"Node {node_id!r} depends on unknown node {dependency!r}"
+                    )
+                dependents[dependency].add(node_id)
+
+        graph = cls(
+            specs=specs,
+            values={key: float(value) for key, value in belief_values.items()},
+            dependents=dict(dependents),
+        )
+        graph.recompute_all()
+        return graph
+
+    def clone(self) -> "ExecutableGraph":
+        return deepcopy(self)
+
+    def topological_order(self, subset: set[str] | None = None) -> list[str]:
+        selected = set(self.specs) if subset is None else set(subset)
+        indegree = {
+            node_id: sum(
+                dependency in selected
+                for dependency in self.specs[node_id].dependencies
+            )
+            for node_id in selected
+        }
+        queue = deque(sorted(node_id for node_id, degree in indegree.items() if degree == 0))
+        ordered: list[str] = []
+        while queue:
+            node_id = queue.popleft()
+            ordered.append(node_id)
+            for child in sorted(self.dependents.get(node_id, set()) & selected):
+                indegree[child] -= 1
+                if indegree[child] == 0:
+                    queue.append(child)
+        if len(ordered) != len(selected):
+            raise ValueError("Dependency graph contains a cycle.")
+        return ordered
+
+    def descendants(self, node_id: str) -> set[str]:
+        if node_id not in self.specs:
+            raise ValueError(f"Unknown node: {node_id}")
+        found: set[str] = set()
+        queue = deque(self.dependents.get(node_id, set()))
+        while queue:
+            current = queue.popleft()
+            if current in found:
+                continue
+            found.add(current)
+            queue.extend(self.dependents.get(current, set()))
+        return found
+
+    def recompute_node(self, node_id: str) -> None:
+        spec = self.specs[node_id]
+        if spec.compute is None:
+            raise ValueError(f"Belief/input node {node_id!r} cannot be recomputed.")
+        self.values[node_id] = float(spec.compute(self.values))
+
+    def recompute_nodes(self, node_ids: set[str]) -> list[str]:
+        ordered = [
+            node_id
+            for node_id in self.topological_order(node_ids)
+            if not self.specs[node_id].is_belief
+        ]
+        for node_id in ordered:
+            self.recompute_node(node_id)
+        return ordered
+
+    def recompute_all(self) -> list[str]:
+        derived = {
+            node_id for node_id, spec in self.specs.items()
+            if not spec.is_belief
+        }
+        return self.recompute_nodes(derived)
+
+
+BELIEF_BASE_VALUES: dict[str, float] = {
+    "price": 25.0,
+    "quantity": 3.0,
+    "tax_rate": 0.08,
+    "discount": 4.0,
+    "shipping_rate": 2.5,
+    "service_fee": 1.25,
+    "spare_belief": 7.0,
+}
+
+SCENARIO_CHANGED_BELIEFS: dict[str, str] = {
+    "price_change": "price",
+    "quantity_change": "quantity",
+    "tax_rate_change": "tax_rate",
+    "discount_change": "discount",
+    "shipping_rate_change": "shipping_rate",
+    "service_fee_change": "service_fee",
+    "disconnected_belief_change": "spare_belief",
+}
+
+
+def _changed_value(old_value: float, seed: int) -> float:
+    """Produce a deterministic, non-zero change for each seed."""
+    return old_value + (seed * 0.75) + 1.0
+
+
+def _new_graph(seed: int) -> ExecutableGraph:
+    values = dict(BELIEF_BASE_VALUES)
+    # Vary inputs by seed without using randomness, so results are reproducible.
+    values["price"] += seed * 0.2
+    values["quantity"] += (seed % 3) * 0.1
+    values["tax_rate"] += seed * 0.001
+    return ExecutableGraph.create(values)
+
+
+def _run_one(
+    scenario: str,
+    seed: int,
+    strategy: str,
+) -> dict[str, Any]:
+    changed_belief = SCENARIO_CHANGED_BELIEFS[scenario]
+    initial = _new_graph(seed)
+    changed_value = _changed_value(initial.values[changed_belief], seed)
+
+    # The oracle starts from the same pre-change state and recomputes every
+    # derived value after applying the changed belief.
+    oracle = initial.clone()
+    oracle.values[changed_belief] = changed_value
+    oracle.recompute_all()
+
+    graph = initial.clone()
+    graph.values[changed_belief] = changed_value
+
+    if strategy == "baseline":
+        recomputed: list[str] = []
+        mode = "no_recovery"
+    elif strategy == "full_recompute":
+        recomputed = graph.recompute_all()
+        mode = "actual_full_recomputation"
+    elif strategy == "belief_graph":
+        affected = graph.descendants(changed_belief)
+        recomputed = graph.recompute_nodes(affected)
+        mode = "actual_selective_recomputation"
+    else:
+        raise ValueError(f"Unknown strategy: {strategy}")
+
+    mismatches = {
+        node_id: {
+            "actual": graph.values.get(node_id),
+            "expected": expected_value,
+        }
+        for node_id, expected_value in oracle.values.items()
+        if graph.values.get(node_id) != expected_value
+    }
+    changed_descendants = initial.descendants(changed_belief)
+    preserved_derived_nodes = {
+        node_id
+        for node_id, spec in initial.specs.items()
+        if not spec.is_belief and node_id not in changed_descendants
+    }
+    preserved_unchanged = all(
+        graph.values[node_id] == initial.values[node_id]
+        for node_id in preserved_derived_nodes
+    )
+    expected_recompute_set = {
+        node_id for node_id in changed_descendants
+        if not initial.specs[node_id].is_belief
+    }
+    unnecessary_recomputed = set(recomputed) - expected_recompute_set
+
+    return {
+        "scenario": scenario,
+        "seed": seed,
+        "instance_id": f"{scenario}_S{seed:04d}",
+        "strategy": strategy,
+        "changed_belief": changed_belief,
+        "changed_value": changed_value,
+        "recovery_mode": mode,
+        "metrics": {
+            "output_correct": len(mismatches) == 0,
+            "mismatched_node_count": len(mismatches),
+            "recomputed_node_count": len(recomputed),
+            "expected_affected_derived_node_count": len(expected_recompute_set),
+            "preserved_derived_node_count": len(preserved_derived_nodes),
+            "preserved_derived_values_unchanged": preserved_unchanged,
+            "unnecessary_recomputation": len(unnecessary_recomputed),
+            "recovery_success": len(mismatches) == 0 and preserved_unchanged,
+        },
+        "details": {
+            "recomputed_nodes": recomputed,
+            "expected_affected_derived_nodes": sorted(expected_recompute_set),
+            "preserved_derived_nodes": sorted(preserved_derived_nodes),
+            "mismatches": mismatches,
+            "final_values": dict(sorted(graph.values.items())),
+            "oracle_values": dict(sorted(oracle.values.items())),
+        },
+    }
+
+
+def run_experiment(
+    scenarios: list[str] | None = None,
+    seeds: list[int] | None = None,
+) -> list[dict[str, Any]]:
+    selected_scenarios = (
+        list(SCENARIO_CHANGED_BELIEFS) if scenarios is None else list(scenarios)
+    )
+    selected_seeds = [1, 2, 3, 4, 5] if seeds is None else list(seeds)
+    unknown = set(selected_scenarios) - set(SCENARIO_CHANGED_BELIEFS)
+    if unknown:
+        raise ValueError(f"Unknown scenarios: {sorted(unknown)}")
+    if not selected_scenarios or not selected_seeds:
+        raise ValueError("At least one scenario and one seed are required.")
+
+    measurements: list[dict[str, Any]] = []
+    for scenario in selected_scenarios:
+        for seed in selected_seeds:
+            for strategy in ("baseline", "full_recompute", "belief_graph"):
+                measurements.append(_run_one(scenario, seed, strategy))
+    return measurements
+
+
+def summarize(measurements: list[dict[str, Any]]) -> dict[str, Any]:
+    strategies = sorted({item["strategy"] for item in measurements})
+    summary: dict[str, Any] = {}
+    metric_names = sorted({
+        metric for item in measurements for metric in item["metrics"]
+    })
+    for strategy in strategies:
+        rows = [item for item in measurements if item["strategy"] == strategy]
+        metric_summary: dict[str, Any] = {}
+        for metric_name in metric_names:
+            values = [row["metrics"][metric_name] for row in rows]
+            if values and all(isinstance(value, bool) for value in values):
+                metric_summary[metric_name] = {
+                    "true_count": sum(values),
+                    "false_count": len(values) - sum(values),
+                    "rate": sum(values) / len(values),
+                }
+            else:
+                numbers = [
+                    float(value) for value in values
+                    if isinstance(value, (int, float)) and not isinstance(value, bool)
+                ]
+                if numbers:
+                    metric_summary[metric_name] = {
+                        "mean": mean(numbers),
+                        "median": median(numbers),
+                        "min": min(numbers),
+                        "max": max(numbers),
+                    }
+        summary[strategy] = {
+            "evaluations": len(rows),
+            "metrics": metric_summary,
+        }
+    return summary
+
+
+def export_json(
+    measurements: list[dict[str, Any]],
+    output_path: str | Path,
+) -> Path:
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    scenarios = sorted({item["scenario"] for item in measurements})
+    seeds = sorted({item["seed"] for item in measurements})
+    strategies = sorted({item["strategy"] for item in measurements})
+    payload = {
+        "experiment": "belief_graph_executable_recovery_comparison",
+        "measurement_count": len(measurements),
+        "design": {
+            "scenario_count": len(scenarios),
+            "seed_count": len(seeds),
+            "strategy_count": len(strategies),
+            "expected_measurements": len(scenarios) * len(seeds) * len(strategies),
+        },
+        "scenarios": scenarios,
+        "seeds": seeds,
+        "strategies": strategies,
+        "interpretation": (
+            "Derived nodes execute deterministic Python functions. Full recomputation "
+            "is the correctness oracle. BeliefGraph recomputes only graph descendants "
+            "of the changed belief. Baseline intentionally leaves derived values stale. "
+            "This is a controlled executable DAG benchmark, not an end-to-end agent test."
+        ),
+        "summary_by_strategy": summarize(measurements),
+        "results": measurements,
+    }
+    path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False, allow_nan=False),
+        encoding="utf-8",
+    )
+    return path
+
+
+def main() -> None:
+    measurements = run_experiment()
+    output = export_json(
+        measurements,
+        "experiments/results/executable_recovery_comparison.json",
+    )
+    print(f"Measurements: {len(measurements)}")
+    print(f"Scenarios: {len(SCENARIO_CHANGED_BELIEFS)}")
+    print(f"Seeds: {len({item['seed'] for item in measurements})}")
+    print("Summary by strategy:")
+    print(json.dumps(summarize(measurements), indent=2))
+    print(f"JSON exported to: {output}")
+
+
+if __name__ == "__main__":
+    main()
+`n======================================================================`nFILE: tests\test_executable_recovery_benchmark.py`n======================================================================
+from app.executable_recovery_benchmark import (
+    SCENARIO_CHANGED_BELIEFS,
+    _new_graph,
+    _run_one,
+    run_experiment,
+)
+
+
+def test_selective_recovery_matches_full_recomputation_for_every_scenario_and_seed():
+    for scenario in SCENARIO_CHANGED_BELIEFS:
+        for seed in range(1, 6):
+            result = _run_one(scenario, seed, "belief_graph")
+            assert result["metrics"]["output_correct"] is True
+            assert result["metrics"]["mismatched_node_count"] == 0
+            assert result["metrics"]["preserved_derived_values_unchanged"] is True
+            assert result["metrics"]["unnecessary_recomputation"] == 0
+            assert result["metrics"]["recovery_success"] is True
+
+
+def test_selective_recovery_recomputes_fewer_nodes_than_full_recompute():
+    for scenario in SCENARIO_CHANGED_BELIEFS:
+        selective = _run_one(scenario, 1, "belief_graph")
+        full = _run_one(scenario, 1, "full_recompute")
+        assert selective["metrics"]["output_correct"] is True
+        assert full["metrics"]["output_correct"] is True
+        assert (
+            selective["metrics"]["recomputed_node_count"]
+            <= full["metrics"]["recomputed_node_count"]
+        )
+
+
+def test_baseline_exposes_stale_derived_values_when_dependency_changes():
+    result = _run_one("price_change", 1, "baseline")
+    assert result["metrics"]["output_correct"] is False
+    assert result["metrics"]["mismatched_node_count"] > 0
+
+
+def test_disconnected_belief_change_recomputes_only_its_own_branch():
+    result = _run_one("disconnected_belief_change", 1, "belief_graph")
+    assert result["metrics"]["output_correct"] is True
+    assert result["metrics"]["recomputed_node_count"] == 1
+    assert result["details"]["recomputed_nodes"] == ["spare_metric"]
+
+
+def test_experiment_has_expected_measurement_count_and_strategies():
+    results = run_experiment()
+    assert len(results) == 105
+    assert {row["strategy"] for row in results} == {
+        "baseline",
+        "full_recompute",
+        "belief_graph",
+    }
+
+
+def test_initial_derived_values_are_computed_from_beliefs():
+    graph = _new_graph(1)
+    assert graph.values["subtotal"] == graph.values["price"] * graph.values["quantity"]
+    assert graph.values["tax"] == graph.values["subtotal"] * graph.values["tax_rate"]
+`n======================================================================`nFILE: app\recovery_benchmark.py`n======================================================================
+"""Reproducible multi-strategy recovery benchmark with explicit summaries.
+
+The exported report separates actual recomputation from benchmark simulation.
+Benchmark adapter timing is not equivalent to end-to-end agent runtime, and
+semantic task/recovery success remains unknown unless a strategy verifies it.
+"""
+
+from __future__ import annotations
+
+import json
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
+from statistics import mean, median
+from time import perf_counter
+from typing import Any, Callable
+
+from .benchmark_instances import (
+    BenchmarkInstance,
+    generate_scenario1_instance,
+    generate_scenario2_instance,
+    generate_scenario3_instance,
+    generate_scenario4_instance,
+    generate_scenario5_instance,
+    generate_scenario6_instance,
+    generate_scenario7_instance,
+)
+from .seeded_strategy_adapters import (
+    run_seeded_baseline,
+    run_seeded_memory,
+    run_seeded_belief_graph,
+)
+
+
+ScenarioGenerator = Callable[..., BenchmarkInstance]
+
+
+SCENARIO_GENERATORS: dict[str, ScenarioGenerator] = {
+    "scenario1": generate_scenario1_instance,
+    "scenario2": generate_scenario2_instance,
+    "scenario3": generate_scenario3_instance,
+    "scenario4": generate_scenario4_instance,
+    "scenario5": generate_scenario5_instance,
+    "scenario6": generate_scenario6_instance,
+    "scenario7": generate_scenario7_instance,
+}
+
+STRATEGIES = (
+    ("baseline", run_seeded_baseline),
+    ("memory", run_seeded_memory),
+    ("belief_graph", run_seeded_belief_graph),
+)
+
+
+@dataclass
+class StrategyMeasurement:
+    scenario: str
+    seed: int
+    instance_id: str
+    strategy: str
+    elapsed_seconds: float
+    metrics: dict[str, Any]
+    details: dict[str, Any] = field(default_factory=dict)
+
+
+def measure_strategy(
+    instance: BenchmarkInstance,
+    evaluator: Callable[[BenchmarkInstance], Any],
+    scenario: str = "unspecified",
+) -> StrategyMeasurement:
+    """Measure one strategy without hiding evaluator failures."""
+    start = perf_counter()
+    result = evaluator(instance)
+    elapsed = perf_counter() - start
+
+    return StrategyMeasurement(
+        scenario=scenario,
+        seed=getattr(instance, "seed", 0),
+        instance_id=getattr(instance, "instance_id", "unknown"),
+        strategy=result.strategy,
+        elapsed_seconds=elapsed,
+        metrics=dict(result.metrics),
+        details=dict(result.details),
+    )
+
+
+def compare_strategies(
+    instance: BenchmarkInstance,
+    scenario: str = "unspecified",
+) -> list[StrategyMeasurement]:
+    """Evaluate the currently registered strategy functions on one instance.
+
+    Resolve the module-level functions at call time rather than relying on the
+    import-time STRATEGIES tuple. This keeps the registry patchable for tests,
+    instrumentation, and controlled benchmark experiments.
+    """
+    evaluators = (
+        ("baseline", run_seeded_baseline),
+        ("memory", run_seeded_memory),
+        ("belief_graph", run_seeded_belief_graph),
+    )
+    return [
+        measure_strategy(instance=instance, evaluator=evaluator, scenario=scenario)
+        for _, evaluator in evaluators
+    ]
+
+
+def generate_instance(scenario: str, seed: int) -> BenchmarkInstance:
+    """Generate a scenario instance using its registered generator."""
+    try:
+        generator = SCENARIO_GENERATORS[scenario]
+    except KeyError as exc:
+        raise ValueError(
+            f"Unknown scenario {scenario!r}. "
+            f"Choose from: {', '.join(SCENARIO_GENERATORS)}"
+        ) from exc
+    return generator(seed=seed)
+
+
+def run_experiment(
+    scenarios: list[str] | None = None,
+    seeds: list[int] | None = None,
+) -> list[StrategyMeasurement]:
+    """Run every selected strategy on every selected scenario and seed."""
+    selected_scenarios = (
+        list(SCENARIO_GENERATORS) if scenarios is None else list(scenarios)
+    )
+    selected_seeds = [1, 2, 3, 4, 5] if seeds is None else list(seeds)
+
+    unknown = set(selected_scenarios) - set(SCENARIO_GENERATORS)
+    if unknown:
+        raise ValueError(f"Unknown scenarios: {sorted(unknown)}")
+    if not selected_scenarios:
+        raise ValueError("At least one scenario is required.")
+    if not selected_seeds:
+        raise ValueError("At least one seed is required.")
+    if len(set(selected_scenarios)) != len(selected_scenarios):
+        raise ValueError("Scenario names must not be duplicated.")
+    if len(set(selected_seeds)) != len(selected_seeds):
+        raise ValueError("Seeds must not be duplicated.")
+
+    measurements: list[StrategyMeasurement] = []
+    for scenario in selected_scenarios:
+        for seed in selected_seeds:
+            instance = generate_instance(scenario, seed)
+            measurements.extend(compare_strategies(instance, scenario))
+    return measurements
+
+
+def _numeric_summary(values: list[Any]) -> dict[str, Any]:
+    """Summarize finite numeric values, excluding booleans and nulls."""
+    numeric = [
+        float(value)
+        for value in values
+        if isinstance(value, (int, float))
+        and not isinstance(value, bool)
+    ]
+    if not numeric:
+        return {"count": 0, "mean": None, "median": None, "min": None, "max": None}
+    return {
+        "count": len(numeric),
+        "mean": mean(numeric),
+        "median": median(numeric),
+        "min": min(numeric),
+        "max": max(numeric),
+    }
+
+
+def summarize_measurements(
+    measurements: list[StrategyMeasurement],
+) -> dict[str, Any]:
+    """Aggregate metrics per strategy while preserving unknown values as unknown."""
+    by_strategy: dict[str, list[StrategyMeasurement]] = {}
+    for measurement in measurements:
+        by_strategy.setdefault(measurement.strategy, []).append(measurement)
+
+    metric_names = sorted(
+        {
+            metric_name
+            for measurement in measurements
+            for metric_name in measurement.metrics
+        }
+    )
+    summary: dict[str, Any] = {}
+
+    for strategy, rows in sorted(by_strategy.items()):
+        metric_summary: dict[str, Any] = {}
+        for metric_name in metric_names:
+            values = [
+                row.metrics.get(metric_name)
+                for row in rows
+                if metric_name in row.metrics
+            ]
+            numeric = _numeric_summary(values)
+            if numeric["count"]:
+                metric_summary[metric_name] = numeric
+            else:
+                # Keep the number of known/unknown values visible for metrics
+                # such as task_success and recovery_success.
+                known = [value for value in values if value is not None]
+                metric_summary[metric_name] = {
+                    "count": 0,
+                    "known_count": len(known),
+                    "unknown_count": len(values) - len(known),
+                    "values": sorted({str(value) for value in known}),
+                }
+
+        operation_metric_names = (
+            "nodes_visited",
+            "dependency_edges_examined",
+            "impact_classifications_computed",
+        )
+        graph_operation_summary: dict[str, Any] = {}
+        for operation_name in operation_metric_names:
+            operation_values = [
+                row.details.get("graph_operation_metrics", {}).get(operation_name)
+                for row in rows
+                if isinstance(row.details.get("graph_operation_metrics"), dict)
+                and operation_name
+                in row.details.get("graph_operation_metrics", {})
+            ]
+            if operation_values:
+                graph_operation_summary[operation_name] = _numeric_summary(
+                    operation_values
+                )
+
+        summary[strategy] = {
+            "evaluations": len(rows),
+            "mean_runtime_ms": mean(row.elapsed_seconds for row in rows) * 1000,
+            "median_runtime_ms": median(row.elapsed_seconds for row in rows) * 1000,
+            "metrics": metric_summary,
+            "graph_operation_metrics": graph_operation_summary,
+        }
+
+    return summary
+
+
+def export_json(
+    measurements: list[StrategyMeasurement],
+    output_path: str | Path,
+) -> Path:
+    """Export individual measurements plus aggregate strategy summaries."""
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    scenario_names = sorted({measurement.scenario for measurement in measurements})
+    seeds = sorted({measurement.seed for measurement in measurements})
+    strategies = sorted({measurement.strategy for measurement in measurements})
+
+    payload = {
+        "experiment": "belief_graph_recovery_comparison",
+        "measurement_count": len(measurements),
+        "scenarios": scenario_names,
+        "seeds": seeds,
+        "strategies": strategies,
+        "design": {
+            "scenario_count": len(scenario_names),
+            "seed_count": len(seeds),
+            "strategy_count": len(strategies),
+            "expected_measurements": len(scenario_names) * len(seeds) * len(strategies),
+        },
+        "metric_semantics": {
+            "recomputed_node_count": (
+                "Actual recomputation count. Remains zero for benchmark adapters "
+                "that do not execute real node/task recomputation."
+            ),
+            "simulated_recomputed_node_count": (
+                "Number of benchmark-level simulated recomputation invocations; "
+                "not evidence of real task execution."
+            ),
+            "task_success": (
+                "Unknown/null when the scenario contains no executable task "
+                "payload and verified expected output."
+            ),
+            "recovery_success": (
+                "Unknown/null unless recovery is semantically executed and verified."
+            ),
+            "recovery_execution_success": (
+                "Success of the benchmark-level simulation only when the adapter "
+                "labels its recovery execution mode as benchmark_simulation."
+            ),
+            "elapsed_seconds": (
+                "Adapter execution time, not end-to-end agent runtime."
+            ),
+        },
+        "interpretation_warning": (
+            "Strategies have different policies. Compare metric semantics, not just "
+            "raw values. BeliefGraph's simulated recomputation is reported separately "
+            "from actual recomputation; simulated success is not semantic task success."
+        ),
+        "summary_by_strategy": summarize_measurements(measurements),
+        "results": [asdict(measurement) for measurement in measurements],
+    }
+
+    path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False, allow_nan=False),
+        encoding="utf-8",
+    )
+    return path
+
+
+def main() -> None:
+    measurements = run_experiment()
+    output = export_json(
+        measurements,
+        "experiments/results/recovery_comparison.json",
+    )
+
+    print(f"Measurements: {len(measurements)}")
+    print(f"Scenarios: {len({measurement.scenario for measurement in measurements})}")
+    print(f"Seeds: {len({measurement.seed for measurement in measurements})}")
+    print(f"Strategies: {sorted({measurement.strategy for measurement in measurements})}")
+    print("Summary by strategy:")
+    print(json.dumps(summarize_measurements(measurements), indent=2))
+    print(f"JSON exported to: {output}")
+
+
+if __name__ == "__main__":
+    main()

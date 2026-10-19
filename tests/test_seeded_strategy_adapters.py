@@ -124,3 +124,21 @@ def test_real_strategies_run_over_five_identical_seeded_instances():
 
     assert preservation.mean == 0.5
     assert preservation.population_std == 0.0
+
+def test_seeded_belief_graph_reports_actual_operation_metrics():
+    instance = generate_scenario2_instance(1)
+
+    result = run_seeded_belief_graph(instance)
+
+    metrics = result.details["graph_operation_metrics"]
+
+    assert metrics["nodes_visited"] > 0
+    assert metrics["dependency_edges_examined"] > 0
+    assert metrics["impact_classifications_computed"] > 0
+
+    assert (
+        metrics["dependency_edges_examined"]
+        == metrics["impact_classifications_computed"]
+    )
+
+    assert result.metrics["recomputed_node_count"] == 0

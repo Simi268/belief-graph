@@ -281,9 +281,16 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
 
     graph = _build_graph(instance)
 
+    graph_operation_metrics: dict[str, int] = {
+        "nodes_visited": 0,
+        "dependency_edges_examined": 0,
+        "impact_classifications_computed": 0,
+    }
+
     impact = graph.propagate_state_impact(
         instance.changed_belief,
         initial_status=NodeStatus.INVALID,
+        metrics=graph_operation_metrics,
     )
 
     graph.apply_state_impact(impact)
@@ -358,6 +365,44 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
         classification_success and evidence_selection_success
 )
 
+    # Benchmark-level recovery simulation.
+    #
+    # Benchmark nodes are abstract artifacts, not executable task payloads.
+    # We therefore simulate invoking a recomputation callback for affected
+    # derived artifacts, while explicitly keeping semantic task success
+    # unknown. The changed belief is the input to recovery, not a node to
+    # recompute. Uncertain nodes are withheld for review rather than
+    # automatically recomputed.
+    recovery_candidates = (
+        (actual_invalidated - {instance.changed_belief})
+        | actual_reevaluation
+    )
+    recovery_graph = graph.graph.subgraph(recovery_candidates).copy()
+    recovery_execution_order = list(
+        __import__("networkx").topological_sort(recovery_graph)
+    )
+    recovery_execution_results: list[dict[str, Any]] = []
+
+    for node_id in recovery_execution_order:
+        # This callback represents a successful benchmark-level recompute
+        # invocation only. It does not execute a real agent task.
+        recovery_execution_results.append(
+            {
+                "node_id": node_id,
+                "status": "simulated_recompute_succeeded",
+                "semantic_result_verified": False,
+            }
+        )
+
+    simulated_recomputed_nodes = {
+        item["node_id"]
+        for item in recovery_execution_results
+        if item["status"] == "simulated_recompute_succeeded"
+    }
+    recovery_execution_success = (
+        len(simulated_recomputed_nodes) == len(recovery_candidates)
+    )
+
     node_types = _node_types(instance)
 
     invalidated_plans = sum(
@@ -384,7 +429,10 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
 
     metrics = {
         "classification_success": classification_success,
+        # Semantic task success remains unknown because benchmark nodes do
+        # not contain executable task functions or expected outputs.
         "task_success": None,
+        "recovery_execution_success": recovery_execution_success,
         "stale_actions": len(detected_stale_actions),
         "stale_plans": len(stale_plans),
         "invalid_plans": invalidated_plans,
@@ -400,8 +448,14 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
         "invalidated_node_count": len(
             actual_invalidated
         ),
+        # No real recomputation has occurred: the callback above is only a
+        # benchmark simulation. Keep actual and simulated counts separate.
         "recomputed_node_count": 0,
+        "simulated_recomputed_node_count": len(simulated_recomputed_nodes),
         "unnecessary_recomputation": 0,
+        "simulated_unnecessary_recomputation": len(
+            simulated_recomputed_nodes & set(instance.expected_preserved)
+        ),
         "preserved_node_count": len(actual_preserved),
         "preservation_ratio": (
             len(actual_preserved)
@@ -412,6 +466,7 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
 
     details = {
         "changed_belief": instance.changed_belief,
+        "graph_operation_metrics": dict(graph_operation_metrics),
         "affected_nodes": sorted(actual_affected),
         "invalidated_nodes": sorted(actual_invalidated),
         "reevaluation_nodes": sorted(actual_reevaluation),
@@ -432,6 +487,13 @@ def run_seeded_belief_graph(instance: BenchmarkInstance) -> SeedResult:
             instance.expected_preserved
         ),
         "direct_graph_execution": True,
+        "recovery_execution_mode": "benchmark_simulation",
+        "recovery_execution_order": recovery_execution_order,
+        "recovery_execution_results": recovery_execution_results,
+        "simulated_recomputed_nodes": sorted(simulated_recomputed_nodes),
+        "uncertain_nodes_deferred_for_review": sorted(actual_uncertain),
+        "semantic_task_execution_performed": False,
+        "semantic_result_verification_performed": False,
     }
     details.update(evidence_details)
 
