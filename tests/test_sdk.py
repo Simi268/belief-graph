@@ -153,3 +153,40 @@ def test_sdk_does_not_execute_action_with_unrelated_belief():
             belief_id="B1",
             environment=environment,
         )
+
+
+def test_sdk_registers_multiple_dependencies():
+    bg = BeliefGraphSDK()
+
+    bg.belief("B1", "First source")
+    bg.belief("B2", "Second source")
+    bg.conclusion("C1", "Combined conclusion")
+    bg.plan("P1", "Next step")
+
+    created = bg.depends_on_many({
+        "C1": ["B1", "B2"],
+        "P1": ["C1"],
+    })
+
+    assert len(created) == 3
+    graph = bg.graph.graph
+
+    assert graph.has_edge("B1", "C1")
+    assert graph.has_edge("B2", "C1")
+    assert graph.has_edge("C1", "P1")
+
+
+def test_sdk_rejects_invalid_dependency_mapping():
+    bg = BeliefGraphSDK()
+
+    with pytest.raises(TypeError, match="dictionary"):
+        bg.depends_on_many([])
+
+
+def test_sdk_rejects_non_list_prerequisites():
+    bg = BeliefGraphSDK()
+    bg.belief("B1", "Source")
+    bg.conclusion("C1", "Conclusion")
+
+    with pytest.raises(TypeError, match="must be a list"):
+        bg.depends_on_many({"C1": "B1"})

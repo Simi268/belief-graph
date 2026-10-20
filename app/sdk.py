@@ -133,6 +133,61 @@ class BeliefGraphSDK:
         )
 
     # ---------------------------------------------------------
+    def depends_on_many(
+        self,
+        dependencies: dict[str, list[str]],
+        dependency_type: DependencyType = DependencyType.REQUIRES,
+    ) -> list[Dependency]:
+        """Register multiple prerequisite-to-dependent relationships.
+
+        ``dependencies`` maps each dependent node ID to its prerequisites.
+
+        Example::
+
+            sdk.depends_on_many({
+                "C1": ["B1", "B2"],
+                "P1": ["C1"],
+            })
+
+        This creates B1 -> C1, B2 -> C1, and C1 -> P1. Each edge is
+        registered through ``depends_on`` so existing dependency semantics
+        remain unchanged.
+
+        Registration is sequential, not atomic: if a later edge fails,
+        earlier edges in the batch may already have been added.
+        """
+        if not isinstance(dependencies, dict):
+            raise TypeError("dependencies must be a dictionary.")
+
+        created: list[Dependency] = []
+
+        for target_id, source_ids in dependencies.items():
+            if not isinstance(target_id, str) or not target_id:
+                raise ValueError(
+                    "Each dependent node ID must be a non-empty string."
+                )
+
+            if not isinstance(source_ids, list):
+                raise TypeError(
+                    f"Prerequisites for {target_id!r} must be a list."
+                )
+
+            for source_id in source_ids:
+                if not isinstance(source_id, str) or not source_id:
+                    raise ValueError(
+                        "Each prerequisite node ID must be a non-empty string."
+                    )
+
+                created.append(
+                    self.depends_on(
+                        source_id=source_id,
+                        target_id=target_id,
+                        dependency_type=dependency_type,
+                    )
+                )
+
+        return created
+
     # DEPENDENCIES AND SEMANTIC EVALUATORS
     # ---------------------------------------------------------
 
