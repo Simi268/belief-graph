@@ -206,6 +206,11 @@ class RecoveryEngine:
             selective_recovery.get("metrics", {})
             if selective_recovery is not None else {}
         )
+        selective_recovery_reason = (
+            None
+            if selective_recovery is not None
+            else "No semantic evaluators were registered for this graph."
+        )
         recovery_metrics = {
             "affected_node_count": len(set(affected_nodes)),
             "invalidated_node_count": len(set(invalidated_nodes)),
@@ -217,6 +222,7 @@ class RecoveryEngine:
                 execution.get("success") if execution is not None else None
             ),
             "selective_recovery_executed": selective_recovery is not None,
+            "selective_recovery_skip_reason": selective_recovery_reason,
             "recomputed_node_count": selective_metrics.get(
                 "recomputed_node_count", 0
             ),

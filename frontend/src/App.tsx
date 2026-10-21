@@ -738,6 +738,33 @@ if (expectedStatusesJson.trim()) {
   );
 
   const selectedNode = snapshot?.nodes.find((node) => node.id === selectedNodeId);
+  const selectedActionDependsOnBelief = useMemo(() => {
+  if (!snapshot || !recoveryForm.action_id || !recoveryForm.belief_id) {
+    return false;
+  }
+
+  const visited = new Set<string>();
+  const queue = [recoveryForm.belief_id];
+
+  while (queue.length > 0) {
+    const current = queue.shift()!;
+
+    if (current === recoveryForm.action_id) {
+      return true;
+    }
+
+    if (visited.has(current)) continue;
+    visited.add(current);
+
+    for (const edge of snapshot.edges ?? []) {
+      if (edge.source === current && !visited.has(edge.target)) {
+        queue.push(edge.target);
+      }
+    }
+  }
+
+  return false;
+}, [snapshot, recoveryForm.action_id, recoveryForm.belief_id]);
   const recoveryVerification =
     recoveryResult?.verification &&
     typeof recoveryResult.verification === "object"
@@ -1002,7 +1029,11 @@ if (expectedStatusesJson.trim()) {
                       <button type="button" className="secondary-button" disabled={recoverySubmitting} onClick={() => { const existingIds = new Set((snapshot?.nodes ?? []).map((node) => node.id)); setRecoveryForm({ action_id: "", belief_id: "", evidence_id: freshEvidenceId(), new_belief_id: nextUnusedId("B_REVISED", existingIds), new_action_id: nextUnusedId("A_RETRY", existingIds), environment_version: "v2", agent_version: "v1" }); setRecoveryResult(null); setError(""); setSuccessMessage(""); }}>
                         Reset form with fresh IDs
                       </button>
-                      <span className="muted-note">The selected action should depend on the selected belief for selective replanning.</span>
+                      {!selectedActionDependsOnBelief && (
+  <span className="muted-note">
+    The selected action should depend on the selected belief for selective replanning.
+  </span>
+)}
                     </div>
                   </form>
                   {recoveryResult && (

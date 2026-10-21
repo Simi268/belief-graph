@@ -19,6 +19,7 @@ from app.models import (
 from app.storage import GraphStorage
 from app.recovery import RecoveryEngine
 from app.sdk import BeliefGraphSDK
+from app.semantic_recomputation import SemanticRecomputer
 
 from app.recovery_verifier import verify_graph_recovery
 
@@ -622,9 +623,53 @@ def recover_from_failure(
                 detail=f"Node '{request.action_id}' is not an action node.",
             )
 
-    # Preserve the caller's action result and attach the action ID
-    # required by RecoveryEngine for selective replanning.
+    # Validate that the failed action is actually downstream of the
+    # belief whose value the caller says it used. This prevents a recovery
+    # request from revising an unrelated belief and silently preserving the
+    # selected action.
     action_result = dict(request.action_result)
+    belief_id = action_result.get("belief_id")
+
+    if not isinstance(belief_id, str) or not belief_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="action_result.belief_id must identify the belief used by the failed action.",
+        )
+
+    ensure_node_exists(sdk, belief_id)
+
+    belief_attributes = sdk.graph.graph.nodes[belief_id]
+    belief_data = belief_attributes.get("data")
+    belief_type = getattr(belief_data, "node_type", None)
+
+    if belief_type is None and isinstance(belief_data, dict):
+        belief_type = belief_data.get("node_type")
+
+    if belief_type is not None:
+        belief_type_value = (
+            belief_type.value if isinstance(belief_type, Enum) else belief_type
+        )
+        if belief_type_value != NodeType.BELIEF.value:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Node '{belief_id}' is not a source belief.",
+            )
+
+    if not nx.has_path(
+        sdk.graph.graph,
+        source=belief_id,
+        target=request.action_id,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=(
+                f"Action '{request.action_id}' does not depend on belief "
+                f"'{belief_id}'. Select the failed action that actually "
+                "depends on the belief being revised."
+            ),
+        )
+
+    # RecoveryEngine requires the failed action ID in action_result.
     action_result["action_id"] = request.action_id
 
     # The UI submits a simulated environment observation. Use its expected
@@ -662,12 +707,21 @@ def recover_from_failure(
     environment.set_api_version(actual_version)
 
     try:
+        # Use the existing per-graph engine (and its commitment registry),
+        # while wiring in the SDK's semantic evaluators when any are registered.
+        recompute_node = (
+            SemanticRecomputer(agent, sdk._evaluators)
+            if sdk._evaluators
+            else None
+        )
+
         result = recovery_engine.recover_from_action_failure(
             action_result=action_result,
             evidence_id=request.evidence_id,
             new_belief_id=request.new_belief_id,
             new_action_id=request.new_action_id,
             environment=environment,
+            recompute_node=recompute_node,
         )
     except (ValueError, KeyError) as exc:
         raise HTTPException(
@@ -690,7 +744,7 @@ def recover_from_failure(
         result["status"] = "revised"
 
     # Full verification requires independently supplied expected statuses.
-    if request.expected_statuses is not None:
+    if request.expected_statuses:
         allowed_statuses = {item.value for item in NodeStatus}
 
         invalid_statuses = {
