@@ -1,0 +1,28 @@
+{
+  "graph_id": "25cbbf01-ae0c-403a-9ee0-7c22a03775ad",
+  "name": "Auto Sync Failure Test",
+  "nodes": [
+    {
+      "id": "B_FAILSYNC",
+      "attributes": {
+        "data": {
+          "id": "B_FAILSYNC",
+          "node_type": "belief",
+          "content": "Sync failure test",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    }
+  ],
+  "edges": [],
+  "graph_attributes": {},
+  "evidence": {},
+  "conflicts": {}
+}

@@ -1,0 +1,54 @@
+{
+  "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+  "name": "SDK Integration Test",
+  "nodes": [
+    {
+      "id": "B_API",
+      "attributes": {
+        "data": {
+          "id": "B_API",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "C_ORDER",
+      "attributes": {
+        "data": {
+          "id": "C_ORDER",
+          "node_type": "conclusion",
+          "content": "Order eligibility",
+          "value": null,
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "B_API",
+      "target": "C_ORDER",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    }
+  ],
+  "graph_attributes": {},
+  "evidence": {},
+  "conflicts": {}
+}

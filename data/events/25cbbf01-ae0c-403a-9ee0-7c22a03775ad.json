@@ -1,0 +1,56 @@
+[
+  {
+    "event_id": "c4d02e0f-7de9-4592-bfc7-b58839f0d8ec",
+    "graph_id": "25cbbf01-ae0c-403a-9ee0-7c22a03775ad",
+    "sequence": 1,
+    "event_type": "graph_created",
+    "summary": "Created graph: Auto Sync Failure Test",
+    "timestamp": "2026-10-21T18:46:30.602778+00:00",
+    "details": {
+      "name": "Auto Sync Failure Test"
+    },
+    "snapshot": {
+      "graph_id": "25cbbf01-ae0c-403a-9ee0-7c22a03775ad",
+      "name": "Auto Sync Failure Test",
+      "node_count": 0,
+      "edge_count": 0,
+      "nodes": [],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "d02cf3c0-284a-418c-88e2-fed055814594",
+    "graph_id": "25cbbf01-ae0c-403a-9ee0-7c22a03775ad",
+    "sequence": 2,
+    "event_type": "node_created",
+    "summary": "Created node: B_FAILSYNC",
+    "timestamp": "2026-10-21T18:46:30.634255+00:00",
+    "details": {
+      "node_id": "B_FAILSYNC",
+      "node_type": "belief",
+      "content": "Sync failure test"
+    },
+    "snapshot": {
+      "graph_id": "25cbbf01-ae0c-403a-9ee0-7c22a03775ad",
+      "name": "Auto Sync Failure Test",
+      "node_count": 1,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B_FAILSYNC",
+          "node_type": "belief",
+          "content": "Sync failure test",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  }
+]

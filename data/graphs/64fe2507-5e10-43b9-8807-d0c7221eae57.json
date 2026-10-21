@@ -1,0 +1,54 @@
+{
+  "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+  "name": "Auto Sync Test",
+  "nodes": [
+    {
+      "id": "B1",
+      "attributes": {
+        "data": {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    },
+    {
+      "id": "C1",
+      "attributes": {
+        "data": {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "Order eligibility",
+          "value": null,
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "B1",
+      "target": "C1",
+      "attributes": {
+        "dependency_type": "requires"
+      }
+    }
+  ],
+  "graph_attributes": {},
+  "evidence": {},
+  "conflicts": {}
+}

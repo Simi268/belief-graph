@@ -1,0 +1,4389 @@
+[
+  {
+    "event_id": "3751b79c-1e68-4339-a7c1-1441adeb2ef1",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 1,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A_RETRY_1",
+    "timestamp": "2026-10-21T10:45:27.024155+00:00",
+    "details": {
+      "action_id": "A_RETRY_1",
+      "new_belief_id": "B_REVISED_2",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVHZJJ4J-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVHZJJ4J-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_2",
+        "old_action_id": "A_RETRY_1",
+        "new_action_id": null,
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_2"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_2.",
+        "timestamp": "2026-10-21 10:45:27.016024+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "B_REVISED_1"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": null,
+      "new_action_id": "A_RETRY_2",
+      "execution": null,
+      "status": "revised",
+      "verification": {
+        "verified": false,
+        "verification_performed": false,
+        "reason": "Expected node statuses were not supplied; graph correctness has not been independently verified.",
+        "execution_successful": false
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "A1",
+          "C1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "A1",
+          "C1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 8,
+      "edge_count": 5,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_2",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "7dff93c6-30be-4281-a445-3eaaa310f89c",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 2,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T12:12:43.409610+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_3",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI2O6LN-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI2O6LN-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_3",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_2",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_3"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_3.",
+        "timestamp": "2026-10-21 12:12:43.354047+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "B_REVISED_1",
+          "B_REVISED_2"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_2",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_3",
+          "action_id": "A_RETRY_2",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_2",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_3",
+        "action_id": "A_RETRY_2",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": false,
+        "verification_performed": false,
+        "reason": "Expected node statuses were not supplied; graph correctness has not been independently verified.",
+        "execution_successful": true
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 11,
+      "edge_count": 7,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_3",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "16ec9509-32d4-4817-bda8-39ebb5f6ed27",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 3,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T12:35:55.624234+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_4",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI3IDMP-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI3IDMP-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_4",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_3",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_4"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_4.",
+        "timestamp": "2026-10-21 12:35:55.619310+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "A_RETRY_2",
+          "B_REVISED_1",
+          "B_REVISED_2",
+          "B_REVISED_3"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_3",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_4",
+          "action_id": "A_RETRY_3",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_3",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_4",
+        "action_id": "A_RETRY_3",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": false,
+        "verification_performed": false,
+        "reason": "Expected node statuses were not supplied; graph correctness has not been independently verified.",
+        "execution_successful": true
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 14,
+      "edge_count": 9,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_4",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI3IDMP"
+        },
+        {
+          "id": "B_REVISED_4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_3",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_4",
+            "action_id": "A_RETRY_3",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI3IDMP",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_4",
+          "target": "A_RETRY_3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "b0f45db6-90eb-46b1-a538-63497b2189fd",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 4,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T12:53:05.955012+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_5",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI42RO7-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI42RO7-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_5",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_4",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_5"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_5.",
+        "timestamp": "2026-10-21 12:53:05.910683+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "A_RETRY_2",
+          "A_RETRY_3",
+          "B_REVISED_1",
+          "B_REVISED_2",
+          "B_REVISED_3",
+          "B_REVISED_4"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_4",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_5",
+          "action_id": "A_RETRY_4",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_4",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_5",
+        "action_id": "A_RETRY_4",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": false,
+        "verification_performed": false,
+        "reason": "Expected node statuses were not supplied; graph correctness has not been independently verified.",
+        "execution_successful": true
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 17,
+      "edge_count": 11,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_5",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI3IDMP"
+        },
+        {
+          "id": "B_REVISED_4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_3",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_4",
+            "action_id": "A_RETRY_3",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI42RO7"
+        },
+        {
+          "id": "B_REVISED_5",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_4",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_5",
+            "action_id": "A_RETRY_4",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI3IDMP",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_4",
+          "target": "A_RETRY_3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI42RO7",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_5",
+          "target": "A_RETRY_4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "48978835-a1d0-4d51-a4d3-f7b65c4d0211",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 5,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T13:00:19.634002+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_6",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI4DO8Y-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI4DO8Y-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_6",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_5",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_6"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_6.",
+        "timestamp": "2026-10-21 13:00:19.620157+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "A_RETRY_2",
+          "A_RETRY_3",
+          "A_RETRY_4",
+          "B_REVISED_1",
+          "B_REVISED_2",
+          "B_REVISED_3",
+          "B_REVISED_4",
+          "B_REVISED_5"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_5",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_6",
+          "action_id": "A_RETRY_5",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_5",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_6",
+        "action_id": "A_RETRY_5",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": false,
+        "verification_performed": false,
+        "reason": "Expected node statuses were not supplied; graph correctness has not been independently verified.",
+        "execution_successful": true
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "B1",
+          "A1",
+          "C1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 20,
+      "edge_count": 13,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_6",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI3IDMP"
+        },
+        {
+          "id": "B_REVISED_4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_3",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_4",
+            "action_id": "A_RETRY_3",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI42RO7"
+        },
+        {
+          "id": "B_REVISED_5",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_4",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_5",
+            "action_id": "A_RETRY_4",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4DO8Y"
+        },
+        {
+          "id": "B_REVISED_6",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_5",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_6",
+            "action_id": "A_RETRY_5",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI3IDMP",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_4",
+          "target": "A_RETRY_3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI42RO7",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_5",
+          "target": "A_RETRY_4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4DO8Y",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_6",
+          "target": "A_RETRY_5",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "df505370-3c72-4af7-8ffb-351ac2bd42c0",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 6,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T13:09:50.111260+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_7",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI4PWYQ-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI4PWYQ-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_7",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_6",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_7"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_7.",
+        "timestamp": "2026-10-21 13:09:50.082954+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "A_RETRY_2",
+          "A_RETRY_3",
+          "A_RETRY_4",
+          "A_RETRY_5",
+          "B_REVISED_1",
+          "B_REVISED_2",
+          "B_REVISED_3",
+          "B_REVISED_4",
+          "B_REVISED_5",
+          "B_REVISED_6"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_6",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_7",
+          "action_id": "A_RETRY_6",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_6",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_7",
+        "action_id": "A_RETRY_6",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": false,
+        "verification_performed": false,
+        "reason": "Expected node statuses were not supplied; graph correctness has not been independently verified.",
+        "execution_successful": true
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 23,
+      "edge_count": 15,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_7",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI3IDMP"
+        },
+        {
+          "id": "B_REVISED_4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_3",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_4",
+            "action_id": "A_RETRY_3",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI42RO7"
+        },
+        {
+          "id": "B_REVISED_5",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_4",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_5",
+            "action_id": "A_RETRY_4",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4DO8Y"
+        },
+        {
+          "id": "B_REVISED_6",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_5",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_6",
+            "action_id": "A_RETRY_5",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4PWYQ"
+        },
+        {
+          "id": "B_REVISED_7",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_6",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_7",
+            "action_id": "A_RETRY_6",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI3IDMP",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_4",
+          "target": "A_RETRY_3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI42RO7",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_5",
+          "target": "A_RETRY_4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4DO8Y",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_6",
+          "target": "A_RETRY_5",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4PWYQ",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_7",
+          "target": "A_RETRY_6",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "2549f80c-61dc-4c14-a15c-6a02fcdcaf14",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 7,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T13:15:20.717152+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_8",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI4Q3TB-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI4Q3TB-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_8",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_7",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_8"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_8.",
+        "timestamp": "2026-10-21 13:15:20.701634+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "A_RETRY_2",
+          "A_RETRY_3",
+          "A_RETRY_4",
+          "A_RETRY_5",
+          "A_RETRY_6",
+          "B_REVISED_1",
+          "B_REVISED_2",
+          "B_REVISED_3",
+          "B_REVISED_4",
+          "B_REVISED_5",
+          "B_REVISED_6",
+          "B_REVISED_7"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_7",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_8",
+          "action_id": "A_RETRY_7",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_7",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_8",
+        "action_id": "A_RETRY_7",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": true,
+        "graph_correct": true,
+        "execution_successful": true,
+        "stale_nodes": [],
+        "unnecessarily_invalidated_nodes": [],
+        "status_mismatches": {},
+        "missing_nodes": []
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 26,
+      "edge_count": 17,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_8",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI3IDMP"
+        },
+        {
+          "id": "B_REVISED_4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_3",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_4",
+            "action_id": "A_RETRY_3",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI42RO7"
+        },
+        {
+          "id": "B_REVISED_5",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_4",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_5",
+            "action_id": "A_RETRY_4",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4DO8Y"
+        },
+        {
+          "id": "B_REVISED_6",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_5",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_6",
+            "action_id": "A_RETRY_5",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4PWYQ"
+        },
+        {
+          "id": "B_REVISED_7",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_6",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_7",
+            "action_id": "A_RETRY_6",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4Q3TB"
+        },
+        {
+          "id": "B_REVISED_8",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_7",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_8",
+            "action_id": "A_RETRY_7",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI3IDMP",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_4",
+          "target": "A_RETRY_3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI42RO7",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_5",
+          "target": "A_RETRY_4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4DO8Y",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_6",
+          "target": "A_RETRY_5",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4PWYQ",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_7",
+          "target": "A_RETRY_6",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4Q3TB",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_8",
+          "target": "A_RETRY_7",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "96710d4b-95ef-46a0-aee0-fab1b97b25ea",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 8,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T13:28:34.584477+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_9",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI5DUAE-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI5DUAE-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_9",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_8",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_9"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_9.",
+        "timestamp": "2026-10-21 13:28:34.539437+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "A_RETRY_2",
+          "A_RETRY_3",
+          "A_RETRY_4",
+          "A_RETRY_5",
+          "A_RETRY_6",
+          "A_RETRY_7",
+          "B_REVISED_1",
+          "B_REVISED_2",
+          "B_REVISED_3",
+          "B_REVISED_4",
+          "B_REVISED_5",
+          "B_REVISED_6",
+          "B_REVISED_7",
+          "B_REVISED_8"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_8",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_9",
+          "action_id": "A_RETRY_8",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_8",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_9",
+        "action_id": "A_RETRY_8",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": false,
+        "verification_performed": false,
+        "reason": "Expected node statuses were not supplied; graph correctness has not been independently verified.",
+        "execution_successful": true
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 29,
+      "edge_count": 19,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_9",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI3IDMP"
+        },
+        {
+          "id": "B_REVISED_4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_3",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_4",
+            "action_id": "A_RETRY_3",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI42RO7"
+        },
+        {
+          "id": "B_REVISED_5",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_4",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_5",
+            "action_id": "A_RETRY_4",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4DO8Y"
+        },
+        {
+          "id": "B_REVISED_6",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_5",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_6",
+            "action_id": "A_RETRY_5",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4PWYQ"
+        },
+        {
+          "id": "B_REVISED_7",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_6",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_7",
+            "action_id": "A_RETRY_6",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4Q3TB"
+        },
+        {
+          "id": "B_REVISED_8",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_7",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_8",
+            "action_id": "A_RETRY_7",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI5DUAE"
+        },
+        {
+          "id": "B_REVISED_9",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_8",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_9",
+            "action_id": "A_RETRY_8",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI3IDMP",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_4",
+          "target": "A_RETRY_3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI42RO7",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_5",
+          "target": "A_RETRY_4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4DO8Y",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_6",
+          "target": "A_RETRY_5",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4PWYQ",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_7",
+          "target": "A_RETRY_6",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4Q3TB",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_8",
+          "target": "A_RETRY_7",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI5DUAE",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_9",
+          "target": "A_RETRY_8",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "17c0fdcb-1c42-4736-99f0-0fcf9a694652",
+    "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+    "sequence": 9,
+    "event_type": "recovery_completed",
+    "summary": "Recovery processed for action: A1",
+    "timestamp": "2026-10-21T13:29:55.601382+00:00",
+    "details": {
+      "action_id": "A1",
+      "new_belief_id": "B_REVISED_10",
+      "revision_event": {
+        "event_id": "REV-CONFLICT-E_MISMATCH_MVI5EYJB-B1",
+        "conflict_id": "CONFLICT-E_MISMATCH_MVI5EYJB-B1",
+        "old_belief_id": "B1",
+        "new_belief_id": "B_REVISED_10",
+        "old_action_id": "A1",
+        "new_action_id": "A_RETRY_9",
+        "affected_nodes": [
+          "C1",
+          "A1",
+          "B1",
+          "B_REVISED_10"
+        ],
+        "invalidated_nodes": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "reevaluation_nodes": [],
+        "uncertain_nodes": [],
+        "reason": "New evidence contradicts belief B1. The belief was revised to B_REVISED_10.",
+        "timestamp": "2026-10-21 13:29:55.557432+00:00"
+      },
+      "recovery_plan": {
+        "changed_nodes": [
+          "B1"
+        ],
+        "affected_nodes": [
+          "A1",
+          "C1"
+        ],
+        "replan_nodes": [
+          "A1"
+        ],
+        "preserved_nodes": [
+          "A_RETRY_1",
+          "A_RETRY_2",
+          "A_RETRY_3",
+          "A_RETRY_4",
+          "A_RETRY_5",
+          "A_RETRY_6",
+          "A_RETRY_7",
+          "A_RETRY_8",
+          "B_REVISED_1",
+          "B_REVISED_2",
+          "B_REVISED_3",
+          "B_REVISED_4",
+          "B_REVISED_5",
+          "B_REVISED_6",
+          "B_REVISED_7",
+          "B_REVISED_8",
+          "B_REVISED_9"
+        ],
+        "causes": {
+          "C1": [
+            "B1"
+          ],
+          "A1": [
+            "B1"
+          ]
+        }
+      },
+      "new_action": {
+        "id": "A_RETRY_9",
+        "node_type": "action",
+        "content": "Call customer API using v2",
+        "value": "v2",
+        "source": "replanner",
+        "confidence": 1.0,
+        "status": "active",
+        "version": 1,
+        "superseded_by": null,
+        "execution_status": "succeeded",
+        "execution_result": {
+          "success": true,
+          "belief_id": "B_REVISED_10",
+          "action_id": "A_RETRY_9",
+          "assumed_version": "v2",
+          "environment_result": {
+            "success": true,
+            "data": "customer-data"
+          }
+        }
+      },
+      "new_action_id": "A_RETRY_9",
+      "execution": {
+        "success": true,
+        "belief_id": "B_REVISED_10",
+        "action_id": "A_RETRY_9",
+        "assumed_version": "v2",
+        "environment_result": {
+          "success": true,
+          "data": "customer-data"
+        }
+      },
+      "status": "recovered",
+      "verification": {
+        "verified": true,
+        "graph_correct": true,
+        "execution_successful": true,
+        "stale_nodes": [],
+        "unnecessarily_invalidated_nodes": [],
+        "status_mismatches": {},
+        "missing_nodes": []
+      },
+      "commitment_impact": {
+        "changed_belief_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "inconsistent_commitment_ids": [],
+        "review_required_ids": [],
+        "unaffected_commitment_ids": []
+      },
+      "commitment_dependency_report": {
+        "changed_node_ids": [
+          "B1"
+        ],
+        "affected_node_ids": [
+          "C1",
+          "A1",
+          "B1"
+        ],
+        "affected_commitment_ids": [],
+        "unaffected_commitment_ids": [],
+        "matched_origin_nodes": {}
+      },
+      "commitment_recommendations": []
+    },
+    "snapshot": {
+      "graph_id": "d05e5f0e-2e46-4e0b-9381-3847f29dce61",
+      "name": "User Acceptance Test",
+      "node_count": 32,
+      "edge_count": 21,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "The API supports version v1",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": "B_REVISED_10",
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "The API can be used",
+          "value": null,
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A1",
+          "node_type": "action",
+          "content": "Call customer API",
+          "value": "V1",
+          "source": "user-test",
+          "confidence": 1.0,
+          "status": "invalid",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVCO3ELY"
+        },
+        {
+          "id": "B_REVISED_1",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_1",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_1",
+            "action_id": "A_RETRY_1",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVHZJJ4J"
+        },
+        {
+          "id": "B_REVISED_2",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "E_MISMATCH_MVI2O6LN"
+        },
+        {
+          "id": "B_REVISED_3",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_2",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_3",
+            "action_id": "A_RETRY_2",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI3IDMP"
+        },
+        {
+          "id": "B_REVISED_4",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_3",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_4",
+            "action_id": "A_RETRY_3",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI42RO7"
+        },
+        {
+          "id": "B_REVISED_5",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_4",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_5",
+            "action_id": "A_RETRY_4",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4DO8Y"
+        },
+        {
+          "id": "B_REVISED_6",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_5",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_6",
+            "action_id": "A_RETRY_5",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4PWYQ"
+        },
+        {
+          "id": "B_REVISED_7",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_6",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_7",
+            "action_id": "A_RETRY_6",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI4Q3TB"
+        },
+        {
+          "id": "B_REVISED_8",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_7",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_8",
+            "action_id": "A_RETRY_7",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI5DUAE"
+        },
+        {
+          "id": "B_REVISED_9",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_8",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_9",
+            "action_id": "A_RETRY_8",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        },
+        {
+          "id": "E_MISMATCH_MVI5EYJB"
+        },
+        {
+          "id": "B_REVISED_10",
+          "node_type": "belief",
+          "content": "API version is v2",
+          "value": "v2",
+          "source": "environment",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 2,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "A_RETRY_9",
+          "node_type": "action",
+          "content": "Call customer API using v2",
+          "value": "v2",
+          "source": "replanner",
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": "succeeded",
+          "execution_result": {
+            "success": true,
+            "belief_id": "B_REVISED_10",
+            "action_id": "A_RETRY_9",
+            "assumed_version": "v2",
+            "environment_result": {
+              "success": true,
+              "data": "customer-data"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "B1",
+          "target": "A1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVCO3ELY",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_1",
+          "target": "A_RETRY_1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVHZJJ4J",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI2O6LN",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_3",
+          "target": "A_RETRY_2",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI3IDMP",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_4",
+          "target": "A_RETRY_3",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI42RO7",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_5",
+          "target": "A_RETRY_4",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4DO8Y",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_6",
+          "target": "A_RETRY_5",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4PWYQ",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_7",
+          "target": "A_RETRY_6",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI4Q3TB",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_8",
+          "target": "A_RETRY_7",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI5DUAE",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_9",
+          "target": "A_RETRY_8",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        },
+        {
+          "source": "E_MISMATCH_MVI5EYJB",
+          "target": "B1",
+          "dependency_type": "contradicts",
+          "attributes": {
+            "dependency_type": "contradicts"
+          }
+        },
+        {
+          "source": "B_REVISED_10",
+          "target": "A_RETRY_9",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  }
+]

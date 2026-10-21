@@ -1,0 +1,161 @@
+[
+  {
+    "event_id": "4ee827da-610a-4e71-ac2a-0f3c42b78f7e",
+    "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+    "sequence": 1,
+    "event_type": "graph_created",
+    "summary": "Created graph: Auto Sync Test",
+    "timestamp": "2026-10-21T18:36:09.395039+00:00",
+    "details": {
+      "name": "Auto Sync Test"
+    },
+    "snapshot": {
+      "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+      "name": "Auto Sync Test",
+      "node_count": 0,
+      "edge_count": 0,
+      "nodes": [],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "c840bbad-8f37-4645-b763-04ed8c56d660",
+    "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+    "sequence": 2,
+    "event_type": "node_created",
+    "summary": "Created node: B1",
+    "timestamp": "2026-10-21T18:36:09.413213+00:00",
+    "details": {
+      "node_id": "B1",
+      "node_type": "belief",
+      "content": "API version"
+    },
+    "snapshot": {
+      "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+      "name": "Auto Sync Test",
+      "node_count": 1,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "ff6de535-b617-4581-9c4d-614ce77237f6",
+    "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+    "sequence": 3,
+    "event_type": "node_created",
+    "summary": "Created node: C1",
+    "timestamp": "2026-10-21T18:36:09.428465+00:00",
+    "details": {
+      "node_id": "C1",
+      "node_type": "conclusion",
+      "content": "Order eligibility"
+    },
+    "snapshot": {
+      "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+      "name": "Auto Sync Test",
+      "node_count": 2,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "Order eligibility",
+          "value": null,
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "0943d4b0-8ae2-4d84-b18a-f0de857045d3",
+    "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+    "sequence": 4,
+    "event_type": "dependency_created",
+    "summary": "Added dependency: B1 → C1",
+    "timestamp": "2026-10-21T18:36:09.446507+00:00",
+    "details": {
+      "source_id": "B1",
+      "target_id": "C1",
+      "dependency_type": "requires"
+    },
+    "snapshot": {
+      "graph_id": "64fe2507-5e10-43b9-8807-d0c7221eae57",
+      "name": "Auto Sync Test",
+      "node_count": 2,
+      "edge_count": 1,
+      "nodes": [
+        {
+          "id": "B1",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C1",
+          "node_type": "conclusion",
+          "content": "Order eligibility",
+          "value": null,
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B1",
+          "target": "C1",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  }
+]

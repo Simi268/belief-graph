@@ -1,0 +1,161 @@
+[
+  {
+    "event_id": "1e4785d7-85e1-4c46-be39-85b9d879c07f",
+    "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+    "sequence": 1,
+    "event_type": "graph_created",
+    "summary": "Created graph: SDK Integration Test",
+    "timestamp": "2026-10-21T16:25:06.497026+00:00",
+    "details": {
+      "name": "SDK Integration Test"
+    },
+    "snapshot": {
+      "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+      "name": "SDK Integration Test",
+      "node_count": 0,
+      "edge_count": 0,
+      "nodes": [],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "6863dd1c-f849-42c2-9464-712343bc1e7e",
+    "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+    "sequence": 2,
+    "event_type": "node_created",
+    "summary": "Created node: B_API",
+    "timestamp": "2026-10-21T16:25:06.539702+00:00",
+    "details": {
+      "node_id": "B_API",
+      "node_type": "belief",
+      "content": "API version"
+    },
+    "snapshot": {
+      "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+      "name": "SDK Integration Test",
+      "node_count": 1,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B_API",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "744efaac-7272-4b68-b206-8ec5a47da21c",
+    "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+    "sequence": 3,
+    "event_type": "node_created",
+    "summary": "Created node: C_ORDER",
+    "timestamp": "2026-10-21T16:25:06.597032+00:00",
+    "details": {
+      "node_id": "C_ORDER",
+      "node_type": "conclusion",
+      "content": "Order eligibility"
+    },
+    "snapshot": {
+      "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+      "name": "SDK Integration Test",
+      "node_count": 2,
+      "edge_count": 0,
+      "nodes": [
+        {
+          "id": "B_API",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C_ORDER",
+          "node_type": "conclusion",
+          "content": "Order eligibility",
+          "value": null,
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": []
+    }
+  },
+  {
+    "event_id": "2ec32855-7051-4451-b826-daa560ee9f31",
+    "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+    "sequence": 4,
+    "event_type": "dependency_created",
+    "summary": "Added dependency: B_API → C_ORDER",
+    "timestamp": "2026-10-21T16:25:06.632338+00:00",
+    "details": {
+      "source_id": "B_API",
+      "target_id": "C_ORDER",
+      "dependency_type": "requires"
+    },
+    "snapshot": {
+      "graph_id": "59ed279a-a25a-41ca-8101-160196329afd",
+      "name": "SDK Integration Test",
+      "node_count": 2,
+      "edge_count": 1,
+      "nodes": [
+        {
+          "id": "B_API",
+          "node_type": "belief",
+          "content": "API version",
+          "value": "v1",
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        },
+        {
+          "id": "C_ORDER",
+          "node_type": "conclusion",
+          "content": "Order eligibility",
+          "value": null,
+          "source": null,
+          "confidence": 1.0,
+          "status": "active",
+          "version": 1,
+          "superseded_by": null,
+          "execution_status": null,
+          "execution_result": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "B_API",
+          "target": "C_ORDER",
+          "dependency_type": "requires",
+          "attributes": {
+            "dependency_type": "requires"
+          }
+        }
+      ]
+    }
+  }
+]
