@@ -18,7 +18,6 @@ import {
 import {
   Background,
   Controls,
-  MiniMap,
   ReactFlow,
   type Edge,
   type Node,
@@ -941,7 +940,7 @@ if (expectedStatusesJson.trim()) {
               <div className="panel graph-panel">
                 <PanelHeading title="Dependency graph" subtitle={snapshot ? snapshot.name : "Create a graph to get started."} icon={<Network size={18} />} />
                 {flowNodes.length > 0 ? (
-                  <div className="flow-container"><ReactFlow nodes={flowNodes} edges={flowEdges} fitView onNodeClick={(_, node) => setSelectedNodeId(node.id)}><Background color="#334155" gap={24} /><Controls /><MiniMap nodeColor={(node) => statusColor(snapshot?.nodes.find((item) => item.id === node.id)?.status)} /></ReactFlow></div>
+                  <div className="flow-container"><ReactFlow nodes={flowNodes} edges={flowEdges} fitView onNodeClick={(_, node) => setSelectedNodeId(node.id)}><Background color="#334155" gap={24} /><Controls /></ReactFlow></div>
                 ) : (
                   <EmptyState title="No graph to visualize" description="Create a graph using the button above. Then add nodes and dependencies through the API." />
                 )}
@@ -961,7 +960,7 @@ if (expectedStatusesJson.trim()) {
             </section>
           )}
 
-          {activePage === "Belief Graph" && <section className="panel full-panel"><PanelHeading title="Graph explorer" subtitle="Inspect nodes and their directed dependencies" icon={<Network size={18} />} />{flowNodes.length > 0 ? <div className="flow-container large-flow"><ReactFlow nodes={flowNodes} edges={flowEdges} fitView onNodeClick={(_, node) => setSelectedNodeId(node.id)}><Background color="#334155" gap={24} /><Controls /><MiniMap /></ReactFlow></div> : <EmptyState title="No graph selected" description="Create a graph, then add nodes and dependencies through the API." />}{selectedNode && <SelectedNode node={selectedNode} nodes={snapshot?.nodes ?? []} edges={snapshot?.edges ?? []} onClose={() => setSelectedNodeId("")} onTrace={() => setActivePage("Impact Analysis")} />}</section>}
+          {activePage === "Belief Graph" && <section className="panel full-panel"><PanelHeading title="Graph explorer" subtitle="Inspect nodes and their directed dependencies" icon={<Network size={18} />} />{flowNodes.length > 0 ? <div className="flow-container large-flow"><ReactFlow nodes={flowNodes} edges={flowEdges} fitView onNodeClick={(_, node) => setSelectedNodeId(node.id)}><Background color="#334155" gap={24} /><Controls /></ReactFlow></div> : <EmptyState title="No graph selected" description="Create a graph, then add nodes and dependencies through the API." />}{selectedNode && <SelectedNode node={selectedNode} nodes={snapshot?.nodes ?? []} edges={snapshot?.edges ?? []} onClose={() => setSelectedNodeId("")} onTrace={() => setActivePage("Impact Analysis")} />}</section>}
           {activePage === "Impact Analysis" && <ImpactPanel graphId={selectedGraphId} nodes={snapshot?.nodes ?? []} edges={snapshot?.edges ?? []} onError={setError} />}
           {activePage === "Recovery" && (
             <section className="panel full-panel">
@@ -1268,10 +1267,6 @@ if (expectedStatusesJson.trim()) {
                                   >
                                     <Background color="#334155" gap={22} />
                                     <Controls showInteractive={false} />
-                                    <MiniMap nodeColor={(node) => {
-                                      const historicalNode = replaySnapshot.nodes.find((item) => item.id === node.id);
-                                      return statusColor(historicalNode?.status);
-                                    }} />
                                   </ReactFlow>
                                 </div>
                               ) : (

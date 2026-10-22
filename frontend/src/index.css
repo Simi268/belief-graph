@@ -85,7 +85,16 @@ select:focus { border-color: #6ee7b7; }
 .flow-container .react-flow__controls { overflow: hidden; border: 1px solid #354153; border-radius: 8px; }
 .flow-container .react-flow__controls-button { color: #d1d5db; fill: #d1d5db; background: #1b2431; border-bottom: 1px solid #354153; }
 .flow-container .react-flow__controls-button:hover { background: #303c4c; }
-.flow-container .react-flow__minimap { overflow: hidden; border: 1px solid #354153; border-radius: 7px; }
+.flow-container .react-flow__minimap {
+  overflow: hidden;
+  background-color: #111827 !important;
+  border: 1px solid #354153;
+  border-radius: 7px;
+}
+
+.flow-container .react-flow__minimap svg {
+  background-color: #111827;
+}
 .node-content { display: grid; gap: 8px; }
 .node-heading { display: flex; justify-content: space-between; gap: 7px; color: #9eabc0; font-size: 9px; text-transform: uppercase; letter-spacing: .4px; }
 .node-status { font-size: 8px; text-transform: none; overflow-wrap: anywhere; }
