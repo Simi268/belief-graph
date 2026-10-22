@@ -26,7 +26,7 @@ import {
 import "@xyflow/react/dist/style.css";
 import "./App.css";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
 type GraphSummary = {
   graph_id: string;
@@ -944,7 +944,7 @@ if (expectedStatusesJson.trim()) {
                 <div className="panel">
                   <PanelHeading title="System health" subtitle="Live backend connectivity" icon={<Activity size={18} />} />
                   <div className="health-row"><div className="health-icon"><CheckCircle2 size={20} /></div><div className="health-copy"><strong>REST API</strong><span>{health?.status === "healthy" ? "Responding normally" : "Connection unavailable"}</span></div><span className={`status-pill ${health?.status === "healthy" ? "success" : "danger"}`}>{health?.status === "healthy" ? "Online" : "Offline"}</span></div>
-                  <div className="health-details"><div><span>Service</span><strong>{health?.service ?? "—"}</strong></div><div><span>API version</span><strong>{health?.version ?? "—"}</strong></div><div><span>Endpoint</span><strong>127.0.0.1:8000</strong></div></div>
+                  <div className="health-details"><div><span>Service</span><strong>{health?.service ?? "—"}</strong><strong>{new URL(API_BASE).host}</strong></div><div><span>API version</span><strong>{health?.version ?? "—"}</strong></div><div><span>Endpoint</span></div></div>
                 </div>
                 <div className="panel">
                   <PanelHeading title="Graph sessions" subtitle="Available in this backend process" icon={<Layers3 size={18} />} />
