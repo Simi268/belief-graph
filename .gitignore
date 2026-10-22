@@ -44,3 +44,7 @@ dist/
 
 # Local experiment artifacts
 experiments/tmp/
+# Local UAT graph and event data
+data/events/2fa005a6-2ada-4081-8956-283c82398eb8.json
+data/events/2fa005a6-2ada-4081-8956-283c82398eb8.json.backup
+data/graphs/2fa005a6-2ada-4081-8956-283c82398eb8.json
