@@ -16,6 +16,10 @@ change.**
 
 Built with Python, FastAPI, React, and TypeScript.
 
+**Live Demo:** https://beliefgraph-frontend.onrender.com  
+**API Documentation:** https://beliefgraph-api.onrender.com/docs  
+**API Health:** https://beliefgraph-api.onrender.com/health
+
 ------------------------------------------------------------------------
 
 ## The Problem
@@ -223,11 +227,11 @@ failure.
 
 In the included deterministic order-processing recovery scenario:
 
-  Metric                                  Selective recovery   Full restart
-  ------------------------------------- -------------------- --------------
-  Semantic nodes processed                            2 of 4         4 of 4
-  Unaffected semantic nodes preserved                      2              0
-  Recovery outcome                                Successful     Successful
+| Metric | Selective recovery | Full restart |
+| --- | ---: | ---: |
+| Semantic nodes processed | 2 of 4 | 4 of 4 |
+| Unaffected semantic nodes preserved | 2 | 0 |
+| Recovery outcome | Successful | Successful |
 
 Both approaches succeed in this controlled scenario. Selective recovery
 processes fewer semantic nodes while preserving the unaffected branch.
