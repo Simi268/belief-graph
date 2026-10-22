@@ -306,37 +306,44 @@ function App() {
   async function refreshDashboard(preferredGraphId?: string) {
     setLoading(true);
     setError("");
+
     try {
       const [healthData, graphData] = await Promise.all([
-        request<Health>("/health"),
-        request<{ graphs: GraphSummary[] }>("/graphs"),
-      ]);
-      setHealth(healthData);
-      setGraphs(graphData.graphs);
+      request<Health>("/health"),
+      request<{ graphs: GraphSummary[] }>("/graphs"),
+    ]);
 
-      const desiredId = preferredGraphId ?? selectedGraphId;
-      const availableGraphId = graphData.graphs.some(
-        (graph) => graph.graph_id === desiredId,
-      )
-        ? desiredId
-        : graphData.graphs[0]?.graph_id ?? "";
+    setHealth(healthData);
+    setGraphs(graphData.graphs);
 
-      setSelectedGraphId(availableGraphId);
-      if (availableGraphId) {
-        const graph = await request<GraphSnapshot>(
-          `/graphs/${availableGraphId}`,
-        );
-        setSnapshot(graph);
-      } else {
-        setSnapshot(null);
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to connect to the API.");
-      setHealth(null);
-    } finally {
-      setLoading(false);
+    const desiredId = preferredGraphId ?? selectedGraphId;
+
+    const availableGraphId = graphData.graphs.some(
+      (graph) => graph.graph_id === desiredId,
+    )
+      ? desiredId
+      : "";
+
+    setSelectedGraphId(availableGraphId);
+
+    if (availableGraphId) {
+      const graph = await request<GraphSnapshot>(
+        `/graphs/${availableGraphId}`,
+      );
+      setSnapshot(graph);
+    } else {
+      setSnapshot(null);
     }
+  } catch (err) {
+    setError(
+      err instanceof Error ? err.message : "Unable to connect to the API.",
+    );
+    setHealth(null);
+  } finally {
+    setLoading(false);
   }
+}
+
 
   useEffect(() => {
     void refreshDashboard("");
