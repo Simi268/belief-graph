@@ -268,8 +268,11 @@ def graph_snapshot(graph_id: str) -> dict[str, Any]:
 
         if node_data is not None:
             serialized_node = to_jsonable(node_data)
+        elif node_id in graph.evidence:
+            serialized_node = to_jsonable(graph.evidence[node_id])
         else:
             serialized_node = to_jsonable(attributes)
+
 
         if isinstance(serialized_node, dict):
             serialized_node.setdefault("id", node_id)
@@ -702,7 +705,9 @@ def recover_from_failure(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The supplied failure evidence does not describe a version mismatch.",
         )
-
+    # Normalize the simulated failure to the environment's result format.
+    environment_result["success"] = False
+    environment_result["error"] = "API_VERSION_MISMATCH"
     environment = DynamicAPIEnvironment()
     environment.set_api_version(actual_version)
 
